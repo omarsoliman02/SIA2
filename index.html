@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accueil SIA2</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      color: #111827;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background-color: #c8102e;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar img {
+      height: 45px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .module-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .module-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .module-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #c8102e;
+    }
+
+    .module-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #111827;
+    }
+
+    .module-description {
+      color: #6b7280;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .modules-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .welcome-section {
+        padding: 3rem 1rem;
+      }
+      
+      .welcome-section h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <img src="LogoArdian.png" alt="Logo Ardian">
+  </div>
+
+  <div class="container">
+    <div class="modules-grid">
+      <a href="Modules/Collecte & Validation des Données/Collecte et validation.html" class="module-card">
+        <div class="module-icon">📊</div>
+        <h2 class="module-title">Collecte & Validation des Données</h2>
+      </a>
+
+
+      <a href="Modules/Gestion du dictionnaire/gestio_dictionnaire.html" class="module-card">
+        <div class="module-icon">📚</div>
+        <h2 class="module-title">Gestion du Dictionnaire</h2>
+      </a>
+
+      <a href="Modules/Adminstration & Sécurité/admin.html" class="module-card">
+        <div class="module-icon">🔒</div>
+        <h2 class="module-title">Administration & Sécurité</h2>
+      </a>
+      
+    </div>
+  </div>
+</body>
+</html>
