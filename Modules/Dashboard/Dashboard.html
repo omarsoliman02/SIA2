@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord ESG</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      color: #111827;
+      margin: 0;
+      display: flex;
+    }
+    .sidebar {
+      width: 180px;
+      background-color: #c8102e;
+      color: white;
+      padding: 1rem;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      overflow-y: auto;
+    }
+    .sidebar h2 {
+      font-size: 1.2rem;
+      margin-top: 0;
+    }
+    .sidebar nav a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .sidebar nav a:hover {
+      background-color: #a10c24;
+    }
+    .main-content {
+      margin-left: 200px;
+      padding: 1rem 2rem;
+      flex-grow: 1;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .kpi-filter-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    .kpi {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      flex: 1;
+      min-width: 0;
+    }
+    .kpi .item {
+      flex: 1 1 20%;
+      background: #fff;
+      padding: 0.5rem;
+      border-radius: 0.4rem;
+      text-align: center;
+      font-size: 0.75rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      min-width: 150px;
+    }
+    .filter-select {
+      font-size: 0.8rem;
+      padding: 0.4rem;
+      border-radius: 0.3rem;
+      border: 1px solid #ccc;
+      height: 32px;
+      margin-left: 1rem;
+      width: 200px;
+    }
+    .content-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .chart-container, .activity-log {
+      flex: 1 1 48%;
+      background: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      min-width: 300px;
+    }
+    .chart-container h3, .activity-log h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      color: #c8102e;
+    }
+    .activity-log {
+      font-size: 0.8rem;
+    }
+    .log-date {
+      font-weight: 700;
+      margin-top: 1rem;
+      margin-bottom: .5rem;
+      color: #111827;
+      font-size: 0.9rem;
+    }
+    .log-entry {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0.75rem;
+      border-radius: 0.4rem;
+      margin-bottom: 0.4rem;
+      font-size: 0.8rem;
+    }
+    .log-valid { background-color: #d1fae5; color: #065f46; }
+    .log-modif { background-color: #fef3c7; color: #92400e; }
+    .log-connexion { background-color: #dbeafe; color: #1e40af; }
+    .log-entry span:last-child { font-weight: 600; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+      background: #fff;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 0.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+    th {
+      background-color: #f9fafb;
+    }
+    .badge {
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+    }
+    .validé { background-color: #d1fae5; color: #065f46; }
+    .en-cours { background-color: #fef3c7; color: #92400e; }
+    .nouveau { background-color: #dbeafe; color: #1e40af; }
+    .table-section h3 {
+      margin: 2rem 0 0.5rem;
+      font-size: 1rem;
+      color: #c8102e;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Ardian ESG</h2>
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="#">Gestion des indicateurs</a>
+      <a href="#">Validation</a>
+      <a href="#">Administration</a>
+      <a href="#">Exportation</a>
+    </nav>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <h2>Tableau de bord ESG</h2>
+    </div>
+
+    <div class="kpi-filter-container">
+      <div class="kpi">
+        <div class="item"><strong>350</strong><br>Indicateurs ESG</div>
+        <div class="item"><strong>82%</strong><br>Taux complétion</div>
+        <div class="item"><strong>16</strong><br>En attente</div>
+        <div class="item"><strong>8</strong><br>Modifiés</div>
+      </div>
+      <select class="filter-select">
+        <option>Tous</option>
+        <option>Validés</option>
+        <option>En cours</option>
+        <option>Nouveaux</option>
+      </select>
+    </div>
+
+    <div class="content-flex" style="justify-content: space-between; gap: 1.5rem;">
+        <div class="chart-container" style="flex: 0 0 49%; height: 280px; position: relative;">
+          <h3>Évolution des statuts</h3>
+          <canvas id="esgChart" style="height: calc(100% - 40px); width: 100%;"></canvas>
+        </div>
+        <div class="activity-log" style="flex: 0 0 48%;">
+          <h3>Suivi des actions</h3>
+          <div class="log-date">18 mai 2025</div>
+          <div class="log-entry log-valid"><span>✔️ Jean Martin a validé EN007</span><span>15:30</span></div>
+          <div class="log-entry log-modif"><span>✏️ Marie Dupont a modifié EN005</span><span>09:24</span></div>
+          <div class="log-date">17 mai 2025</div>
+          <div class="log-entry log-valid"><span>✔️ Paul Bernard a validé EN122</span><span>17:50</span></div>
+          <div class="log-entry log-connexion"><span>🔐 Jean Martin s'est connecté via SSO</span><span>08:16</span></div>
+        </div>
+    </div>
+      
+
+    <div class="table-section">
+      <h3>Vue d’ensemble des indicateurs</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Indicateur</th>
+            <th>Statut</th>
+            <th>Resp.</th>
+            <th>Type</th>
+            <th>Date MAJ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>EN001</td><td>Consommation énergétique</td><td><span class="badge validé">Validé</span></td><td>A. Martin</td><td>Numérique</td><td>24/04/25</td></tr>
+          <tr><td>EN002</td><td>Émissions CO₂</td><td><span class="badge en-cours">En cours</span></td><td>J. Dupont</td><td>Numérique</td><td>22/04/25</td></tr>
+          <tr><td>SO003</td><td>Parité salariale</td><td><span class="badge nouveau">Nouveau</span></td><td>S. Dubois</td><td>Booléen</td><td>20/04/25</td></tr>
+          <tr><td>EN004</td><td>Énergie renouvelable</td><td><span class="badge en-cours">En cours</span></td><td>N. Lefèvre</td><td>Numérique</td><td>19/04/25</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    new Chart(document.getElementById('esgChart'), {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+        datasets: [
+          {label: 'Validés', data: [45, 60, 72, 90, 110, 125], borderColor: '#065f46', fill: false, tension: 0.3},
+          {label: 'En cours', data: [20, 28, 35, 40, 38, 36], borderColor: '#92400e', fill: false, tension: 0.3},
+          {label: 'Nouveaux', data: [10, 12, 15, 14, 11, 10], borderColor: '#1e40af', fill: false, tension: 0.3}
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        elements: {
+          point: { radius: 3 },
+          line: { borderWidth: 2 }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'line'
+            }
+          }
+        },
+        scales: {
+          y: { beginAtZero: true },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
