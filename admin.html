@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration & Sécurité</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f9fafb;
+      padding: 2rem;
+      color: #111827;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+      flex: 1 1 500px;
+      max-width: 600px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: #1d4ed8;
+    }
+
+    .btn {
+      background-color: #2563eb;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+      margin-bottom: 1rem;
+    }
+
+    .btn:hover {
+      background-color: #1d4ed8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background-color: #f3f4f6;
+    }
+
+    .log-entry {
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      padding: 0.5rem;
+      border-radius: 0.4rem;
+    }
+
+    .log-valid {
+      background-color: #ecfdf5;
+      color: #065f46;
+    }
+
+    .log-modif {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+
+    .log-connexion {
+      background-color: #e0f2fe;
+      color: #1e3a8a;
+    }
+
+    .log-date {
+      font-weight: bold;
+      margin-top: 1rem;
+      color: #111827;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      color: #6b7280;
+    }
+
+    .role-select {
+      padding: 0.4rem;
+      border-radius: 0.4rem;
+      border: 1px solid #d1d5db;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Card -->
+    <div class="card">
+      <h2>Gestion des rôles et permissions</h2>
+      <button class="btn" onclick="alert('Ajouter un utilisateur')">Ajouter un utilisateur</button>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Équipe</th>
+            <th>Rôle</th>
+            <th>Droits</th>
+            <th>Modifier</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Marie Dupont</td>
+            <td>ESG</td>
+            <td>Validation</td>
+            <td>✔️</td>
+            <td><select class="role-select"><option>Lecture seule</option><option>Édition</option><option selected>Validation</option></select></td>
+          </tr>
+          <tr>
+            <td>Paul Bernard</td>
+            <td>Finance</td>
+            <td>Édition</td>
+            <td>✎</td>
+            <td><select class="role-select"><option>Lecture seule</option><option selected>Édition</option><option>Validation</option></select></td>
+          </tr>
+          <tr>
+            <td>Sophie Laurent</td>
+            <td>IT</td>
+            <td>Lecture seule</td>
+            <td>👁️</td>
+            <td><select class="role-select"><option selected>Lecture seule</option><option>Édition</option><option>Validation</option></select></td>
+          </tr>
+          <tr>
+            <td>Jean Martin</td>
+            <td>IT</td>
+            <td>Validation</td>
+            <td>✔️</td>
+            <td><select class="role-select"><option>Lecture seule</option><option>Édition</option><option selected>Validation</option></select></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Right Card -->
+    <div class="card">
+      <h2>Audit et traçabilité</h2>
+      <div class="log-date">12 avril 2024</div>
+      <div class="log-entry log-valid"><span>✔️ Jean Martin a validé ESG indicateur Nr. 7</span><span>15:30</span></div>
+      <div class="log-entry log-modif"><span>✏️ Marie Dupont a modifié l'indicateur ESG n. 5</span><span>09:24</span></div>
+
+      <div class="log-date">11 avril 2024</div>
+      <div class="log-entry log-valid"><span>✔️ Paul Bernard a validé ESG indicateur Nr. 122</span><span>17:50</span></div>
+      <div class="log-entry log-connexion"><span>🔐 Jean Martin s'est connecté via SSO</span><span>08:16</span></div>
+
+      <div class="log-date" style="margin-top: 1.5rem">Note</div>
+      <ul>
+        <li>Historique des actions des utilisateurs</li>
+        <li>Versionning des indicateurs ESG</li>
+        <li>Journal des validations et modifications</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
