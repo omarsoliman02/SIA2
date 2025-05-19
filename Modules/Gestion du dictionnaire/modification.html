@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un Indicateur ESG</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-5">
+        <div class="bg-red-600 text-white p-4 rounded-t-lg mb-4">
+            <h1 class="text-2xl font-bold">Modifier l'Indicateur ESG - Ardian Identification Number</h1>
+        </div>
+
+        <!-- Formulaire de modification pré-rempli -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <form class="grid grid-cols-2 gap-4">
+                <input class="border p-2" type="text" placeholder="Nom de l'indicateur" value="Ardian Identification Number" required>
+                <input class="border p-2" type="text" placeholder="ID Technique" value="AGI-01" required>
+                <input class="border p-2" type="text" placeholder="Responsable de la donnée" value="Susty" required>
+                <input class="border p-2" type="text" placeholder="Outil de stockage" value="DataPlatform" required>
+                <select class="border p-2">
+                    <option selected>Numérique</option>
+                    <option>Texte</option>
+                    <option>Booléen</option>
+                    <option>Liste de valeurs</option>
+                </select>
+                <select class="border p-2">
+                    <option>Nouveau</option>
+                    <option selected>Modifié</option>
+                    <option>Supprimé</option>
+                </select>
+
+                <textarea class="border p-2 col-span-2" placeholder="Description de l'indicateur">Identification unique pour Ardian dans le DataPlatform.</textarea>
+
+                <button class="col-span-2 bg-green-500 text-white px-4 py-2 rounded">Modifier l'indicateur</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
