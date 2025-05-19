@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collecte & Validation des Données</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f4f6f8;
+      color: #111827;
+    }
+
+    .navbar {
+      background-color: #c8102e;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+    }
+
+    .navbar img {
+      height: 45px;
+    }
+
+    .navbar h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      flex: 1 1 500px;
+      max-width: 600px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      color: #c8102e;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .indicator {
+      border-left: 4px solid #c8102e;
+      background-color: #fce4e7;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+    }
+
+    .indicator strong {
+      color: #90001f;
+    }
+
+    .btn {
+      background-color: #c8102e;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 10px rgba(200, 16, 46, 0.3);
+      margin-right: 0.5rem;
+    }
+
+    .btn:hover {
+      background-color: #a10c24;
+      box-shadow: 0 6px 12px rgba(161, 12, 36, 0.4);
+    }
+
+    textarea {
+      width: 100%;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #d1d5db;
+      padding: 0.5rem;
+      font-family: inherit;
+    }
+
+    .log-entry {
+      background-color: #eef;
+      border-left: 4px solid #88a;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .validation ul {
+      padding-left: 1.2rem;
+      color: #6b7280;
+      margin-top: 1rem;
+    }
+
+    .validation ul li {
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <img src="LogoArdian.png" alt="Logo Ardian">
+    <h1>Collecte & Validation des Données</h1>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h2>📋 Indicateurs en attente</h2>
+      <div class="indicator">
+        <strong>Indicateur ESG n°5</strong><br>
+        Proposé par: Paul Bernard<br>
+        Modification: Valeur actuelle "Oui" → "Non"
+        <div style="margin-top: 0.5rem">
+          <button class="btn" onclick="validate('5')">Valider</button>
+          <button class="btn" onclick="reject('5')">Rejeter</button>
+        </div>
+        <textarea placeholder="Ajouter un commentaire..."></textarea>
+      </div>
+
+      <div class="indicator">
+        <strong>Indicateur ESG n°9</strong><br>
+        Proposé par: Sophie Laurent<br>
+        Modification: Valeur actuelle "30" → "35"
+        <div style="margin-top: 0.5rem">
+          <button class="btn" onclick="validate('9')">Valider</button>
+          <button class="btn" onclick="reject('9')">Rejeter</button>
+        </div>
+        <textarea placeholder="Ajouter un commentaire..."></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🕓 Historique des modifications</h2>
+      <div class="log-entry">✅ Jean Martin a validé l’indicateur ESG n°7 <span>15:30</span></div>
+      <div class="log-entry">✏️ Marie Dupont a modifié l’indicateur ESG n°5 <span>09:24</span></div>
+      <div class="log-entry">✅ Paul Bernard a validé l’indicateur ESG n°122 <span>17:50</span></div>
+      <div class="log-entry">🔐 Jean Martin s’est connecté via SSO <span>08:16</span></div>
+
+      <div class="validation">
+        <h2>📝 Règles qualité automatisées</h2>
+        <ul>
+          <li>✔️ Format des données : OK</li>
+          <li>⚠️ Valeur aberrante détectée sur indicateur n°12</li>
+          <li>⚠️ Incohérence avec la réglementation SFDR</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function validate(id) {
+      alert("Indicateur ESG n°" + id + " validé ✅");
+    }
+    function reject(id) {
+      alert("Indicateur ESG n°" + id + " rejeté ❌");
+    }
+  </script>
+</body>
+
+</html>
