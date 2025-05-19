@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ajouter un Utilisateur - Administration & Sécurité</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      color: #111827;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background-color: #c8102e;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar img {
+      height: 45px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    h1 {
+      color: #111827;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #374151;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #c8102e;
+      box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.1);
+    }
+
+    .btn {
+      background-color: #c8102e;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 10px rgba(200, 16, 46, 0.3);
+    }
+
+    .btn:hover {
+      background-color: #a10c24;
+      box-shadow: 0 6px 12px rgba(161, 12, 36, 0.4);
+    }
+
+    .btn-secondary {
+      background-color: #6b7280;
+      box-shadow: 0 4px 10px rgba(107, 114, 128, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background-color: #4b5563;
+      box-shadow: 0 6px 12px rgba(75, 85, 99, 0.4);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .required {
+      color: #c8102e;
+      margin-left: 0.25rem;
+    }
+
+    .error-message {
+      color: #c8102e;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    input:invalid + .error-message {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="../../index.html">
+      <img src="../../LogoArdian.png" alt="Logo Ardian">
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h1>Ajouter un Utilisateur</h1>
+      <form id="addUserForm">
+        <div class="form-group">
+          <label for="nom">Nom<span class="required">*</span></label>
+          <input type="text" id="nom" name="nom" required>
+          <div class="error-message">Le nom est requis</div>
+        </div>
+
+        <div class="form-group">
+          <label for="prenom">Prénom<span class="required">*</span></label>
+          <input type="text" id="prenom" name="prenom" required>
+          <div class="error-message">Le prénom est requis</div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email<span class="required">*</span></label>
+          <input type="email" id="email" name="email" required>
+          <div class="error-message">Veuillez entrer une adresse email valide</div>
+        </div>
+
+        <div class="form-group">
+          <label for="equipe">Équipe<span class="required">*</span></label>
+          <select id="equipe" name="equipe" required>
+            <option value="">Sélectionnez une équipe</option>
+            <option value="ESG">ESG</option>
+            <option value="Finance">Finance</option>
+            <option value="IT">IT</option>
+          </select>
+          <div class="error-message">Veuillez sélectionner une équipe</div>
+        </div>
+
+        <div class="form-group">
+          <label for="role">Rôle<span class="required">*</span></label>
+          <select id="role" name="role" required>
+            <option value="">Sélectionnez un rôle</option>
+            <option value="lecture">Lecture seule</option>
+            <option value="edition">Édition</option>
+            <option value="validation">Validation</option>
+          </select>
+          <div class="error-message">Veuillez sélectionner un rôle</div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn">Ajouter l'utilisateur</button>
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='admin.html'">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('addUserForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Ici, vous pouvez ajouter la logique pour envoyer les données au serveur
+      alert('Utilisateur ajouté avec succès!');
+      window.location.href = 'admin.html';
+    });
+  </script>
+</body>
+</html> 
