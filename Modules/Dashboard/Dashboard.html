@@ -210,6 +210,7 @@
   </div>
 
   <div class="main-content">
+    <div id="main-dashboard">
     <div class="header">
     </div>
 
@@ -217,8 +218,8 @@
       <div class="kpi">
         <div class="item"><strong>350</strong><br>Indicateurs ESG</div>
         <div class="item"><strong>82%</strong><br>Taux complétion</div>
-        <div class="item"><strong>16</strong><br>En attente</div>
-        <div class="item"><strong>8</strong><br>Modifiés</div>
+        <div class="item" id="kpi-en-attente" style="cursor: pointer;"><strong>16</strong><br>En attente</div>
+        <div class="item" id="kpi-modifie" style="cursor: pointer;"><strong>8</strong><br>Modifiés</div>
       </div>
       <select class="filter-select">
         <option>Tous</option>
@@ -267,6 +268,67 @@
         </tbody>
       </table>
     </div>
+    </div>
+
+    <div id="modified-list" style="display: none; margin-top: 2rem;">
+        <h3 style="color: #c8102e;">📌 Indicateurs modifiés</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Indicateur</th>
+              <th>Secteur</th>
+              <th>Direction</th>
+              <th>Responsable</th>
+              <th>Personne en charge</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>EN005</td><td>Énergie</td><td>Développement durable</td><td>Marie Dupont</td><td>Paul Bernard</td></tr>
+            <tr><td>SO009</td><td>Social</td><td>RH Groupe</td><td>Jean Martin</td><td>Sophie Laurent</td></tr>
+            <tr><td>EN018</td><td>Climat</td><td>Opérations</td><td>Claire Moreau</td><td>Lucas Girard</td></tr>
+            <tr><td>EN019</td><td>Énergie</td><td>Infrastructure</td><td>David Marchand</td><td>Julie Robert</td></tr>
+            <tr><td>SO021</td><td>Social</td><td>RH Groupe</td><td>Nina Leroy</td><td>Marc Lefèvre</td></tr>
+            <tr><td>EN022</td><td>Climat</td><td>Développement durable</td><td>Lucas Girard</td><td>Sophie Laurent</td></tr>
+            <tr><td>GO025</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Claire Moreau</td></tr>
+            <tr><td>EN026</td><td>Énergie</td><td>Opérations</td><td>Jean Martin</td><td>Julie Robert</td></tr>
+          </tbody>
+        </table>
+        <button onclick="retourDashboard()" style="margin-top: 1rem; background-color: #c8102e; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.4rem; cursor: pointer;">⬅️ Retour</button>
+      </div>
+      
+      <div id="pending-list" style="display: none; margin-top: 2rem;">
+        <h3 style="color: #c8102e;">📌 Indicateurs en attente</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Indicateur</th>
+              <th>Secteur</th>
+              <th>Direction</th>
+              <th>Responsable</th>
+              <th>Personne en charge</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>EN101</td><td>Énergie</td><td>Opérations</td><td>Claire Moreau</td><td>Lucas Girard</td></tr>
+            <tr><td>EN102</td><td>Climat</td><td>Développement Durable</td><td>Marc Lefèvre</td><td>Julie Robert</td></tr>
+            <tr><td>EN103</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Sophie Laurent</td></tr>
+            <tr><td>EN104</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Nina Leroy</td></tr>
+            <tr><td>EN105</td><td>Énergie</td><td>Développement Durable</td><td>Claire Moreau</td><td>David Marchand</td></tr>
+            <tr><td>EN106</td><td>Climat</td><td>Opérations</td><td>Marc Lefèvre</td><td>Sophie Laurent</td></tr>
+            <tr><td>EN107</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Lucas Girard</td></tr>
+            <tr><td>EN108</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Julie Robert</td></tr>
+            <tr><td>EN109</td><td>Climat</td><td>Investissement</td><td>Claire Moreau</td><td>Nina Leroy</td></tr>
+            <tr><td>EN110</td><td>Énergie</td><td>Opérations</td><td>Marc Lefèvre</td><td>Lucas Girard</td></tr>
+            <tr><td>EN111</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Julie Robert</td></tr>
+            <tr><td>EN112</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Sophie Laurent</td></tr>
+            <tr><td>EN113</td><td>Climat</td><td>Développement Durable</td><td>Claire Moreau</td><td>David Marchand</td></tr>
+            <tr><td>EN114</td><td>Énergie</td><td>Opérations</td><td>Marc Lefèvre</td><td>Nina Leroy</td></tr>
+            <tr><td>EN115</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Lucas Girard</td></tr>
+            <tr><td>EN116</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Julie Robert</td></tr>
+          </tbody>
+        </table>
+        <button onclick="retourDashboard()" style="margin-top: 1rem; background-color: #c8102e; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.4rem; cursor: pointer;">⬅️ Retour</button>
+      </div>      
   </div>
 
   <script>
@@ -303,5 +365,25 @@
       }
     });
   </script>
+  <script>
+    document.getElementById('kpi-modifie').addEventListener('click', function () {
+      document.getElementById('main-dashboard').style.display = 'none';
+      document.getElementById('modified-list').style.display = 'block';
+      document.getElementById('pending-list').style.display = 'none';
+    });
+  
+    document.getElementById('kpi-en-attente').addEventListener('click', function () {
+      document.getElementById('main-dashboard').style.display = 'none';
+      document.getElementById('modified-list').style.display = 'none';
+      document.getElementById('pending-list').style.display = 'block';
+    });
+  
+    function retourDashboard() {
+      document.getElementById('main-dashboard').style.display = 'block';
+      document.getElementById('modified-list').style.display = 'none';
+      document.getElementById('pending-list').style.display = 'none';
+    }
+  </script>  
+  
 </body>
 </html>
