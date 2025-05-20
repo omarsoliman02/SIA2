@@ -42,6 +42,12 @@
     .sidebar nav a:hover {
       background-color: #a10c24;
     }
+    .sidebar nav a.active {
+    background-color: white;
+    color: #c8102e;
+    font-weight: bold;
+    border-radius: 0.4rem;
+    }
     .main-content {
       margin-left: 200px;
       padding: 1rem 2rem;
@@ -164,7 +170,7 @@
   <div class="sidebar">
     <h2>Ardian ESG</h2>
     <nav>
-      <a href="#">Dashboard</a>
+      <a href="#" class="active">Dashboard</a>
       <a href="#">Gestion des indicateurs</a>
       <a href="#">Validation</a>
       <a href="#">Administration</a>
@@ -174,7 +180,7 @@
 
   <div class="main-content">
     <div class="header">
-      <h2>Tableau de bord ESG</h2>
+      <h2>Dashboard</h2>
     </div>
 
     <div class="kpi-filter-container">
@@ -186,9 +192,10 @@
       </div>
       <select class="filter-select">
         <option>Tous</option>
-        <option>Validés</option>
-        <option>En cours</option>
-        <option>Nouveaux</option>
+        <option>Information général</option>
+        <option>Gourvernance</option>
+        <option>Social</option>
+        <option>Climat et Environnement </option>
       </select>
     </div>
 
