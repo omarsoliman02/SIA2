@@ -210,17 +210,19 @@
   </div>
 
   <div class="main-content">
-    <div id="main-dashboard">
+    <div id="dashboard-wrapper">
+        <div id="main-dashboard">
     <div class="header">
     </div>
 
     <div class="kpi-filter-container">
-      <div class="kpi">
-        <div class="item"><strong>350</strong><br>Indicateurs ESG</div>
-        <div class="item"><strong>82%</strong><br>Taux complétude</div>
-        <div class="item" id="kpi-en-attente" style="cursor: pointer;"><strong>16</strong><br>En attente</div>
-        <div class="item" id="kpi-modifie" style="cursor: pointer;"><strong>8</strong><br>Modifiés</div>
-      </div>
+        <div class="kpi">
+            <div class="item"><strong>350</strong><br>Indicateurs ESG</div>
+            <div class="item"><strong>82%</strong><br>Taux complétude</div>
+            <div class="item" id="kpi-en-attente" style="cursor: pointer;"><strong>16</strong><br>En attente</div>
+            <div class="item" id="kpi-modifie" style="cursor: pointer;"><strong>8</strong><br>Modifiés</div>
+          </div>
+          
       <select class="filter-select">
         <option>Tous</option>
         <option>Information général</option>
@@ -246,30 +248,52 @@
         </div>
     </div>
       
+    <div class="table-section" style="margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 1.5rem 0;">
+          <h3 style="margin: 0;">Vue d’ensemble des indicateurs</h3>
+          <select id="filter-status" class="filter-select">
+            <option value="tous">Tous</option>
+            <option value="validé">Validé</option>
+            <option value="en-cours">En cours</option>
+            <option value="nouveau">Nouveau</option>
+          </select>
+        </div>
+      
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Indicateur</th>
+              <th>Statut</th>
+              <th>Resp.</th>
+              <th>Type</th>
+              <th>Date MAJ</th>
+            </tr>
+          </thead>
+          <tbody id="indicateur-table-body">
+            <tr data-status="validé">
+              <td>EN001</td><td>Consommation énergétique</td>
+              <td><span class="badge validé">Validé</span></td><td>A. Martin</td><td>Numérique</td><td>24/04/25</td>
+            </tr>
+            <tr data-status="en-cours">
+              <td>EN002</td><td>Émissions CO₂</td>
+              <td><span class="badge en-cours">En cours</span></td><td>J. Dupont</td><td>Numérique</td><td>22/04/25</td>
+            </tr>
+            <tr data-status="nouveau">
+              <td>SO003</td><td>Parité salariale</td>
+              <td><span class="badge nouveau">Nouveau</span></td><td>S. Dubois</td><td>Booléen</td><td>20/04/25</td>
+            </tr>
+            <tr data-status="en-cours">
+              <td>EN004</td><td>Énergie renouvelable</td>
+              <td><span class="badge en-cours">En cours</span></td><td>N. Lefèvre</td><td>Numérique</td><td>19/04/25</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+        
 
-    <div class="table-section">
-      <h3>Vue d’ensemble des indicateurs</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Indicateur</th>
-            <th>Statut</th>
-            <th>Resp.</th>
-            <th>Type</th>
-            <th>Date MAJ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>EN001</td><td>Consommation énergétique</td><td><span class="badge validé">Validé</span></td><td>A. Martin</td><td>Numérique</td><td>24/04/25</td></tr>
-          <tr><td>EN002</td><td>Émissions CO₂</td><td><span class="badge en-cours">En cours</span></td><td>J. Dupont</td><td>Numérique</td><td>22/04/25</td></tr>
-          <tr><td>SO003</td><td>Parité salariale</td><td><span class="badge nouveau">Nouveau</span></td><td>S. Dubois</td><td>Booléen</td><td>20/04/25</td></tr>
-          <tr><td>EN004</td><td>Énergie renouvelable</td><td><span class="badge en-cours">En cours</span></td><td>N. Lefèvre</td><td>Numérique</td><td>19/04/25</td></tr>
-        </tbody>
-      </table>
-    </div>
-    </div>
-
+    </div> <!-- fin de #main-dashboard -->
     <div id="modified-list" style="display: none; margin-top: 2rem;">
         <h3 style="color: #c8102e;">📌 Indicateurs modifiés</h3>
         <table>
@@ -295,7 +319,6 @@
         </table>
         <button onclick="retourDashboard()" style="margin-top: 1rem; background-color: #c8102e; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.4rem; cursor: pointer;">⬅️ Retour</button>
       </div>
-      
       <div id="pending-list" style="display: none; margin-top: 2rem;">
         <h3 style="color: #c8102e;">📌 Indicateurs en attente</h3>
         <table>
@@ -328,8 +351,9 @@
           </tbody>
         </table>
         <button onclick="retourDashboard()" style="margin-top: 1rem; background-color: #c8102e; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.4rem; cursor: pointer;">⬅️ Retour</button>
-      </div>      
-  </div>
+        </div>
+</div> <!-- fin de #dashboard-wrapper -->
+</div> <!-- fin de .main-content -->
 
   <script>
     new Chart(document.getElementById('esgChart'), {
@@ -365,25 +389,37 @@
       }
     });
   </script>
-  <script>
-    document.getElementById('kpi-modifie').addEventListener('click', function () {
-      document.getElementById('main-dashboard').style.display = 'none';
-      document.getElementById('modified-list').style.display = 'block';
-      document.getElementById('pending-list').style.display = 'none';
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const kpiModifie = document.getElementById('kpi-modifie');
+  const kpiEnAttente = document.getElementById('kpi-en-attente');
+  const dashboard = document.getElementById('main-dashboard');
+  const modifList = document.getElementById('modified-list');
+  const pendingList = document.getElementById('pending-list');
+
+  if (kpiModifie && kpiEnAttente) {
+    kpiModifie.addEventListener('click', () => {
+      dashboard.style.display = 'none';
+      modifList.style.display = 'block';
+      pendingList.style.display = 'none';
     });
-  
-    document.getElementById('kpi-en-attente').addEventListener('click', function () {
-      document.getElementById('main-dashboard').style.display = 'none';
-      document.getElementById('modified-list').style.display = 'none';
-      document.getElementById('pending-list').style.display = 'block';
+
+    kpiEnAttente.addEventListener('click', () => {
+      dashboard.style.display = 'none';
+      modifList.style.display = 'none';
+      pendingList.style.display = 'block';
     });
-  
-    function retourDashboard() {
-      document.getElementById('main-dashboard').style.display = 'block';
-      document.getElementById('modified-list').style.display = 'none';
-      document.getElementById('pending-list').style.display = 'none';
-    }
+  }
+
+  window.retourDashboard = function () {
+    dashboard.style.display = 'block';
+    modifList.style.display = 'none';
+    pendingList.style.display = 'none';
+  };
+});
   </script>  
+  
+  
   
 </body>
 </html>
