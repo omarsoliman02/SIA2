@@ -40,7 +40,7 @@
     margin: 0;
     }
     .sidebar {
-    width: 180px;
+    width: 200px;
     background-color: #c8102e;
     color: white;
     padding: 1rem;
@@ -260,35 +260,35 @@
         </div>
       
         <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Indicateur</th>
-              <th>Statut</th>
-              <th>Resp.</th>
-              <th>Type</th>
-              <th>Date MAJ</th>
-            </tr>
-          </thead>
-          <tbody id="indicateur-table-body">
-            <tr data-status="validé">
-              <td>EN001</td><td>Consommation énergétique</td>
-              <td><span class="badge validé">Validé</span></td><td>A. Martin</td><td>Numérique</td><td>24/04/25</td>
-            </tr>
-            <tr data-status="en-cours">
-              <td>EN002</td><td>Émissions CO₂</td>
-              <td><span class="badge en-cours">En cours</span></td><td>J. Dupont</td><td>Numérique</td><td>22/04/25</td>
-            </tr>
-            <tr data-status="nouveau">
-              <td>SO003</td><td>Parité salariale</td>
-              <td><span class="badge nouveau">Nouveau</span></td><td>S. Dubois</td><td>Booléen</td><td>20/04/25</td>
-            </tr>
-            <tr data-status="en-cours">
-              <td>EN004</td><td>Énergie renouvelable</td>
-              <td><span class="badge en-cours">En cours</span></td><td>N. Lefèvre</td><td>Numérique</td><td>19/04/25</td>
-            </tr>
-          </tbody>
-        </table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Indicateur</th>
+                <th>Statut</th>
+                <th>Resp.</th>
+                <th>Type</th>
+                <th>Date MAJ</th>
+              </tr>
+            </thead>
+            <tbody id="indicateur-table-body">
+              <tr data-categorie="Information général">
+                <td>EN001</td><td>Consommation énergétique</td>
+                <td><span class="badge validé">Validé</span></td><td>A. Martin</td><td>Numérique</td><td>24/04/25</td>
+              </tr>
+              <tr data-categorie="Climat et Environnement">
+                <td>EN002</td><td>Émissions CO₂</td>
+                <td><span class="badge en-cours">En cours</span></td><td>J. Dupont</td><td>Numérique</td><td>22/04/25</td>
+              </tr>
+              <tr data-categorie="Social">
+                <td>SO003</td><td>Parité salariale</td>
+                <td><span class="badge nouveau">Nouveau</span></td><td>S. Dubois</td><td>Booléen</td><td>20/04/25</td>
+              </tr>
+              <tr data-categorie="Climat et Environnement">
+                <td>EN004</td><td>Énergie renouvelable</td>
+                <td><span class="badge en-cours">En cours</span></td><td>N. Lefèvre</td><td>Numérique</td><td>19/04/25</td>
+              </tr>
+            </tbody>
+          </table>
       </div>
       
         
@@ -307,15 +307,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>EN005</td><td>Énergie</td><td>Développement durable</td><td>Marie Dupont</td><td>Paul Bernard</td></tr>
-            <tr><td>SO009</td><td>Social</td><td>RH Groupe</td><td>Jean Martin</td><td>Sophie Laurent</td></tr>
-            <tr><td>EN018</td><td>Climat</td><td>Opérations</td><td>Claire Moreau</td><td>Lucas Girard</td></tr>
-            <tr><td>EN019</td><td>Énergie</td><td>Infrastructure</td><td>David Marchand</td><td>Julie Robert</td></tr>
-            <tr><td>SO021</td><td>Social</td><td>RH Groupe</td><td>Nina Leroy</td><td>Marc Lefèvre</td></tr>
-            <tr><td>EN022</td><td>Climat</td><td>Développement durable</td><td>Lucas Girard</td><td>Sophie Laurent</td></tr>
-            <tr><td>GO025</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Claire Moreau</td></tr>
-            <tr><td>EN026</td><td>Énergie</td><td>Opérations</td><td>Jean Martin</td><td>Julie Robert</td></tr>
-          </tbody>
+            <tr data-categorie="énergie"><td>EN005</td><td>Énergie</td><td>Développement durable</td><td>Marie Dupont</td><td>Paul Bernard</td></tr>
+            <tr data-categorie="social"><td>SO009</td><td>Social</td><td>RH Groupe</td><td>Jean Martin</td><td>Sophie Laurent</td></tr>
+            <tr data-categorie="climat"><td>EN018</td><td>Climat</td><td>Opérations</td><td>Claire Moreau</td><td>Lucas Girard</td></tr>
+            <tr data-categorie="énergie"><td>EN019</td><td>Énergie</td><td>Infrastructure</td><td>David Marchand</td><td>Julie Robert</td></tr>
+            <tr data-categorie="social"><td>SO021</td><td>Social</td><td>RH Groupe</td><td>Nina Leroy</td><td>Marc Lefèvre</td></tr>
+            <tr data-categorie="climat"><td>EN022</td><td>Climat</td><td>Développement durable</td><td>Lucas Girard</td><td>Sophie Laurent</td></tr>
+            <tr data-categorie="gouvernance"><td>GO025</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Claire Moreau</td></tr>
+            <tr data-categorie="énergie"><td>EN026</td><td>Énergie</td><td>Opérations</td><td>Jean Martin</td><td>Julie Robert</td></tr>
+          </tbody>          
         </table>
         <button onclick="retourDashboard()" style="margin-top: 1rem; background-color: #c8102e; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.4rem; cursor: pointer;">⬅️ Retour</button>
       </div>
@@ -332,94 +332,155 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>EN101</td><td>Énergie</td><td>Opérations</td><td>Claire Moreau</td><td>Lucas Girard</td></tr>
-            <tr><td>EN102</td><td>Climat</td><td>Développement Durable</td><td>Marc Lefèvre</td><td>Julie Robert</td></tr>
-            <tr><td>EN103</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Sophie Laurent</td></tr>
-            <tr><td>EN104</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Nina Leroy</td></tr>
-            <tr><td>EN105</td><td>Énergie</td><td>Développement Durable</td><td>Claire Moreau</td><td>David Marchand</td></tr>
-            <tr><td>EN106</td><td>Climat</td><td>Opérations</td><td>Marc Lefèvre</td><td>Sophie Laurent</td></tr>
-            <tr><td>EN107</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Lucas Girard</td></tr>
-            <tr><td>EN108</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Julie Robert</td></tr>
-            <tr><td>EN109</td><td>Climat</td><td>Investissement</td><td>Claire Moreau</td><td>Nina Leroy</td></tr>
-            <tr><td>EN110</td><td>Énergie</td><td>Opérations</td><td>Marc Lefèvre</td><td>Lucas Girard</td></tr>
-            <tr><td>EN111</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Julie Robert</td></tr>
-            <tr><td>EN112</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Sophie Laurent</td></tr>
-            <tr><td>EN113</td><td>Climat</td><td>Développement Durable</td><td>Claire Moreau</td><td>David Marchand</td></tr>
-            <tr><td>EN114</td><td>Énergie</td><td>Opérations</td><td>Marc Lefèvre</td><td>Nina Leroy</td></tr>
-            <tr><td>EN115</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Lucas Girard</td></tr>
-            <tr><td>EN116</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Julie Robert</td></tr>
-          </tbody>
+            <tr data-categorie="énergie"><td>EN101</td><td>Énergie</td><td>Opérations</td><td>Claire Moreau</td><td>Lucas Girard</td></tr>
+            <tr data-categorie="climat"><td>EN102</td><td>Climat</td><td>Développement Durable</td><td>Marc Lefèvre</td><td>Julie Robert</td></tr>
+            <tr data-categorie="social"><td>EN103</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Sophie Laurent</td></tr>
+            <tr data-categorie="gouvernance"><td>EN104</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Nina Leroy</td></tr>
+            <tr data-categorie="énergie"><td>EN105</td><td>Énergie</td><td>Développement Durable</td><td>Claire Moreau</td><td>David Marchand</td></tr>
+            <tr data-categorie="climat"><td>EN106</td><td>Climat</td><td>Opérations</td><td>Marc Lefèvre</td><td>Sophie Laurent</td></tr>
+            <tr data-categorie="social"><td>EN107</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Lucas Girard</td></tr>
+            <tr data-categorie="gouvernance"><td>EN108</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Julie Robert</td></tr>
+            <tr data-categorie="climat"><td>EN109</td><td>Climat</td><td>Investissement</td><td>Claire Moreau</td><td>Nina Leroy</td></tr>
+            <tr data-categorie="énergie"><td>EN110</td><td>Énergie</td><td>Opérations</td><td>Marc Lefèvre</td><td>Lucas Girard</td></tr>
+            <tr data-categorie="social"><td>EN111</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Julie Robert</td></tr>
+            <tr data-categorie="gouvernance"><td>EN112</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Sophie Laurent</td></tr>
+            <tr data-categorie="climat"><td>EN113</td><td>Climat</td><td>Développement Durable</td><td>Claire Moreau</td><td>David Marchand</td></tr>
+            <tr data-categorie="énergie"><td>EN114</td><td>Énergie</td><td>Opérations</td><td>Marc Lefèvre</td><td>Nina Leroy</td></tr>
+            <tr data-categorie="social"><td>EN115</td><td>Social</td><td>RH</td><td>Jean Martin</td><td>Lucas Girard</td></tr>
+            <tr data-categorie="gouvernance"><td>EN116</td><td>Gouvernance</td><td>Compliance</td><td>Paul Bernard</td><td>Julie Robert</td></tr>
+          </tbody>          
         </table>
         <button onclick="retourDashboard()" style="margin-top: 1rem; background-color: #c8102e; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.4rem; cursor: pointer;">⬅️ Retour</button>
         </div>
 </div> <!-- fin de #dashboard-wrapper -->
 </div> <!-- fin de .main-content -->
 
-  <script>
-    new Chart(document.getElementById('esgChart'), {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
-        datasets: [
-          {label: 'Validés', data: [45, 60, 72, 90, 110, 125], borderColor: '#065f46', fill: false, tension: 0.3},
-          {label: 'En cours', data: [20, 28, 35, 40, 38, 36], borderColor: '#92400e', fill: false, tension: 0.3},
-          {label: 'Nouveaux', data: [10, 12, 15, 14, 11, 10], borderColor: '#1e40af', fill: false, tension: 0.3}
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        elements: {
-          point: { radius: 3 },
-          line: { borderWidth: 2 }
+    <script>
+        new Chart(document.getElementById('esgChart'), {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+            datasets: [
+            {label: 'Validés', data: [45, 60, 72, 90, 110, 125], borderColor: '#065f46', fill: false, tension: 0.3},
+            {label: 'En cours', data: [20, 28, 35, 40, 38, 36], borderColor: '#92400e', fill: false, tension: 0.3},
+            {label: 'Nouveaux', data: [10, 12, 15, 14, 11, 10], borderColor: '#1e40af', fill: false, tension: 0.3}
+            ]
         },
-        plugins: {
-          legend: {
-            position: 'top',
-            labels: {
-              usePointStyle: true,
-              pointStyle: 'line'
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            elements: {
+            point: { radius: 3 },
+            line: { borderWidth: 2 }
+            },
+            plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                usePointStyle: true,
+                pointStyle: 'line'
+                }
             }
-          }
-        },
-        scales: {
-          y: { beginAtZero: true },
-          x: { grid: { display: false } }
+            },
+            scales: {
+            y: { beginAtZero: true },
+            x: { grid: { display: false } }
+            }
         }
-      }
-    });
-  </script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-  const kpiModifie = document.getElementById('kpi-modifie');
-  const kpiEnAttente = document.getElementById('kpi-en-attente');
-  const dashboard = document.getElementById('main-dashboard');
-  const modifList = document.getElementById('modified-list');
-  const pendingList = document.getElementById('pending-list');
+        });
+    </script>
 
-  if (kpiModifie && kpiEnAttente) {
-    kpiModifie.addEventListener('click', () => {
-      dashboard.style.display = 'none';
-      modifList.style.display = 'block';
-      pendingList.style.display = 'none';
-    });
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const kpiModifie = document.getElementById('kpi-modifie');
+    const kpiEnAttente = document.getElementById('kpi-en-attente');
+    const dashboard = document.getElementById('main-dashboard');
+    const modifList = document.getElementById('modified-list');
+    const pendingList = document.getElementById('pending-list');
 
-    kpiEnAttente.addEventListener('click', () => {
-      dashboard.style.display = 'none';
-      modifList.style.display = 'none';
-      pendingList.style.display = 'block';
-    });
-  }
+    if (kpiModifie && kpiEnAttente) {
+        kpiModifie.addEventListener('click', () => {
+        dashboard.style.display = 'none';
+        modifList.style.display = 'block';
+        pendingList.style.display = 'none';
+        });
 
-  window.retourDashboard = function () {
-    dashboard.style.display = 'block';
-    modifList.style.display = 'none';
-    pendingList.style.display = 'none';
-  };
-});
-  </script>  
-  
-  
+        kpiEnAttente.addEventListener('click', () => {
+        dashboard.style.display = 'none';
+        modifList.style.display = 'none';
+        pendingList.style.display = 'block';
+        });
+    }
+
+    window.retourDashboard = function () {
+        dashboard.style.display = 'block';
+        modifList.style.display = 'none';
+        pendingList.style.display = 'none';
+    };
+    });
+    </script>  
+    
+    <script>
+        // Filtrage du tableau principal des indicateurs
+        document.getElementById("filter-status").addEventListener("change", function () {
+        const selectedStatus = this.value;
+        const rows = document.querySelectorAll("#indicateur-table-body tr");
+    
+        rows.forEach((row) => {
+            const status = row.getAttribute("data-status");
+            if (selectedStatus === "tous" || status === selectedStatus) {
+            row.style.display = "";
+            } else {
+            row.style.display = "none";
+            }
+        });
+        });
+    </script>
+
+    <script>
+        const statusFilter = document.getElementById("filter-status");
+        const categorieFilter = document.querySelector(".filter-select"); // le premier select du haut
+        const tableRows = document.querySelectorAll("#indicateur-table-body tr");
+    
+        function applyFilters() {
+        const selectedStatus = statusFilter.value;
+        const selectedCategorie = categorieFilter.value.trim().toLowerCase();
+    
+        tableRows.forEach((row) => {
+            const rowStatus = row.getAttribute("data-status");
+            const rowCategorie = row.getAttribute("data-categorie")?.trim().toLowerCase();
+    
+            const matchStatus = selectedStatus === "tous" || rowStatus === selectedStatus;
+            const matchCategorie = selectedCategorie === "tous" || rowCategorie === selectedCategorie;
+    
+            row.style.display = (matchStatus && matchCategorie) ? "" : "none";
+        });
+        }
+    
+        statusFilter.addEventListener("change", applyFilters);
+        categorieFilter.addEventListener("change", applyFilters);
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const filterCategorie = document.getElementById("filter-categorie");
+          const rows = document.querySelectorAll("#indicateur-table-body tr");
+      
+          filterCategorie.addEventListener("change", () => {
+            const selected = filterCategorie.value;
+      
+            rows.forEach(row => {
+              const rowCategorie = row.getAttribute("data-categorie");
+              if (selected === "tous" || rowCategorie === selected) {
+                row.style.display = "";
+              } else {
+                row.style.display = "none";
+              }
+            });
+          });
+        });
+      </script>
+      
   
 </body>
 </html>
