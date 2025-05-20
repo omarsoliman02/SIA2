@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connexion - Ardian ESG</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-card img {
+      height: 50px;
+      margin-bottom: 1.5rem;
+    }
+
+    .login-card h2 {
+      margin-bottom: 1rem;
+      color: #c8102e;
+      font-size: 1.5rem;
+    }
+
+    .login-card p {
+      font-size: 0.95rem;
+      color: #6b7280;
+      margin-bottom: 2rem;
+    }
+
+    .sso-btn {
+      background-color: #c8102e;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .sso-btn:hover {
+      background-color: #a10c24;
+    }
+
+    .footer-note {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+    <img src="LogoArdian.png" alt="Logo Ardian">
+    <h2>Connexion Ardian ESG</h2>
+    <p>Connectez-vous via votre compte Ardian</p>
+    <button class="sso-btn" onclick="handleSSO()">Connexion SSO</button>
+    <div class="footer-note">© 2025 Ardian. Tous droits réservés.</div>
+  </div>
+
+  <script>
+    function handleSSO() {
+      // Simuler une redirection SSO
+      window.location.href = "dashboard.html"; // Redirige vers le dashboard après authentification
+    }
+  </script>
+
+</body>
+</html>
