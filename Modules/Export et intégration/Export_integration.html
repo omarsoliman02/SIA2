@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export & Intégration - ESG</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto p-6">
+    <div class="bg-red-600 text-white p-4 rounded-t-lg mb-4 flex items-center gap-4">
+      <a href="/index.html">
+        <img src="/Modules/ressources/LogoArdian.png" alt="Logo Ardian" class="h-10">
+      </a>
+      <h1 class="text-2xl font-bold">Export & Intégration des Données ESG</h1>
+    </div>
+
+    <div class="bg-white p-6 rounded-b-lg shadow-md space-y-8">
+      <!-- Export Section -->
+      <section>
+        <h2 class="text-xl font-semibold text-red-600 mb-4">📄 Génération et Export des Données ESG</h2>
+        <p class="text-gray-700 mb-4">Choisissez un format pour exporter les données ESG en fonction de vos besoins :</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <button class="bg-red-600 text-white py-2 px-4 rounded shadow hover:bg-red-700">Excel</button>
+          <button class="bg-red-600 text-white py-2 px-4 rounded shadow hover:bg-red-700">CSV</button>
+          <button class="bg-red-600 text-white py-2 px-4 rounded shadow hover:bg-red-700">API JSON</button>
+        </div>
+        <div class="mt-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">Rapports personnalisés</h3>
+          <p class="text-gray-600">Créez des rapports ESG adaptés aux besoins des différents services (Finance, ESG, IT).</p>
+          <button class="mt-2 bg-gray-200 text-gray-800 py-2 px-4 rounded">Configurer un rapport personnalisé</button>
+        </div>
+      </section>
+
+      <!-- BI Integration Section -->
+      <section>
+        <h2 class="text-xl font-semibold text-red-600 mb-4">📊 Intégration avec outils BI</h2>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700">
+          <li>Connecteurs disponibles vers <strong>Power BI</strong> et <strong>Tableau</strong>.</li>
+          <li>Sélection des indicateurs à synchroniser.</li>
+          <li>Mises à jour programmables ou à la demande.</li>
+        </ul>
+      </section>
+
+      <!-- API & Webhooks -->
+      <section>
+        <h2 class="text-xl font-semibold text-red-600 mb-4">🚀 API & Webhooks</h2>
+        <p class="mb-2 text-gray-700">Accédez directement aux données ESG depuis vos systèmes internes via API REST :</p>
+        <div class="bg-gray-100 p-4 rounded font-mono text-sm text-gray-800 border border-gray-300">
+          GET /api/esg/export?format=json<br>
+          Authorization: Bearer [TOKEN]
+        </div>
+        <p class="mt-2 text-gray-600">Cette API permet une intégration fluide avec les bases internes d’Ardian.</p>
+
+        <h3 class="mt-6 text-lg font-semibold text-gray-800 mb-2">Webhooks</h3>
+        <ul class="list-disc pl-6 space-y-1 text-gray-700">
+          <li>Déclenchement automatique lors de mise à jour d’indicateur.</li>
+          <li>Notification vers applications tierces ou ERP internes.</li>
+        </ul>
+      </section>
+
+      <!-- ESG Standards -->
+      <section>
+        <h2 class="text-xl font-semibold text-red-600 mb-4">🌍 Conformité ESG</h2>
+        <p class="text-gray-700">Les données exportées sont conformes aux standards internationaux :</p>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700">
+          <li><strong>SFDR</strong> - Sustainable Finance Disclosure Regulation</li>
+          <li><strong>UN PRI</strong> - Principles for Responsible Investment</li>
+          <li><strong>GRI</strong> - Global Reporting Initiative</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+</body>
+</html>
