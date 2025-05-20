@@ -10,23 +10,47 @@
       box-sizing: border-box;
     }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
-      color: #111827;
-      margin: 0;
-      display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #111827;
+    margin: 0;
+    display: block; /* <- CORRIGÉ: on ne met pas flex sur body si on utilise une navbar + sidebar */
+    }
+    .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #c8102e;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    height: 72px;
+    }
+    .navbar img {
+    height: 45px;
+    }
+    .navbar h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
     }
     .sidebar {
-      width: 180px;
-      background-color: #c8102e;
-      color: white;
-      padding: 1rem;
-      height: 100vh;
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      overflow-y: auto;
+    width: 180px;
+    background-color: #c8102e;
+    color: white;
+    padding: 1rem;
+    height: 100vh; /* reste plein écran */
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    padding-top: 90px; /* espace sous la navbar fixée */
     }
     .sidebar h2 {
       font-size: 1.2rem;
@@ -40,7 +64,7 @@
       font-size: 0.9rem;
     }
     .sidebar nav a:hover {
-      background-color: #a10c24;
+      background-color: #c8102e;
     }
     .sidebar nav a.active {
     background-color: white;
@@ -49,9 +73,10 @@
     border-radius: 0.4rem;
     }
     .main-content {
-      margin-left: 200px;
-      padding: 1rem 2rem;
-      flex-grow: 1;
+    margin-left: 200px;  /* place pour la sidebar */
+    padding: 1rem 2rem;
+    padding-top: 90px;   /* place pour la navbar */
+    flex-grow: 1;
     }
     .header {
       display: flex;
@@ -130,7 +155,7 @@
       font-size: 0.8rem;
     }
     .log-valid { background-color: #d1fae5; color: #065f46; }
-    .log-modif { background-color: #fef3c7; color: #92400e; }
+    .log-modif { background-color: #fef3c7; color: #c8102e; }
     .log-connexion { background-color: #dbeafe; color: #1e40af; }
     .log-entry span:last-child { font-weight: 600; }
     table {
@@ -157,7 +182,7 @@
       font-size: 0.7rem;
     }
     .validé { background-color: #d1fae5; color: #065f46; }
-    .en-cours { background-color: #fef3c7; color: #92400e; }
+    .en-cours { background-color: #fef3c7; color: #c8102e; }
     .nouveau { background-color: #dbeafe; color: #1e40af; }
     .table-section h3 {
       margin: 2rem 0 0.5rem;
@@ -167,6 +192,12 @@
   </style>
 </head>
 <body>
+  <div class="navbar">
+    <a href="../../index.html">
+        <img src="../../LogoArdian.png" alt="Logo Ardian">
+    </a>
+    <h1>Dashboard</h1>
+  </div>      
   <div class="sidebar">
     <h2>Ardian ESG</h2>
     <nav>
