@@ -1,44 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un Indicateur ESG</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Collecte & Validation des Données</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background-color: #c8102e;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      z-index: 1000;
+    }
+    .navbar img {
+      height: 45px;
+    }
+    .sidebar {
+      position: fixed;
+      top: 72px;
+      left: 0;
+      width: 200px;
+      height: calc(100vh - 72px);
+      background-color: #c8102e;
+      color: white;
+      padding: 1rem 0.5rem;
+    }
+    .sidebar nav a {
+      display: block;
+      color: white;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .sidebar nav a:hover,
+    .sidebar nav a.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      font-weight: bold;
+    }
+    .main {
+      margin-left: 200px;
+      padding: 100px 2rem 2rem;
+    }
+    .card {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #c8102e;
+      margin-bottom: 1.5rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+    }
+    textarea {
+      resize: vertical;
+    }
+    .btn {
+      background-color: #16a34a;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
+    }
+    .btn:hover {
+      background-color: #15803d;
+    }
+  </style>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto p-5">
-        <div class="bg-red-600 text-white p-4 rounded-t-lg mb-4">
-            <h1 class="text-2xl font-bold">Ajouter un Indicateur ESG</h1>
-        </div>
+<body>
 
-        <!-- Formulaire d'ajout -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <form class="grid grid-cols-2 gap-4">
-                <input class="border p-2" type="text" placeholder="Nom de l'indicateur" required>
-                <input class="border p-2" type="text" placeholder="ID Technique" required>
-                <input class="border p-2" type="text" placeholder="Responsable de la donnée" required>
-                <input class="border p-2" type="text" placeholder="Outil de stockage" required>
-                <select class="border p-2">
-                    <option>Numérique</option>
-                    <option>Texte</option>
-                    <option>Booléen</option>
-                    <option>Liste de valeurs</option>
-                </select>
-                <select class="border p-2">
-                    <option>Nouveau</option>
-                    <option>Modifié</option>
-                    <option>Supprimé</option>
-                </select>
+  <!-- Barre de navigation -->
+  <div class="navbar">
+    <a href="../../index.html">
+      <img src="../ressources/LogoArdian.png" alt="Logo Ardian" />
+    </a>
+    <h1>Collecte & Validation</h1>
+  </div>
 
-                <textarea class="border p-2 col-span-2" placeholder="Description de l'indicateur"></textarea>
-                
-                <a href="./gestion_dictionnaire.html">
-                    <button class="col-span-2 bg-green-500 text-white px-4 py-2 rounded">Ajouter l'indicateur</button>
-                </a>
-            </form>
+  <!-- Barre latérale -->
+  <div class="sidebar">
+    <nav>
+      <a href="../Dashboard/Dashboard.html">Dashboard</a>
+      <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
+      <a href="#" class="active">Collecte et Validation</a>
+      <a href="../Adminstration & Sécurité/admin.html">Administration et Sécurité</a>
+      <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
+    </nav>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="main">
+    <div class="card">
+      <h1>Ajouter un Indicateur ESG</h1>
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="text" placeholder="Nom de l'indicateur" required>
+        <input type="text" placeholder="ID Technique" required>
+        <input type="text" placeholder="Responsable de la donnée" required>
+        <input type="text" placeholder="Outil de stockage" required>
+        <select required>
+          <option disabled selected>Type de donnée</option>
+          <option>Numérique</option>
+          <option>Texte</option>
+          <option>Booléen</option>
+          <option>Liste de valeurs</option>
+        </select>
+        <select required>
+          <option disabled selected>Statut</option>
+          <option>Nouveau</option>
+          <option>Modifié</option>
+          <option>Supprimé</option>
+        </select>
+        <textarea placeholder="Description de l'indicateur" class="col-span-1 md:col-span-2"></textarea>
+        <div class="col-span-1 md:col-span-2 flex justify-end">
+          <a href="./gestion_dictionnaire.html">
+            <button type="button" class="btn">Ajouter l'indicateur</button>
+          </a>
         </div>
+      </form>
     </div>
+  </div>
+
 </body>
 </html>

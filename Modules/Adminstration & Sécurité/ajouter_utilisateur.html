@@ -2,185 +2,155 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ajouter un Utilisateur - Administration & Sécurité</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Administration & Sécurité - ESG</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f6f8;
-      color: #111827;
-      min-height: 100vh;
+      margin: 0;
     }
-
     .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
       background-color: #c8102e;
-      padding: 1rem 2rem;
+      color: white;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 0 1.5rem;
+      z-index: 1000;
     }
-
     .navbar img {
       height: 45px;
     }
-
-    .container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 2rem;
+    .sidebar {
+      position: fixed;
+      top: 72px;
+      left: 0;
+      width: 200px;
+      height: calc(100vh - 72px);
+      background-color: #c8102e;
+      color: white;
+      padding: 1rem 0.5rem;
     }
-
+    .sidebar nav a {
+      display: block;
+      color: white;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .sidebar nav a:hover,
+    .sidebar nav a.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      font-weight: bold;
+    }
+    .main {
+      margin-left: 200px;
+      padding: 90px 2rem 2rem;
+    }
     .card {
-      background: white;
-      border-radius: 1.5rem;
+      background-color: white;
+      border-radius: 1rem;
       padding: 2rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      max-width: 700px;
+      margin: auto;
     }
-
     h1 {
-      color: #111827;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 2rem;
-    }
-
-    .form-group {
+      color: #c8102e;
       margin-bottom: 1.5rem;
     }
-
     label {
-      display: block;
       font-weight: 600;
+      display: block;
       margin-bottom: 0.5rem;
-      color: #374151;
     }
-
     input, select {
       width: 100%;
-      padding: 0.75rem 1rem;
+      padding: 0.75rem;
       border: 1px solid #d1d5db;
-      border-radius: 0.75rem;
-      font-size: 1rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
     }
-
-    input:focus, select:focus {
-      outline: none;
-      border-color: #c8102e;
-      box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.1);
-    }
-
     .btn {
       background-color: #c8102e;
       color: white;
       padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 0.75rem;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: background-color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 10px rgba(200, 16, 46, 0.3);
+      border-radius: 0.5rem;
+      font-weight: bold;
+      margin-right: 1rem;
     }
-
     .btn:hover {
       background-color: #a10c24;
-      box-shadow: 0 6px 12px rgba(161, 12, 36, 0.4);
     }
-
     .btn-secondary {
       background-color: #6b7280;
-      box-shadow: 0 4px 10px rgba(107, 114, 128, 0.3);
     }
-
     .btn-secondary:hover {
       background-color: #4b5563;
-      box-shadow: 0 6px 12px rgba(75, 85, 99, 0.4);
-    }
-
-    .button-group {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .required {
-      color: #c8102e;
-      margin-left: 0.25rem;
-    }
-
-    .error-message {
-      color: #c8102e;
-      font-size: 0.875rem;
-      margin-top: 0.25rem;
-      display: none;
-    }
-
-    input:invalid + .error-message {
-      display: block;
     }
   </style>
 </head>
 <body>
+
+  <!-- Navbar -->
   <div class="navbar">
     <a href="../../index.html">
       <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
     </a>
+    <h1>Administration & Sécurité</h1>
   </div>
 
-  <div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <nav>
+      <a href="../Dashboard/Dashboard.html">Dashboard</a>
+      <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
+      <a href="../Collecte & Validation des Données/Collecte et validation.html">Collecte et Validation</a>
+      <a href="#" class="active">Administration et Sécurité</a>
+      <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
+    </nav>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="main">
     <div class="card">
       <h1>Ajouter un Utilisateur</h1>
       <form id="addUserForm">
-        <div class="form-group">
-          <label for="nom">Nom<span class="required">*</span></label>
-          <input type="text" id="nom" name="nom" required>
-          <div class="error-message">Le nom est requis</div>
-        </div>
+        <label for="nom">Nom<span class="text-red-500">*</span></label>
+        <input type="text" id="nom" name="nom" required>
 
-        <div class="form-group">
-          <label for="prenom">Prénom<span class="required">*</span></label>
-          <input type="text" id="prenom" name="prenom" required>
-          <div class="error-message">Le prénom est requis</div>
-        </div>
+        <label for="prenom">Prénom<span class="text-red-500">*</span></label>
+        <input type="text" id="prenom" name="prenom" required>
 
-        <div class="form-group">
-          <label for="email">Email<span class="required">*</span></label>
-          <input type="email" id="email" name="email" required>
-          <div class="error-message">Veuillez entrer une adresse email valide</div>
-        </div>
+        <label for="email">Email<span class="text-red-500">*</span></label>
+        <input type="email" id="email" name="email" required>
 
-        <div class="form-group">
-          <label for="equipe">Équipe<span class="required">*</span></label>
-          <select id="equipe" name="equipe" required>
-            <option value="">Sélectionnez une équipe</option>
-            <option value="ESG">ESG</option>
-            <option value="Finance">Finance</option>
-            <option value="IT">IT</option>
-          </select>
-          <div class="error-message">Veuillez sélectionner une équipe</div>
-        </div>
+        <label for="equipe">Équipe<span class="text-red-500">*</span></label>
+        <select id="equipe" name="equipe" required>
+          <option value="">Sélectionnez une équipe</option>
+          <option value="ESG">ESG</option>
+          <option value="Finance">Finance</option>
+          <option value="IT">IT</option>
+        </select>
 
-        <div class="form-group">
-          <label for="role">Rôle<span class="required">*</span></label>
-          <select id="role" name="role" required>
-            <option value="">Sélectionnez un rôle</option>
-            <option value="lecture">Lecture seule</option>
-            <option value="edition">Édition</option>
-            <option value="validation">Validation</option>
-          </select>
-          <div class="error-message">Veuillez sélectionner un rôle</div>
-        </div>
+        <label for="role">Rôle<span class="text-red-500">*</span></label>
+        <select id="role" name="role" required>
+          <option value="">Sélectionnez un rôle</option>
+          <option value="lecture">Lecture seule</option>
+          <option value="edition">Édition</option>
+          <option value="validation">Validation</option>
+        </select>
 
-        <div class="button-group">
+        <div class="mt-4">
           <button type="submit" class="btn">Ajouter l'utilisateur</button>
           <button type="button" class="btn btn-secondary" onclick="window.location.href='admin.html'">Annuler</button>
         </div>
@@ -191,10 +161,10 @@
   <script>
     document.getElementById('addUserForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      // Ici, vous pouvez ajouter la logique pour envoyer les données au serveur
-      alert('Utilisateur ajouté avec succès!');
+      alert("Utilisateur ajouté avec succès !");
       window.location.href = 'admin.html';
     });
   </script>
+
 </body>
-</html> 
+</html>

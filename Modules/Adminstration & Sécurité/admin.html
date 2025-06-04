@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Administration & Sécurité</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Administration & Sécurité - ESG</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
@@ -18,12 +14,19 @@
     }
 
     .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
       background-color: #c8102e;
       padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       color: white;
+      height: 72px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .navbar img {
@@ -36,12 +39,39 @@
       margin: 0;
     }
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-      padding: 2rem;
+    .sidebar {
+      width: 200px;
+      background-color: #c8102e;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 90px;
+    }
+
+    .sidebar nav a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .sidebar nav a:hover {
+      background-color: #a10c24;
+    }
+
+    .sidebar nav a.active {
+      background-color: transparent;
+      border-left: 4px solid white;
+      padding-left: 0.75rem;
+      font-weight: bold;
+    }
+
+    .main-content {
+      margin-left: 200px;
+      padding: 100px 2rem 2rem;
     }
 
     .card {
@@ -91,8 +121,7 @@
       overflow: hidden;
     }
 
-    th,
-    td {
+    th, td {
       padding: 1rem;
       text-align: left;
       border-bottom: 1px solid #e5e7eb;
@@ -112,20 +141,9 @@
       display: inline-block;
     }
 
-    .badge-read {
-      background-color: #f3f4f6;
-      color: #374151;
-    }
-
-    .badge-edit {
-      background-color: #fef3c7;
-      color: #92400e;
-    }
-
-    .badge-validate {
-      background-color: #d1fae5;
-      color: #065f46;
-    }
+    .badge-read { background-color: #f3f4f6; color: #374151; }
+    .badge-edit { background-color: #fef3c7; color: #92400e; }
+    .badge-validate { background-color: #d1fae5; color: #065f46; }
 
     .log-entry {
       margin-bottom: 0.5rem;
@@ -137,20 +155,9 @@
       align-items: center;
     }
 
-    .log-valid {
-      background-color: #d1fae5;
-      color: #065f46;
-    }
-
-    .log-modif {
-      background-color: #fef3c7;
-      color: #92400e;
-    }
-
-    .log-connexion {
-      background-color: #dbeafe;
-      color: #1e40af;
-    }
+    .log-valid { background-color: #d1fae5; color: #065f46; }
+    .log-modif { background-color: #fef3c7; color: #92400e; }
+    .log-connexion { background-color: #dbeafe; color: #1e40af; }
 
     .log-date {
       font-weight: 700;
@@ -175,10 +182,18 @@
       border: 1px solid #d1d5db;
       background-color: #f9fafb;
     }
+
+    .card-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
   </style>
 </head>
-
 <body>
+
+  <!-- Barre de navigation -->
   <div class="navbar">
     <a href="../../index.html">
       <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
@@ -186,98 +201,114 @@
     <h1>Administration & Sécurité</h1>
   </div>
 
-  <div class="container">
-    <!-- Left Card -->
-    <div class="card">
-      <h2>Gestion des rôles et permissions</h2>
-      <button class="btn" onclick="window.location.href='ajouter_utilisateur.html'">Ajouter un utilisateur</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Équipe</th>
-            <th>Droits</th>
-            <th>Modifier</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Marie Dupont</td>
-            <td>ESG</td>
-            <td><span class="badge badge-validate">Validation</span></td>
-            <td>
-              <select class="role-select">
-                <option>Lecture seule</option>
-                <option>Édition</option>
-                <option selected>Validation</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Paul Bernard</td>
-            <td>Finance</td>
-            <td><span class="badge badge-edit">Édition</span></td>
-            <td>
-              <select class="role-select">
-                <option>Lecture seule</option>
-                <option selected>Édition</option>
-                <option>Validation</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Sophie Laurent</td>
-            <td>IT</td>
-            <td><span class="badge badge-read">Lecture seule</span></td>
-            <td>
-              <select class="role-select">
-                <option selected>Lecture seule</option>
-                <option>Édition</option>
-                <option>Validation</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Jean Martin</td>
-            <td>IT</td>
-            <td><span class="badge badge-validate">Validation</span></td>
-            <td>
-              <select class="role-select">
-                <option>Lecture seule</option>
-                <option>Édition</option>
-                <option selected>Validation</option>
-              </select>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <!-- Barre latérale -->
+  <div class="sidebar">
+    <nav>
+      <a href="../Dashboard/Dashboard.html">Dashboard</a>
+      <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
+      <a href="../Collecte & Validation des Données/Collecte et validation.html">Collecte et Validation</a>
+      <a href="#" class="active">Administration et Sécurité</a>
+      <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
+    </nav>
+  </div>
 
-    <!-- Right Card -->
-    <div class="card">
-      <h2>Audit et traçabilité</h2>
-      <div class="log-date">12 avril 2024</div>
-      <div class="log-entry log-valid">
-        <span>✔️ Jean Martin a validé ESG indicateur Nr. 7</span><span>15:30</span>
-      </div>
-      <div class="log-entry log-modif">
-        <span>✏️ Marie Dupont a modifié l'indicateur ESG n. 5</span><span>09:24</span>
-      </div>
-
-      <div class="log-date">11 avril 2024</div>
-      <div class="log-entry log-valid">
-        <span>✔️ Paul Bernard a validé ESG indicateur Nr. 122</span><span>17:50</span>
-      </div>
-      <div class="log-entry log-connexion">
-        <span>🔐 Jean Martin s'est connecté via SSO</span><span>08:16</span>
+  <!-- Contenu principal -->
+  <div class="main-content">
+    <div class="card-wrapper">
+      
+      <!-- Carte gauche : rôles -->
+      <div class="card">
+        <h2>Gestion des rôles et permissions</h2>
+        <button class="btn" onclick="window.location.href='ajouter_utilisateur.html'">Ajouter un utilisateur</button>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Équipe</th>
+              <th>Droits</th>
+              <th>Modifier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Marie Dupont</td>
+              <td>ESG</td>
+              <td><span class="badge badge-validate">Validation</span></td>
+              <td>
+                <select class="role-select">
+                  <option>Lecture seule</option>
+                  <option>Édition</option>
+                  <option selected>Validation</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Paul Bernard</td>
+              <td>Finance</td>
+              <td><span class="badge badge-edit">Édition</span></td>
+              <td>
+                <select class="role-select">
+                  <option>Lecture seule</option>
+                  <option selected>Édition</option>
+                  <option>Validation</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Sophie Laurent</td>
+              <td>IT</td>
+              <td><span class="badge badge-read">Lecture seule</span></td>
+              <td>
+                <select class="role-select">
+                  <option selected>Lecture seule</option>
+                  <option>Édition</option>
+                  <option>Validation</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Jean Martin</td>
+              <td>IT</td>
+              <td><span class="badge badge-validate">Validation</span></td>
+              <td>
+                <select class="role-select">
+                  <option>Lecture seule</option>
+                  <option>Édition</option>
+                  <option selected>Validation</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="log-date" style="margin-top: 1.5rem">Note</div>
-      <ul>
-        <li>Historique des actions des utilisateurs</li>
-        <li>Versionning des indicateurs ESG</li>
-        <li>Journal des validations et modifications</li>
-      </ul>
+      <!-- Carte droite : historique -->
+      <div class="card">
+        <h2>Audit et traçabilité</h2>
+        <div class="log-date">12 avril 2024</div>
+        <div class="log-entry log-valid">
+          <span>✔️ Jean Martin a validé ESG indicateur Nr. 7</span><span>15:30</span>
+        </div>
+        <div class="log-entry log-modif">
+          <span>✏️ Marie Dupont a modifié l'indicateur ESG n. 5</span><span>09:24</span>
+        </div>
+
+        <div class="log-date">11 avril 2024</div>
+        <div class="log-entry log-valid">
+          <span>✔️ Paul Bernard a validé ESG indicateur Nr. 122</span><span>17:50</span>
+        </div>
+        <div class="log-entry log-connexion">
+          <span>🔐 Jean Martin s'est connecté via SSO</span><span>08:16</span>
+        </div>
+
+        <div class="log-date" style="margin-top: 1.5rem">Note</div>
+        <ul>
+          <li>Historique des actions des utilisateurs</li>
+          <li>Versionning des indicateurs ESG</li>
+          <li>Journal des validations et modifications</li>
+        </ul>
+      </div>
+
     </div>
   </div>
 </body>

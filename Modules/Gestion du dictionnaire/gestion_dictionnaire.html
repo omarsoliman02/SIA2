@@ -1,11 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion du Dictionnaire ESG - Module 2</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestion du Dictionnaire ESG</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      color: #111827;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background-color: #c8102e;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      z-index: 1000;
+    }
+    .navbar img {
+      height: 45px;
+    }
+    .sidebar {
+      position: fixed;
+      top: 72px;
+      left: 0;
+      width: 200px;
+      height: calc(100vh - 72px);
+      background-color: #c8102e;
+      color: white;
+      padding: 1rem 0.5rem;
+    }
+    .sidebar nav a {
+      display: block;
+      color: white;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .sidebar nav a:hover,
+    .sidebar nav a.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      font-weight: bold;
+    }
+    .main {
+      margin-left: 200px;
+      padding: 90px 2rem 2rem;
+    }
+  </style>
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-5">
@@ -18,218 +68,186 @@
         <h1 class="text-2xl font-bold">Gestion du Dictionnaire ESG</h1>
     </div>
 
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <nav>
+      <a href="../Dashboard/Dashboard.html">Dashboard</a>
+      <a href="gestion_dictionnaire.html" class="active">Gestion du dictionnaire</a>
+      <a href="../Collecte & Validation des Données/Collecte et validation.html">Collecte et Validation</a>
+      <a href="../Adminstration & Sécurité/admin.html">Administration et Sécurité</a>
+      <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
+    </nav>
+  </div>
 
+  <!-- Contenu principal -->
+  <div class="main">
+    <div class="bg-white p-6 rounded-lg shadow-md grid grid-cols-3 gap-4">
+      <!-- Tableau -->
+      <div class="col-span-2">
+        <div class="flex gap-2 mb-4">
+          <input type="text" placeholder="Nom de l'indicateur" class="border p-2 w-1/3 rounded">
+          <select class="border p-2 w-1/4 rounded">
+            <option>Statut</option>
+            <option>Nouveau</option>
+            <option>Inchangé</option>
+            <option>Modifié</option>
+            <option>Supprimé</option>
+          </select>
+          <input type="text" placeholder="Réglementation associée" class="border p-2 w-1/3 rounded">
+          <button class="bg-red-600 text-white px-4 py-2 rounded">Filtrer</button>
+        </div>
 
-        <div class="bg-white p-4 rounded-b-lg shadow-md grid grid-cols-3 gap-4">
-            <!-- Tableau de gestion des indicateurs -->
-            <div class="col-span-2">
-                <div class="flex gap-2 mb-4">
-                    <input type="text" placeholder="Nom de l'indicateur" class="border p-2 w-1/3">
-                    <select class="border p-2 w-1/4">
-                        <option>Statut</option>
-                        <option>Nouveau</option>
-                        <option>Inchangé</option>
-                        <option>Modifié</option>
-                        <option>Supprimé</option>
-                    </select>
-                    <input type="text" placeholder="Réglementation associée" class="border p-2 w-1/3">
-                    <button class="bg-red-600 text-white px-4 py-2 rounded">Filtrer</button>
-                </div>
-                <table class="w-full border-collapse bg-white">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="p-2 border">Nom de l'Indicateur</th>
-                            <th class="p-2 border">ID Technique</th>
-                            <th class="p-2 border">Responsable</th>
-                            <th class="p-2 border">Outil de Stockage</th>
-                            <th class="p-2 border">Type</th>
-                            <th class="p-2 border">Statut</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">Ardian Identification Number</td>
-                            <td class="p-2 border">AGI-01</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Numérique</td>
-                            <td class="p-2 border"><span class="bg-green-200 text-green-700 px-2 py-1 rounded">Nouveau</span></td>
-                        </tr>
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">MDM Company Commercial Name</td>
-                            <td class="p-2 border">AGI-02</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Texte</td>
-                            <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
-                        </tr>
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">Industry Classification GICS 3</td>
-                            <td class="p-2 border">AGI-04</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Liste de valeurs</td>
-                            <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
-                        </tr>
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">Industry Classification GICS 4</td>
-                            <td class="p-2 border">AGI-37</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Numérique</td>
-                            <td class="p-2 border"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded">Supprimé</span></td>
-                        </tr>
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">MDM Company Commercial Name</td>
-                            <td class="p-2 border">AGI-02</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Texte</td>
-                            <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
-                        </tr>
+        <table class="w-full border-collapse text-sm">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="p-2 border">Nom</th>
+              <th class="p-2 border">ID</th>
+              <th class="p-2 border">Responsable</th>
+              <th class="p-2 border">Stockage</th>
+              <th class="p-2 border">Type</th>
+              <th class="p-2 border">Statut</th>
+            </tr>
+          </thead>
+            <tbody>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">Ardian Identification Number</td>
+                    <td class="p-2 border">AGI-01</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Numérique</td>
+                    <td class="p-2 border"><span class="bg-green-200 text-green-700 px-2 py-1 rounded">Nouveau</span></td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">MDM Company Commercial Name</td>
+                    <td class="p-2 border">AGI-02</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Texte</td>
+                    <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">Industry Classification GICS 3</td>
+                    <td class="p-2 border">AGI-04</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Liste de valeurs</td>
+                    <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">Industry Classification GICS 4</td>
+                    <td class="p-2 border">AGI-37</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Numérique</td>
+                    <td class="p-2 border"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded">Supprimé</span></td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">MDM Company Commercial Name</td>
+                    <td class="p-2 border">AGI-02</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Texte</td>
+                    <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
+                </tr>
 
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">Industry Classification GICS 3</td>
-                            <td class="p-2 border">AGI-04</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Liste de valeurs</td>
-                            <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
-                        </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">Industry Classification GICS 3</td>
+                    <td class="p-2 border">AGI-04</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Liste de valeurs</td>
+                    <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
+                </tr>
 
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">Industry Classification GICS 4</td>
-                            <td class="p-2 border">AGI-37</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Numérique</td>
-                            <td class="p-2 border"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded">Supprimé</span></td>
-                        </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">Industry Classification GICS 4</td>
+                    <td class="p-2 border">AGI-37</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Numérique</td>
+                    <td class="p-2 border"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded">Supprimé</span></td>
+                </tr>
 
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">Ardian Identification Number</td>
-                            <td class="p-2 border">AGI-01</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Numérique</td>
-                            <td class="p-2 border"><span class="bg-green-200 text-green-700 px-2 py-1 rounded">Nouveau</span></td>
-                        </tr>
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">Industry Classification GICS 3</td>
-                            <td class="p-2 border">AGI-04</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Liste de valeurs</td>
-                            <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
-                        </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">Ardian Identification Number</td>
+                    <td class="p-2 border">AGI-01</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Numérique</td>
+                    <td class="p-2 border"><span class="bg-green-200 text-green-700 px-2 py-1 rounded">Nouveau</span></td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">Industry Classification GICS 3</td>
+                    <td class="p-2 border">AGI-04</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Liste de valeurs</td>
+                    <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
+                </tr>
 
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">Industry Classification GICS 4</td>
-                            <td class="p-2 border">AGI-37</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Numérique</td>
-                            <td class="p-2 border"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded">Supprimé</span></td>
-                        </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">Industry Classification GICS 4</td>
+                    <td class="p-2 border">AGI-37</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Numérique</td>
+                    <td class="p-2 border"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded">Supprimé</span></td>
+                </tr>
 
-                        <tr class="hover:bg-gray-100">
-                            <td class="p-2 border">Ardian Identification Number</td>
-                            <td class="p-2 border">AGI-01</td>
-                            <td class="p-2 border">Susty</td>
-                            <td class="p-2 border">DataPlatform</td>
-                            <td class="p-2 border">Numérique</td>
-                            <td class="p-2 border"><span class="bg-green-200 text-green-700 px-2 py-1 rounded">Nouveau</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <a href="./ajout.html">
-                <button class="mt-4 bg-red-600 text-white px-4 py-2 rounded">Ajouter un indicateur</button>
-                </a>
-            </div>
+                <tr class="hover:bg-gray-100">
+                    <td class="p-2 border">Ardian Identification Number</td>
+                    <td class="p-2 border">AGI-01</td>
+                    <td class="p-2 border">Susty</td>
+                    <td class="p-2 border">DataPlatform</td>
+                    <td class="p-2 border">Numérique</td>
+                    <td class="p-2 border"><span class="bg-green-200 text-green-700 px-2 py-1 rounded">Nouveau</span></td>
+                </tr>
+            </tbody>
+        </table>
 
-            <!-- Détail de l'indicateur -->
-            <div class="bg-white p-4 border rounded-lg">
-    <h2 class="text-xl font-semibold mb-2">Détail de l'indicateur : Ardian Identification Number</h2>
-    <div class="space-y-2">
+        <a href="./ajout.html">
+          <button class="mt-4 bg-red-600 text-white px-4 py-2 rounded">Ajouter un indicateur</button>
+        </a>
+      </div>
+
+      <!-- Détails -->
+      <div class="bg-gray-50 p-4 rounded border">
+        <h2 class="text-lg font-semibold mb-2">Détail de l'indicateur</h2>
         <p><strong>ID Technique :</strong> AGI-01</p>
         <p><strong>Responsable :</strong> Susty</p>
-        <p><strong>Outil de Stockage :</strong> DataPlatform</p>
+        <p><strong>Stockage :</strong> DataPlatform</p>
         <p><strong>Type :</strong> Numérique</p>
         <p><strong>Statut :</strong> Nouveau</p>
-        <p><strong>Description :</strong> Identification unique pour Ardian dans le DataPlatform.</p>
-    </div>
+        <p><strong>Description :</strong> Identification unique dans le DataPlatform.</p>
 
-    <!-- Bouton Modifier -->
-    <div class="mt-4 flex gap-4">
         <a href="./modification.html">
-            <button class="bg-blue-500 text-white px-4 py-2 rounded">Modifier l'indicateur</button>
+          <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Modifier</button>
         </a>
+
+        <!-- Commentaires -->
+        <div class="mt-6">
+          <h3 class="font-bold mb-2">Commentaires</h3>
+          <div class="h-32 overflow-y-auto border p-2 bg-white rounded">
+            <p><strong>Jean :</strong> À vérifier</p>
+            <p><strong>Marie :</strong> OK pour validation</p>
+          </div>
+          <div class="flex gap-2 mt-2">
+            <input type="text" placeholder="Ajouter..." class="border p-2 flex-grow rounded">
+            <button class="bg-blue-600 text-white px-4 py-2 rounded">Envoyer</button>
+          </div>
+        </div>
+
+        <!-- Historique -->
+        <div class="mt-6">
+          <h3 class="font-bold mb-2">Historique</h3>
+          <ul class="text-sm space-y-2 border-l-2 border-gray-300 pl-4">
+            <li><span class="text-gray-500">12/05/2025</span> - <strong>Ajout</strong> par Jean</li>
+            <li><span class="text-gray-500">13/05/2025</span> - <strong>Modification</strong> par Marie</li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Zone de Chat -->
-    <div class="mt-4">
-        <h3 class="text-lg font-bold mb-2">Commentaires</h3>
-        <div class="h-40 overflow-y-auto border p-2 bg-gray-50 rounded">
-            <p><strong>Jean Dupont :</strong> L'indicateur est conforme, mais nécessite une vérification sur les doublons.</p>
-            <p><strong>Marie Dubois :</strong> J'ai ajouté des précisions sur les règles de validation.</p>
-        </div>
-        <div class="mt-2 flex gap-2">
-            <input type="text" placeholder="Ajouter un commentaire..." class="w-full border p-2 rounded">
-            <button class="bg-blue-500 text-white px-4 py-2 rounded">Envoyer</button>
-        </div>
-    </div>
-
-    <!-- Historique des actions -->
-<div class="mt-6">
-    <h3 class="text-lg font-bold mb-4">Historique des actions</h3>
-    <div class="border-l-2 border-gray-300 pl-4 space-y-4">
-        
-        <!-- Action 1 -->
-        <div class="relative">
-            <div class="absolute -left-3 top-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
-            <div class="ml-8">
-                <p class="text-sm text-gray-500">12/05/2025</p>
-                <p class="font-semibold">Ajout de l'indicateur</p>
-                <p class="text-gray-700">Jean Dupont</p>
-            </div>
-        </div>
-
-        <!-- Action 2 -->
-        <div class="relative">
-            <div class="absolute -left-3 top-1 w-6 h-6 bg-yellow-500 rounded-full border-2 border-white"></div>
-            <div class="ml-8">
-                <p class="text-sm text-gray-500">13/05/2025</p>
-                <p class="font-semibold">Modification du champ "Responsable"</p>
-                <p class="text-gray-700">Marie Dubois</p>
-            </div>
-        </div>
-
-        <!-- Action 3 -->
-        <div class="relative">
-            <div class="absolute -left-3 top-1 w-6 h-6 bg-blue-500 rounded-full border-2 border-white"></div>
-            <div class="ml-8">
-                <p class="text-sm text-gray-500">14/05/2025</p>
-                <p class="font-semibold">Validation effectuée</p>
-                <p class="text-gray-700">Pierre Martin</p>
-            </div>
-        </div>
-
-        <!-- Action 4 -->
-        <div class="relative">
-            <div class="absolute -left-3 top-1 w-6 h-6 bg-red-500 rounded-full border-2 border-white"></div>
-            <div class="ml-8">
-                <p class="text-sm text-gray-500">15/05/2025</p>
-                <p class="font-semibold">Suppression proposée</p>
-                <p class="text-gray-700">John Doe</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-</div>
-
-            </div>
-        </div>
-    </div>
 </body>
 </html>

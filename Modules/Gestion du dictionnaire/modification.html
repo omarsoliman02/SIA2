@@ -1,44 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier un Indicateur ESG</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Collecte & Validation des Données</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background-color: #c8102e;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      z-index: 1000;
+    }
+    .navbar img {
+      height: 45px;
+    }
+    .sidebar {
+      position: fixed;
+      top: 72px;
+      left: 0;
+      width: 200px;
+      height: calc(100vh - 72px);
+      background-color: #c8102e;
+      color: white;
+      padding: 1rem 0.5rem;
+    }
+    .sidebar nav a {
+      display: block;
+      color: white;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .sidebar nav a:hover,
+    .sidebar nav a.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      font-weight: bold;
+    }
+    .main {
+        margin-left: 200px;
+        padding: 2rem;
+        padding-top: 6rem; 
+    }
+  </style>
 </head>
 <body class="bg-gray-100">
+
+  <!-- Barre de navigation -->
+  <div class="navbar">
+    <a href="../../index.html">
+      <img src="../ressources/LogoArdian.png" alt="Logo Ardian" />
+    </a>
+    <h1>Collecte & Validation</h1>
+  </div>
+
+  <!-- Barre latérale -->
+  <div class="sidebar">
+    <nav>
+      <a href="../Dashboard/Dashboard.html">Dashboard</a>
+      <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
+      <a href="#" class="active">Collecte et Validation</a>
+      <a href="../Adminstration & Sécurité/admin.html">Administration et Sécurité</a>
+      <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
+    </nav>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="main">
     <div class="container mx-auto p-5">
-        <div class="bg-red-600 text-white p-4 rounded-t-lg mb-4">
-            <h1 class="text-2xl font-bold">Modifier l'Indicateur ESG - Ardian Identification Number</h1>
+    <div class="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
+  
+      <!-- Barre de titre intégrée -->
+      <div class="bg-red-600 text-white p-4 rounded-t-lg -mt-6 -mx-6 mb-6">
+        <h1 class="text-2xl font-bold">Modifier l'Indicateur ESG - Ardian Identification Number</h1>
+      </div>
+  
+      <!-- Formulaire -->
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-4" action="gestion_dictionnaire.html" method="get">
+        <!-- Champs -->
+        <div>
+          <label for="nom" class="block font-semibold mb-1">Nom de l'indicateur</label>
+          <input id="nom" class="border p-2 w-full rounded" type="text" value="Ardian Identification Number" required>
         </div>
-
-        <!-- Formulaire de modification pré-rempli -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <form class="grid grid-cols-2 gap-4">
-                <input class="border p-2" type="text" placeholder="Nom de l'indicateur" value="Ardian Identification Number" required>
-                <input class="border p-2" type="text" placeholder="ID Technique" value="AGI-01" required>
-                <input class="border p-2" type="text" placeholder="Responsable de la donnée" value="Susty" required>
-                <input class="border p-2" type="text" placeholder="Outil de stockage" value="DataPlatform" required>
-                <select class="border p-2">
-                    <option selected>Numérique</option>
-                    <option>Texte</option>
-                    <option>Booléen</option>
-                    <option>Liste de valeurs</option>
-                </select>
-                <select class="border p-2">
-                    <option>Nouveau</option>
-                    <option selected>Modifié</option>
-                    <option>Supprimé</option>
-                </select>
-
-                <textarea class="border p-2 col-span-2" placeholder="Description de l'indicateur">Identification unique pour Ardian dans le DataPlatform.</textarea>
-
-                <a href="./gestion_dictionnaire.html">
-                    <button class="col-span-2 bg-green-500 text-white px-4 py-2 rounded">Modifier l'indicateur</button>
-                </a>
-            </form>
+        <div>
+          <label for="id-tech" class="block font-semibold mb-1">ID Technique</label>
+          <input id="id-tech" class="border p-2 w-full rounded" type="text" value="AGI-01" required>
         </div>
+        <div>
+          <label for="responsable" class="block font-semibold mb-1">Responsable de la donnée</label>
+          <input id="responsable" class="border p-2 w-full rounded" type="text" value="Susty" required>
+        </div>
+        <div>
+          <label for="outil" class="block font-semibold mb-1">Outil de stockage</label>
+          <input id="outil" class="border p-2 w-full rounded" type="text" value="DataPlatform" required>
+        </div>
+        <div>
+          <label for="type" class="block font-semibold mb-1">Type de donnée</label>
+          <select id="type" class="border p-2 w-full rounded">
+            <option selected>Numérique</option>
+            <option>Texte</option>
+            <option>Booléen</option>
+            <option>Liste de valeurs</option>
+          </select>
+        </div>
+        <div>
+          <label for="statut" class="block font-semibold mb-1">Statut</label>
+          <select id="statut" class="border p-2 w-full rounded">
+            <option>Nouveau</option>
+            <option selected>Modifié</option>
+            <option>Supprimé</option>
+          </select>
+        </div>
+        <div class="md:col-span-2">
+          <label for="description" class="block font-semibold mb-1">Description</label>
+          <textarea id="description" class="border p-2 w-full rounded" rows="4">Identification unique pour Ardian dans le DataPlatform.</textarea>
+        </div>
+        <div class="md:col-span-2 text-right">
+          <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+            Modifier l'indicateur
+          </button>
+        </div>
+      </form>
+    </div>  
     </div>
+  </div>
+
 </body>
 </html>
