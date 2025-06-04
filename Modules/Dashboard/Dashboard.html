@@ -202,9 +202,10 @@
   <div class="sidebar">
     <nav>
         <a href="Dashboard.html" class="active">Dashboard</a>
-        <a href="../Gestion du dictionnaire/gestio_dictionnaire.html">Gestion du dictionnaire</a>
+        <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
         <a href="../Collecte & Validation des Données/Collecte et validation.html">Collecte et Validation</a>
         <a href="../Adminstration & Sécurité/admin.html">Administration et Sécurité</a>
+        <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
       </nav>
       
   </div>
@@ -237,15 +238,60 @@
           <h3>Évolution des statuts</h3>
           <canvas id="esgChart" style="height: calc(100% - 40px); width: 100%;"></canvas>
         </div>
-        <div class="activity-log" style="flex: 0 0 48%;">
-          <h3>Suivi des actions</h3>
-          <div class="log-date">18 mai 2025</div>
-          <div class="log-entry log-valid"><span>✔️ Jean Martin a validé EN007</span><span>15:30</span></div>
-          <div class="log-entry log-modif"><span>✏️ Marie Dupont a modifié EN005</span><span>09:24</span></div>
-          <div class="log-date">17 mai 2025</div>
-          <div class="log-entry log-valid"><span>✔️ Paul Bernard a validé EN122</span><span>17:50</span></div>
-          <div class="log-entry log-connexion"><span>🔐 Jean Martin s'est connecté via SSO</span><span>08:16</span></div>
-        </div>
+        
+  <!-- Nouveau bloc HTML pour remplacer le "Suivi des actions" par un Baromètre ESG -->
+<div class="activity-log" style="flex: 0 0 48%; max-width: 100%; overflow-x: auto;">
+  <h3>Baromètre ESG</h3>
+  <p style="font-size: 0.85rem; color: #374151; margin-bottom: 0.5rem;">
+    Vue synthétique de l’avancement des indicateurs par thématique.
+  </p>
+  <div style="overflow-x: auto;">
+    <table style="min-width: 500px;">
+      <thead>
+        <tr>
+          <th>Thématique</th>
+          <th>Validés</th>
+          <th>En cours</th>
+          <th>En attente</th>
+          <th>Complétude</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Climat & Environnement</td>
+          <td>120</td>
+          <td>25</td>
+          <td>15</td>
+          <td><span class="badge validé">80%</span></td>
+        </tr>
+        <tr>
+          <td>Social</td>
+          <td>90</td>
+          <td>18</td>
+          <td>12</td>
+          <td><span class="badge en-cours">75%</span></td>
+        </tr>
+        <tr>
+          <td>Gouvernance</td>
+          <td>85</td>
+          <td>10</td>
+          <td>5</td>
+          <td><span class="badge validé">85%</span></td>
+        </tr>
+        <tr>
+          <td>Information générale</td>
+          <td>55</td>
+          <td>5</td>
+          <td>2</td>
+          <td><span class="badge validé">88%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top: 1rem; font-size: 0.75rem; color: #6b7280;">
+    Données agrégées en date du 1er juin 2025.
+  </p>
+</div>
     </div>
       
     <div class="table-section" style="margin-top: 2rem;">
