@@ -8,9 +8,11 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
       background-color: #f4f6f8;
       color: #111827;
     }
+
     .navbar {
       position: fixed;
       top: 0;
@@ -26,7 +28,17 @@
       height: 72px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    .navbar img { height: 45px; }
+
+    .navbar img {
+      height: 45px;
+    }
+
+    .navbar h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
     .sidebar {
       width: 200px;
       background-color: #c8102e;
@@ -37,6 +49,7 @@
       left: 0;
       padding-top: 90px;
     }
+
     .sidebar nav a {
       display: block;
       padding: 0.75rem 1rem;
@@ -44,23 +57,23 @@
       text-decoration: none;
       font-size: 0.9rem;
     }
-    .sidebar nav a:hover { background-color: #a10c24; }
+
+    .sidebar nav a:hover {
+      background-color: #a10c24;
+    }
+
     .sidebar nav a.active {
       background-color: transparent;
       border-left: 4px solid white;
       padding-left: 0.75rem;
       font-weight: bold;
     }
+
     .main-content {
       margin-left: 200px;
       padding: 100px 2rem 2rem;
     }
-    .card-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-    }
+
     .card {
       background-color: white;
       border-radius: 1.5rem;
@@ -68,180 +81,236 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
       flex: 1 1 500px;
       max-width: 600px;
+      transition: transform 0.2s ease-in-out;
     }
-    .card:hover { transform: translateY(-4px); }
-    .btn-confirm {
-      background-color: #2563eb;
-      margin-top: 0.5rem;
-      padding: 0.4rem 0.8rem;
-      font-size: 0.85rem;
-      border-radius: 0.5rem;
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      color: #c8102e;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      background-color: #c8102e;
       color: white;
+      padding: 0.75rem 1.5rem;
       border: none;
+      border-radius: 0.75rem;
       cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 10px rgba(200, 16, 46, 0.3);
+      margin-bottom: 1.5rem;
     }
-    .btn-confirm:hover { background-color: #1e40af; }
+
+    .btn:hover {
+      background-color: #a10c24;
+      box-shadow: 0 6px 12px rgba(161, 12, 36, 0.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background-color: #f9fafb;
+      color: #1f2937;
+      font-weight: 600;
+    }
+
+    .badge {
+      padding: 0.4rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .badge-read { background-color: #f3f4f6; color: #374151; }
+    .badge-edit { background-color: #fef3c7; color: #92400e; }
+    .badge-validate { background-color: #d1fae5; color: #065f46; }
+
+    .log-entry {
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.6rem;
+      align-items: center;
+    }
+
+    .log-valid { background-color: #d1fae5; color: #065f46; }
+    .log-modif { background-color: #fef3c7; color: #92400e; }
+    .log-connexion { background-color: #dbeafe; color: #1e40af; }
+
+    .log-date {
+      font-weight: 700;
+      margin-top: 1rem;
+      color: #111827;
+      font-size: 1rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      color: #6b7280;
+      margin-top: 1rem;
+    }
+
+    ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .role-select {
+      padding: 0.4rem 0.6rem;
+      border-radius: 0.5rem;
+      border: 1px solid #d1d5db;
+      background-color: #f9fafb;
+    }
+
+    .card-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
-<div class="navbar">
-  <a href="../../index.html">
-    <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
-  </a>
-  <h1>Administration & Sécurité</h1>
-</div>
 
-<div class="sidebar">
-  <nav>
-    <a href="../Dashboard/Dashboard.html">Dashboard</a>
-    <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
-    <a href="../Collecte & Validation des Données/Collecte et validation.html">Collecte et Validation</a>
-    <a href="#" class="active">Administration et Sécurité</a>
-    <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
-  </nav>
-</div>
-
-<div class="main-content">
-  <div class="card-wrapper">
-
-    <!-- Roles + boutons -->
-    <div class="card">
-      <h2 class="text-2xl font-bold text-red-700 mb-4">Utilisateurs & Permissions</h2>
-      <div class="flex flex-wrap gap-3 mb-4">
-        <button onclick="window.location.href='ajouter_utilisateur.html'" class="bg-red-700 text-white px-4 py-2 rounded shadow">Ajouter un utilisateur</button>
-        <button onclick="exportCSV()" class="bg-red-700 text-white px-4 py-2 rounded shadow">Exporter CSV</button>
-      </div>
-      <input id="searchInput" placeholder="Rechercher..." class="w-full mb-4 px-4 py-2 border rounded"/>
-      <table id="userTable" class="w-full">
-        <thead>
-        <tr class="bg-gray-100">
-          <th class="p-2 cursor-pointer" onclick="sortTable(0)">Nom</th>
-          <th class="p-2 cursor-pointer" onclick="sortTable(1)">Equipe</th>
-          <th class="p-2">Rôle</th>
-          <th class="p-2">Modifier</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td class="p-2">Marie Dupont</td>
-          <td class="p-2">ESG</td>
-          <td class="p-2"><span class="badge badge-validate">Validation</span></td>
-          <td class="p-2">
-            <select class="role-select">
-              <option>Lecture seule</option>
-              <option>Edition</option>
-              <option selected>Validation</option>
-            </select>
-            <button class="btn-confirm" onclick="confirmChange(this)">Confirmer</button>
-          </td>
-        </tr>
-        <tr>
-          <td class="p-2">Paul Bernard</td>
-          <td class="p-2">Finance</td>
-          <td class="p-2"><span class="badge badge-edit">Édition</span></td>
-          <td class="p-2">
-            <select class="role-select">
-              <option>Lecture seule</option>
-              <option selected>Edition</option>
-              <option>Validation</option>
-            </select>
-            <button class="btn-confirm" onclick="confirmChange(this)">Confirmer</button>
-          </td>
-        </tr>
-        <tr>
-          <td class="p-2">Sophie Laurent</td>
-          <td class="p-2">IT</td>
-          <td class="p-2"><span class="badge badge-read">Lecture seule</span></td>
-          <td class="p-2">
-            <select class="role-select">
-              <option selected>Lecture seule</option>
-              <option>Edition</option>
-              <option>Validation</option>
-            </select>
-            <button class="btn-confirm" onclick="confirmChange(this)">Confirmer</button>
-          </td>
-        </tr>
-        <tr>
-          <td class="p-2">Jean Martin</td>
-          <td class="p-2">IT</td>
-          <td class="p-2"><span class="badge badge-validate">Validation</span></td>
-          <td class="p-2">
-            <select class="role-select">
-              <option>Lecture seule</option>
-              <option>Edition</option>
-              <option selected>Validation</option>
-            </select>
-            <button class="btn-confirm" onclick="confirmChange(this)">Confirmer</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Statistiques par département -->
-    <div class="card">
-      <h2 class="text-2xl font-bold text-red-700 mb-4">Statistiques par département</h2>
-      <ul id="departmentStats" class="list-disc pl-5 text-gray-800"></ul>
-    </div>
-
+  <!-- Barre de navigation -->
+  <div class="navbar">
+    <a href="../../index.html">
+      <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
+    </a>
+    <h1>Administration & Sécurité</h1>
   </div>
-</div>
 
-<script>
-  document.getElementById('searchInput').addEventListener('keyup', function () {
-    const filter = this.value.toLowerCase();
-    const rows = document.querySelectorAll("#userTable tbody tr");
-    rows.forEach(row => {
-      const text = row.innerText.toLowerCase();
-      row.style.display = text.includes(filter) ? "" : "none";
-    });
-  });
+  <!-- Barre latérale -->
+  <div class="sidebar">
+    <nav>
+      <a href="../Dashboard/Dashboard.html">Dashboard</a>
+      <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
+      <a href="../Collecte & Validation des Données/Collecte et validation.html">Collecte et Validation</a>
+      <a href="#" class="active">Administration et Sécurité</a>
+      <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
+    </nav>
+  </div>
 
-  function sortTable(index) {
-    const tbody = document.querySelector("#userTable tbody");
-    const rows = Array.from(tbody.querySelectorAll("tr"));
-    rows.sort((a, b) => a.children[index].innerText.localeCompare(b.children[index].innerText));
-    tbody.innerHTML = '';
-    rows.forEach(r => tbody.appendChild(r));
-  }
-
-  function exportCSV() {
-    const rows = Array.from(document.querySelectorAll("#userTable tr"));
-    const csv = rows.map(row =>
-            Array.from(row.querySelectorAll("th, td")).map(cell => `"${cell.innerText}"`).join(",")
-    ).join("\n");
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = "utilisateurs.csv";
-    link.click();
-  }
-
-  function confirmChange(btn) {
-    const row = btn.closest('tr');
-    const name = row.children[0].innerText;
-    const team = row.children[1].innerText;
-    const role = row.querySelector('select').value;
-    alert(`${name} (${team}) => ${role}`);
-  }
-
-  function updateStats() {
-    const rows = document.querySelectorAll("#userTable tbody tr");
-    const counts = {};
-    rows.forEach(r => {
-      const dept = r.children[1].innerText;
-      counts[dept] = (counts[dept] || 0) + 1;
-    });
-    const ul = document.getElementById("departmentStats");
-    ul.innerHTML = '';
-    for (const dept in counts) {
-      const li = document.createElement('li');
-      li.textContent = `${dept} : ${counts[dept]} utilisateur(s)`;
-      ul.appendChild(li);
-    }
-  }
-
-  updateStats();
-</script>
+  <div class="main-content">
+    <div class="card-wrapper" style="flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 1.5rem;">
+      
+      <!-- Carte gauche -->
+      <div class="card" style="max-width: 500px; width: 100%;">
+        <h2>Gestion des rôles</h2>
+        <button class="btn" onclick="window.location.href='ajouter_utilisateur.html'">Ajouter un utilisateur</button>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Équipe</th>
+              <th>Droits</th>
+              <th>Modifier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Marie Dupont</td><td>ESG</td>
+              <td><span class="badge badge-validate">Validation</span></td>
+              <td><select class="role-select"><option>Lecture seule</option><option>Édition</option><option selected>Validation</option></select></td>
+            </tr>
+            <tr>
+              <td>Paul Bernard</td><td>Finance</td>
+              <td><span class="badge badge-edit">Édition</span></td>
+              <td><select class="role-select"><option>Lecture seule</option><option selected>Édition</option><option>Validation</option></select></td>
+            </tr>
+            <tr>
+              <td>Sophie Laurent</td><td>IT</td>
+              <td><span class="badge badge-read">Lecture seule</span></td>
+              <td><select class="role-select"><option selected>Lecture seule</option><option>Édition</option><option>Validation</option></select></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Carte droite -->
+      <div class="card" style="max-width: 500px; width: 100%;">
+        <h2>Suivi des connexions</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Utilisateur</th>
+              <th>Connexion</th>
+              <th>Méthode</th>
+              <th>État</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Marie Dupont</td><td>03/06/2025 09:32</td><td>SSO</td><td><span class="badge badge-validate">Succès</span></td>
+            </tr>
+            <tr>
+              <td>Paul Bernard</td><td>01/06/2025 14:05</td><td>Mot de passe</td><td><span class="badge badge-read">2 échecs</span></td>
+            </tr>
+            <tr>
+              <td>Sophie Laurent</td><td>30/05/2025 08:11</td><td>SSO</td><td><span class="badge badge-edit">Succès</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Carte du dessous : Historique -->
+      <div class="card" style="width: 100%; max-width: 1040px;">
+        <h2>Historique des rôles & permissions</h2>
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            <span class="text-green-600 text-xl">✔️</span>
+            <div>
+              <div class="text-sm text-gray-500">03/06/2025</div>
+              <div><strong>Marie Dupont</strong> a donné le rôle <strong>Validation</strong> à <strong>Paul Bernard</strong></div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-yellow-600 text-xl">✏️</span>
+            <div>
+              <div class="text-sm text-gray-500">01/06/2025</div>
+              <div><strong>Paul Bernard</strong> a modifié les droits de <strong>Sophie Laurent</strong> (Édition → Lecture)</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-blue-600 text-xl">➕</span>
+            <div>
+              <div class="text-sm text-gray-500">30/05/2025</div>
+              <div><strong>Jean Martin</strong> a ajouté un nouvel utilisateur : <strong>Lucie Morel</strong> (ESG)</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-red-600 text-xl">🗑️</span>
+            <div>
+              <div class="text-sm text-gray-500">29/05/2025</div>
+              <div><strong>Admin</strong> a supprimé <strong>Hugo Lemaitre</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
 </body>
 </html>
