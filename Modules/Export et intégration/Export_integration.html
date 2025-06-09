@@ -73,6 +73,46 @@
       margin-left: 200px;
       padding: 100px 2rem 2rem;
     }
+    .connected-bar {
+      position: fixed;
+      top: 72px;
+      left: 200px;
+      right: 0;
+      height: 38px;
+      background-color: #fff;
+      color: #c8102e;
+      font-size: 0.85rem;
+      padding: 0 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      z-index: 998;
+    }
+
+    .connected-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll 30s linear infinite;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .connected-user {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 2rem;
+    }
+
+    .connected-user::before {
+      content: " 🟢 ";
+      margin-right: 0.4rem;
+      font-size: 0.85rem;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
   </style>
 </head>
 <body>
@@ -95,6 +135,18 @@
       <a href="#" class="active">Export et Intégration</a>
     </nav>
   </div>
+
+        <!-- Barre des utilisateurs connectés -->
+        <div class="connected-bar">
+          <a href="../../Utilisateurs_connectés.html" class="connected-content">
+            <div class="connected-user"><span> Marie Dupont (ESG) </span></div>
+            <div class="connected-user"><span> Paul Bernard (Finance) </span></div>
+            <div class="connected-user"><span> Sophie Laurent (IT) </span></div>
+            <div class="connected-user"><span> Jean Martin (IT) </span></div>
+            <div class="connected-user"><span> Lucie Morel (ESG) </span></div>
+          </a>
+          </div>
+        </div>
 
   <!-- Contenu principal -->
   <div class="main-content">

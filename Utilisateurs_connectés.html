@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Suivi des connexions</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- En-tête -->
+  <header class="bg-red-700 text-white px-6 py-4 shadow flex justify-between items-center">
+    <h1 class="text-xl font-bold"><i class="fa-solid fa-user-group mr-2"></i>Suivi des connexions</h1>
+    <a class="bg-white text-red-700 px-4 py-2 rounded shadow hover:bg-gray-100">
+      ← Retour 
+    </a>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="p-6 space-y-12">
+
+    <!-- Fonction d'affichage équipe -->
+    <section>
+      <h2 class="text-2xl font-semibold text-red-700 mb-4">🔴 Équipe ESG</h2>
+      <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+        <!-- Utilisateurs -->
+        <div class="bg-white rounded-xl shadow p-5 space-y-2 border-l-4 border-green-500">
+          <h3 class="text-lg font-semibold">Marie Dupont</h3>
+          <p class="text-green-600"><i class="fa-solid fa-circle-check mr-1"></i>Connectée depuis 5 min</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5 space-y-2 border-l-4 border-yellow-400">
+          <h3 class="text-lg font-semibold">Lucie Morel</h3>
+          <p class="text-yellow-600"><i class="fa-solid fa-clock mr-1"></i>Inactive depuis 22 min</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5 space-y-2 border-l-4 border-gray-400">
+          <h3 class="text-lg font-semibold">Julien Lemoine</h3>
+          <p class="text-gray-500"><i class="fa-solid fa-umbrella-beach mr-1"></i>En congé jusqu'au 15/06</p>
+          <p class="text-sm text-gray-600 italic">Référent : <strong>Marie Dupont</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-semibold text-red-700 mb-4">🟠 Équipe Finance</h2>
+      <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl shadow p-5 space-y-2 border-l-4 border-gray-400">
+          <h3 class="text-lg font-semibold">Paul Bernard</h3>
+          <p class="text-gray-500"><i class="fa-solid fa-umbrella-beach mr-1"></i>En congé jusqu'au 12/06</p>
+          <p class="text-sm text-gray-600 italic">Référent : <strong>Antoine Dufour</strong></p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5 space-y-2 border-l-4 border-green-500">
+          <h3 class="text-lg font-semibold">Antoine Dufour</h3>
+          <p class="text-green-600"><i class="fa-solid fa-circle-check mr-1"></i>Connecté depuis 8 min</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5 space-y-2 border-l-4 border-yellow-400">
+          <h3 class="text-lg font-semibold">Camille Petit</h3>
+          <p class="text-yellow-600"><i class="fa-solid fa-clock mr-1"></i>Inactive depuis 38 min</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-semibold text-red-700 mb-4">🔵 Équipe IT</h2>
+      <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl shadow p-5 space-y-2 border-l-4 border-green-500">
+          <h3 class="text-lg font-semibold">Sophie Laurent</h3>
+          <p class="text-green-600"><i class="fa-solid fa-circle-check mr-1"></i>Connectée depuis 3 min</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5 space-y-2 border-l-4 border-yellow-400">
+          <h3 class="text-lg font-semibold">Jean Martin</h3>
+          <p class="text-yellow-600"><i class="fa-solid fa-clock mr-1"></i>Inactive depuis 41 min</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5 space-y-2 border-l-4 border-gray-400">
+          <h3 class="text-lg font-semibold">Nathalie Roche</h3>
+          <p class="text-gray-500"><i class="fa-solid fa-umbrella-beach mr-1"></i>En congé jusqu'au 20/06</p>
+          <p class="text-sm text-gray-600 italic">Référent : <strong>Sophie Laurent</strong></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

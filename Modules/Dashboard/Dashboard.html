@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tableau de bord ESG</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
   <style>
     * {
       box-sizing: border-box;
@@ -16,6 +17,11 @@
     margin: 0;
     display: block; /* <- CORRIGÉ: on ne met pas flex sur body si on utilise une navbar + sidebar */
     }
+      .main-content {
+    margin-left: 200px;
+    padding: 140px 2rem 2rem;
+  }
+
     .navbar {
     position: fixed;
     top: 0;
@@ -190,6 +196,48 @@
       font-size: 1rem;
       color: #c8102e;
     }
+    .connected-bar {
+      position: fixed;
+      top: 72px;
+      left: 200px;
+      right: 0;
+      height: 38px;
+      background-color: #fff;
+      color: #c8102e;
+      font-size: 0.85rem;
+      padding: 0 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      z-index: 998;
+    }
+
+    .connected-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll 30s linear infinite;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .connected-user {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 2rem;
+    }
+
+    .connected-user::before {
+      content: " 🟢 ";
+      margin-right: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
   </style>
 </head>
 <body>
@@ -209,12 +257,24 @@
       </nav>
       
   </div>
+  <div class="connected-bar">
+    <a href="../../Utilisateurs_connectés.html" class="connected-content">
+      <div class="connected-user"><span> Marie Dupont (ESG) </span></div>
+      <div class="connected-user"><span> Paul Bernard (Finance) </span></div>
+      <div class="connected-user"><span> Sophie Laurent (IT) </span></div>
+      <div class="connected-user"><span> Jean Martin (IT) </span></div>
+      <div class="connected-user"><span> Lucie Morel (ESG) </span></div>
+    </a>
+  </div>
 
   <div class="main-content">
+
     <div id="dashboard-wrapper">
         <div id="main-dashboard">
     <div class="header">
     </div>
+
+
 
     <div class="kpi-filter-container">
         <div class="kpi">
