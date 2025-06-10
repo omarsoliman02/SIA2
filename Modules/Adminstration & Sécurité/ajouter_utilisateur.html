@@ -3,169 +3,447 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Administration & Sécurité - ESG</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Ajouter un utilisateur - Administration</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
+    :root {
+      --ardian-red: #c8102e;
+      --ardian-dark-red: #a10c24;
+      --sidebar-width: 250px;
+      --navbar-height: 72px;
+    }
+    
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
-      margin: 0;
+      background-color: #f8f9fa;
+      overflow-x: hidden;
     }
+    
+    /* Navbar styles */
     .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 72px;
-      background-color: #c8102e;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem;
-      z-index: 1000;
+      background-color: var(--ardian-red);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 1rem;
+      height: var(--navbar-height);
+      z-index: 1030;
     }
-    .navbar img {
+    
+    .navbar-brand img {
       height: 45px;
     }
+    
+    /* Sidebar styles */
     .sidebar {
       position: fixed;
-      top: 72px;
+      top: var(--navbar-height);
       left: 0;
-      width: 200px;
-      height: calc(100vh - 72px);
-      background-color: #c8102e;
+      width: var(--sidebar-width);
+      height: calc(100vh - var(--navbar-height));
+      background-color: var(--ardian-red);
       color: white;
-      padding: 1rem 0.5rem;
+      padding-top: 1rem;
+      z-index: 1020;
+      transition: all 0.3s;
+      overflow-y: auto;
     }
-    .sidebar nav a {
-      display: block;
-      color: white;
-      padding: 0.5rem 1rem;
-      text-decoration: none;
-      font-size: 0.9rem;
+    
+    .sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.85);
+      padding: 0.75rem 1.25rem;
+      font-size: 0.95rem;
+      border-radius: 0;
+      transition: all 0.2s;
     }
-    .sidebar nav a:hover,
-    .sidebar nav a.active {
+    
+    .sidebar .nav-link:hover {
       background-color: rgba(255, 255, 255, 0.1);
-      font-weight: bold;
-    }
-    .main {
-      margin-left: 200px;
-      padding: 90px 2rem 2rem;
-    }
-    .card {
-      background-color: white;
-      border-radius: 1rem;
-      padding: 2rem;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-      max-width: 700px;
-      margin: auto;
-    }
-    h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #c8102e;
-      margin-bottom: 1.5rem;
-    }
-    label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    input, select {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #d1d5db;
-      border-radius: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .btn {
-      background-color: #c8102e;
       color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      font-weight: bold;
-      margin-right: 1rem;
     }
-    .btn:hover {
-      background-color: #a10c24;
+    
+    .sidebar .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-weight: 600;
+      border-left: 4px solid white;
+      padding-left: calc(1.25rem - 4px);
     }
-    .btn-secondary {
-      background-color: #6b7280;
+    
+    .sidebar .nav-link i {
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+      width: 1.5rem;
+      text-align: center;
     }
-    .btn-secondary:hover {
-      background-color: #4b5563;
+    
+    /* Main content styles */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: calc(var(--navbar-height) + 1.5rem + 40px) 1.5rem 1.5rem;
+      min-height: 100vh;
+      transition: all 0.3s;
+    }
+    
+    /* Connected users bar */
+    .connected-bar {
+      position: fixed;
+      top: var(--navbar-height);
+      left: var(--sidebar-width);
+      right: 0;
+      height: 40px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      z-index: 1010;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      overflow: hidden;
+      font-size: 0.85rem;
+    }
+    
+    .connected-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll 30s linear infinite;
+      text-decoration: none;
+      color: var(--ardian-red);
+    }
+    
+    .connected-user {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 2rem;
+    }
+    
+    .connected-user::before {
+      content: " 🟢 ";
+      margin-right: 0.4rem;
+      font-size: 0.85rem;
+    }
+    
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    
+    /* Form card styles */
+    .form-card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+    }
+    
+    .form-card .card-header {
+      background-color: transparent;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-weight: 600;
+      color: var(--ardian-red);
+    }
+    
+    /* Buttons */
+    .btn-primary {
+      background-color: var(--ardian-red);
+      border-color: var(--ardian-red);
+    }
+    
+    .btn-primary:hover, .btn-primary:focus {
+      background-color: var(--ardian-dark-red);
+      border-color: var(--ardian-dark-red);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 60px;
+      }
+      
+      .sidebar .nav-link span {
+        display: none;
+      }
+      
+      .sidebar .nav-link i {
+        margin-right: 0;
+        font-size: 1.25rem;
+      }
+      
+      .main-content {
+        margin-left: 60px;
+      }
+      
+      .connected-bar {
+        left: 60px;
+      }
+      
+      :root {
+        --sidebar-width: 60px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .connected-bar {
+        left: 0;
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      
+      :root {
+        --sidebar-width: 0px;
+      }
     }
   </style>
 </head>
 <body>
-
   <!-- Navbar -->
-  <div class="navbar">
-    <a href="../../index.html">
-      <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
-    </a>
-    <h1>Administration & Sécurité</h1>
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
+      </a>
+      <div class="d-flex align-items-center">
+        <h1 class="navbar-text text-white fw-bold d-none d-sm-block mb-0 ms-3">Administration & Sécurité</h1>
+        <button class="navbar-toggler ms-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
 
   <!-- Sidebar -->
-  <div class="sidebar">
-    <nav>
-      <a href="../Dashboard/Dashboard.html">Dashboard</a>
-      <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
-      <a href="../Collecte & Validation des Données/Collecte et validation.html">Validation des données</a>
-      <a href="#" class="active">Administration et Sécurité</a>
-      <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
-    </nav>
-  </div>
-
-  
-  <!-- Contenu principal -->
-  <div class="main">
-    <div class="card">
-      <h1>Ajouter un Utilisateur</h1>
-      <form id="addUserForm">
-        <label for="nom">Nom<span class="text-red-500">*</span></label>
-        <input type="text" id="nom" name="nom" required>
-
-        <label for="prenom">Prénom<span class="text-red-500">*</span></label>
-        <input type="text" id="prenom" name="prenom" required>
-
-        <label for="email">Email<span class="text-red-500">*</span></label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="equipe">Équipe<span class="text-red-500">*</span></label>
-        <select id="equipe" name="equipe" required>
-          <option value="">Sélectionnez une équipe</option>
-          <option value="ESG">ESG</option>
-          <option value="Finance">Finance</option>
-          <option value="IT">IT</option>
-        </select>
-
-        <label for="role">Rôle<span class="text-red-500">*</span></label>
-        <select id="role" name="role" required>
-          <option value="">Sélectionnez un rôle</option>
-          <option value="lecture">Lecture seule</option>
-          <option value="edition">Édition</option>
-          <option value="validation">Validation</option>
-        </select>
-
-        <div class="mt-4">
-          <button type="submit" class="btn">Ajouter l'utilisateur</button>
-          <button type="button" class="btn btn-secondary" onclick="window.location.href='admin.html'">Annuler</button>
-        </div>
-      </form>
+  <div class="sidebar" id="sidebarMenu">
+    <div class="position-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="../Dashboard/Dashboard.html">
+            <i class="bi bi-graph-up"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Gestion du dictionnaire/gestion_dictionnaire.html">
+            <i class="bi bi-book"></i>
+            <span>Gestion du dictionnaire</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Collecte & Validation des Données/Collecte et validation.html">
+            <i class="bi bi-clipboard-data"></i>
+            <span>Validation des données</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="admin.html">
+            <i class="bi bi-shield-lock"></i>
+            <span>Administration et Sécurité</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Export et intégration/Export_integration.html">
+            <i class="bi bi-box-arrow-up"></i>
+            <span>Export et Intégration</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 
+  <!-- Connected users bar -->
+  <div class="connected-bar">
+    <a href="../../Utilisateurs_connectés.html" class="connected-content">
+      <div class="connected-user"><span>Marie Dupont (ESG)</span></div>
+      <div class="connected-user"><span>Paul Bernard (Finance)</span></div>
+      <div class="connected-user"><span>Sophie Laurent (IT)</span></div>
+      <div class="connected-user"><span>Jean Martin (IT)</span></div>
+      <div class="connected-user"><span>Lucie Morel (ESG)</span></div>
+    </a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="row">
+      <div class="col-12 col-lg-8 mx-auto">
+        <div class="d-flex align-items-center mb-4">
+          <a href="admin.html" class="btn btn-outline-secondary btn-sm me-3">
+            <i class="bi bi-arrow-left"></i> Retour
+          </a>
+          <h2 class="fw-bold text-danger mb-0">Ajouter un utilisateur</h2>
+        </div>
+        
+        <div class="card form-card">
+          <div class="card-header py-3">
+            <h5 class="mb-0">Informations de l'utilisateur</h5>
+          </div>
+          <div class="card-body">
+            <form id="addUserForm" class="row g-3">
+              <div class="col-md-6">
+                <label for="nom" class="form-label">Nom <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="nom" name="nom" required>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="prenom" class="form-label">Prénom <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="prenom" name="prenom" required>
+              </div>
+              
+              <div class="col-12">
+                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="prenom.nom@ardian.com" required>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="equipe" class="form-label">Département <span class="text-danger">*</span></label>
+                <select class="form-select" id="equipe" name="equipe" required>
+                  <option value="" selected disabled>Sélectionnez un département</option>
+                  <option value="ESG">ESG</option>
+                  <option value="Finance">Finance</option>
+                  <option value="IT">IT</option>
+                  <option value="RH">RH</option>
+                  <option value="Compliance">Compliance</option>
+                </select>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="role" class="form-label">Rôle <span class="text-danger">*</span></label>
+                <select class="form-select" id="role" name="role" required>
+                  <option value="" selected disabled>Sélectionnez un rôle</option>
+                  <option value="lecteur">Lecteur</option>
+                  <option value="contributeur">Contributeur</option>
+                  <option value="validateur">Validateur</option>
+                  <option value="admin">Administrateur</option>
+                </select>
+              </div>
+              
+              <div class="col-12 mt-4">
+                <div class="card">
+                  <div class="card-header bg-light">
+                    <h6 class="mb-0">Permissions</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-check mb-2">
+                      <input class="form-check-input" type="checkbox" id="perm_lecture" name="permissions[]" value="lecture" checked>
+                      <label class="form-check-label" for="perm_lecture">
+                        Lecture - Accès en lecture aux données
+                      </label>
+                    </div>
+                    <div class="form-check mb-2">
+                      <input class="form-check-input" type="checkbox" id="perm_edition" name="permissions[]" value="edition">
+                      <label class="form-check-label" for="perm_edition">
+                        Édition - Modification des données
+                      </label>
+                    </div>
+                    <div class="form-check mb-2">
+                      <input class="form-check-input" type="checkbox" id="perm_validation" name="permissions[]" value="validation">
+                      <label class="form-check-label" for="perm_validation">
+                        Validation - Validation des données et modifications
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="perm_admin" name="permissions[]" value="admin">
+                      <label class="form-check-label" for="perm_admin">
+                        Administration - Gestion des utilisateurs et des droits
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-12 mt-4">
+                <div class="d-flex justify-content-between">
+                  <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='admin.html'">
+                    Annuler
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-person-plus me-2"></i>Ajouter l'utilisateur
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Form script -->
   <script>
     document.getElementById('addUserForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      
+      // Automatic permission selection based on role
+      document.getElementById('role').addEventListener('change', function() {
+        const role = this.value;
+        const permRead = document.getElementById('perm_lecture');
+        const permEdit = document.getElementById('perm_edition');
+        const permValidate = document.getElementById('perm_validation');
+        const permAdmin = document.getElementById('perm_admin');
+        
+        // Reset all
+        permRead.checked = false;
+        permEdit.checked = false;
+        permValidate.checked = false;
+        permAdmin.checked = false;
+        
+        // Set based on role
+        switch(role) {
+          case 'lecteur':
+            permRead.checked = true;
+            break;
+          case 'contributeur':
+            permRead.checked = true;
+            permEdit.checked = true;
+            break;
+          case 'validateur':
+            permRead.checked = true;
+            permEdit.checked = true;
+            permValidate.checked = true;
+            break;
+          case 'admin':
+            permRead.checked = true;
+            permEdit.checked = true;
+            permValidate.checked = true;
+            permAdmin.checked = true;
+            break;
+        }
+      });
+      
+      // Form submission
+      const formData = new FormData(this);
+      // Success message
       alert("Utilisateur ajouté avec succès !");
       window.location.href = 'admin.html';
     });
   </script>
 
+  <!-- Mobile sidebar toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebarToggle = document.querySelector('[data-bs-toggle="collapse"]');
+      const sidebar = document.getElementById('sidebarMenu');
+
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('show');
+        });
+      }
+    });
+  </script>
 </body>
 </html>

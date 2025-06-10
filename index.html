@@ -4,136 +4,208 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Accueil SIA2</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Custom CSS -->
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root {
+      --ardian-red: #c8102e;
+      --ardian-dark-red: #a10c24;
     }
-
+    
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
-      color: #111827;
-      min-height: 100vh;
+      background-color: #f8f9fa;
     }
 
     .navbar {
-      background-color: #c8102e;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: white;
+      background-color: var(--ardian-red);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    .navbar img {
+    .navbar-brand img {
       height: 45px;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 2rem;
-    }
-
-    .modules-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .module-card {
-      background: white;
-      border-radius: 1.5rem;
-      padding: 2rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+    .card {
+      border: none;
+      border-radius: 1rem;
       transition: all 0.3s ease;
-      text-decoration: none;
-      color: inherit;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-    }
-
-    .module-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
     }
 
     .module-icon {
       font-size: 2.5rem;
       margin-bottom: 1rem;
-      color: #c8102e;
+      color: var(--ardian-red);
     }
 
-    .module-title {
-      font-size: 1.4rem;
+    .card-title {
       font-weight: 600;
+      color: #212529;
       margin-bottom: 0.5rem;
-      color: #111827;
     }
 
-    .module-description {
-      color: #6b7280;
-      font-size: 1rem;
-      line-height: 1.5;
+    .btn-outline-primary {
+      color: var(--ardian-red);
+      border-color: var(--ardian-red);
     }
 
-    @media (max-width: 768px) {
-      .modules-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .welcome-section {
-        padding: 3rem 1rem;
-      }
-      
-      .welcome-section h1 {
-        font-size: 2rem;
-      }
+    .btn-outline-primary:hover {
+      background-color: var(--ardian-red);
+      border-color: var(--ardian-red);
+    }
+
+    .btn-primary {
+      background-color: var(--ardian-red);
+      border-color: var(--ardian-red);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--ardian-dark-red);
+      border-color: var(--ardian-dark-red);
     }
   </style>
 </head>
 <body>
-  <div class="navbar">
-    <a href="index.html">
-      <img src="Modules/ressources/LogoArdian.png" alt="Logo Ardian">
-    </a>
-  </div>
-
-  <div class="container">
-    <div class="modules-grid">
-      <a href="Modules/Dashboard/Dashboard.html" class="module-card">
-        <div class="module-icon">📈</div>
-        <h2 class="module-title">Dashboard</h2>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="Modules/ressources/LogoArdian.png" alt="Logo Ardian">
       </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Accueil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Utilisateurs_connectés.html">Utilisateurs connectés</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="connexion.html">Connexion</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container py-5">
+    <div class="row mb-4">
+      <div class="col-12">
+        <h1 class="display-5 fw-bold text-center">Plateforme SIA2</h1>
+        <p class="lead text-center text-muted">Sélectionnez un module pour commencer</p>
+      </div>
+    </div>
+    
+    <div class="row g-4">
+      <!-- Dashboard Card -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="module-icon">
+              <i class="bi bi-graph-up"></i>
+            </div>
+            <h2 class="card-title">Dashboard</h2>
+            <p class="card-text text-muted mb-4">Visualisez et analysez vos données avec des tableaux de bord interactifs</p>
+            <a href="Modules/Dashboard/Dashboard.html" class="btn btn-primary mt-auto">Accéder</a>
+          </div>
+        </div>
+      </div>
       
-      <a href="Modules/Collecte & Validation des Données/Collecte et validation.html" class="module-card">
-        <div class="module-icon">📊</div>
-        <h2 class="module-title">Collecte & Validation des Données</h2>
-      </a>
+      <!-- Collecte & Validation Card -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="module-icon">
+              <i class="bi bi-clipboard-data"></i>
+            </div>
+            <h2 class="card-title">Collecte & Validation</h2>
+            <p class="card-text text-muted mb-4">Collectez et validez vos données à l'aide d'outils spécialisés</p>
+            <a href="Modules/Collecte & Validation des Données/Collecte et validation.html" class="btn btn-primary mt-auto">Accéder</a>
+          </div>
+        </div>
+      </div>
 
+      <!-- Gestion du Dictionnaire Card -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="module-icon">
+              <i class="bi bi-book"></i>
+            </div>
+            <h2 class="card-title">Gestion du Dictionnaire</h2>
+            <p class="card-text text-muted mb-4">Gérez les définitions et métadonnées de votre système</p>
+            <a href="Modules/Gestion du dictionnaire/gestion_dictionnaire.html" class="btn btn-primary mt-auto">Accéder</a>
+          </div>
+        </div>
+      </div>
 
-      <a href="Modules/Gestion du dictionnaire/gestion_dictionnaire.html" class="module-card">
-        <div class="module-icon">📚</div>
-        <h2 class="module-title">Gestion du Dictionnaire</h2>
-      </a>
+      <!-- Administration & Sécurité Card -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="module-icon">
+              <i class="bi bi-shield-lock"></i>
+            </div>
+            <h2 class="card-title">Administration & Sécurité</h2>
+            <p class="card-text text-muted mb-4">Gérez les utilisateurs et les paramètres de sécurité</p>
+            <a href="Modules/Adminstration & Sécurité/admin.html" class="btn btn-primary mt-auto">Accéder</a>
+          </div>
+        </div>
+      </div>
 
-      <a href="Modules/Adminstration & Sécurité/admin.html" class="module-card">
-        <div class="module-icon">🔒</div>
-        <h2 class="module-title">Administration & Sécurité</h2>
-      </a>
-
-      <a href="Modules/Export et intégration/Export_integration.html" class="module-card">
-        <div class="module-icon">🔗</div>
-        <h2 class="module-title">Export & Intégration</h2>
-      </a>
-      
+      <!-- Export & Intégration Card -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="module-icon">
+              <i class="bi bi-link-45deg"></i>
+            </div>
+            <h2 class="card-title">Export & Intégration</h2>
+            <p class="card-text text-muted mb-4">Exportez vos données et intégrez-les à d'autres systèmes</p>
+            <a href="Modules/Export et intégration/Export_integration.html" class="btn btn-primary mt-auto">Accéder</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer class="bg-light py-4 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="mb-0 text-muted">© 2025 Ardian. Tous droits réservés.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0 text-muted">Plateforme SIA2</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

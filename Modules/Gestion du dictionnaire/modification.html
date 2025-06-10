@@ -3,141 +3,569 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Collecte & Validation des Données</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+  <title>Modifier un Indicateur ESG</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
+    :root {
+      --ardian-red: #c8102e;
+      --ardian-dark-red: #a10c24;
+      --sidebar-width: 250px;
+      --navbar-height: 72px;
+    }
+    
     body {
-      margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
+      background-color: #f8f9fa;
+      overflow-x: hidden;
     }
+    
+    /* Navbar styles */
     .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 72px;
-      background-color: #c8102e;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem;
-      z-index: 1000;
+      background-color: var(--ardian-red);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 1rem;
+      height: var(--navbar-height);
+      z-index: 1030;
     }
-    .navbar img {
+    
+    .navbar-brand img {
       height: 45px;
     }
+    
+    /* Sidebar styles */
     .sidebar {
       position: fixed;
-      top: 72px;
+      top: var(--navbar-height);
       left: 0;
-      width: 200px;
-      height: calc(100vh - 72px);
-      background-color: #c8102e;
+      width: var(--sidebar-width);
+      height: calc(100vh - var(--navbar-height));
+      background-color: var(--ardian-red);
       color: white;
-      padding: 1rem 0.5rem;
+      padding-top: 1rem;
+      z-index: 1020;
+      transition: all 0.3s;
+      overflow-y: auto;
     }
-    .sidebar nav a {
-      display: block;
-      color: white;
-      padding: 0.5rem 1rem;
-      text-decoration: none;
-      font-size: 0.9rem;
+    
+    .sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.85);
+      padding: 0.75rem 1.25rem;
+      font-size: 0.95rem;
+      border-radius: 0;
+      transition: all 0.2s;
     }
-    .sidebar nav a:hover,
-    .sidebar nav a.active {
+    
+    .sidebar .nav-link:hover {
       background-color: rgba(255, 255, 255, 0.1);
-      font-weight: bold;
+      color: white;
     }
-    .main {
-        margin-left: 200px;
-        padding: 2rem;
-        padding-top: 6rem; 
+    
+    .sidebar .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-weight: 600;
+      border-left: 4px solid white;
+      padding-left: calc(1.25rem - 4px);
+    }
+    
+    .sidebar .nav-link i {
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+      width: 1.5rem;
+      text-align: center;
+    }
+    
+    /* Main content styles */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: calc(var(--navbar-height) + 1.5rem + 40px) 1.5rem 1.5rem;
+      min-height: 100vh;
+      transition: all 0.3s;
+    }
+    
+    /* Connected users bar */
+    .connected-bar {
+      position: fixed;
+      top: var(--navbar-height);
+      left: var(--sidebar-width);
+      right: 0;
+      height: 40px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      z-index: 1010;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      overflow: hidden;
+      font-size: 0.85rem;
+    }
+    
+    .connected-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll 30s linear infinite;
+      text-decoration: none;
+      color: var(--ardian-red);
+    }
+    
+    .connected-user {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 2rem;
+    }
+    
+    .connected-user::before {
+      content: " 🟢 ";
+      margin-right: 0.4rem;
+      font-size: 0.85rem;
+    }
+    
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    
+    /* Card styles */
+    .form-card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+    }
+    
+    .form-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+    
+    .form-card .card-header {
+      background-color: var(--ardian-red);
+      color: white;
+      border-radius: 1rem 1rem 0 0;
+      padding: 1.25rem 1.5rem;
+      border: none;
+    }
+    
+    .form-card .card-body {
+      padding: 2rem 1.5rem;
+    }
+    
+    /* Form styles */
+    .form-label {
+      font-weight: 500;
+      color: #495057;
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-control, .form-select {
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #dee2e6;
+      background-color: #fff;
+      transition: all 0.2s;
+    }
+    
+    .form-control:focus, .form-select:focus {
+      border-color: var(--ardian-red);
+      box-shadow: 0 0 0 0.25rem rgba(200, 16, 46, 0.15);
+    }
+    
+    /* Button styles */
+    .btn-submit {
+      background-color: #198754;
+      border-color: #198754;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    
+    .btn-submit:hover {
+      background-color: #157347;
+      border-color: #157347;
+      transform: translateY(-2px);
+    }
+    
+    .btn-cancel {
+      background-color: #f8f9fa;
+      border-color: #dee2e6;
+      color: #495057;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    
+    .btn-cancel:hover {
+      background-color: #e9ecef;
+      border-color: #ced4da;
+    }
+    
+    /* History section */
+    .history-item {
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      background-color: rgba(0, 0, 0, 0.03);
+      margin-bottom: 0.75rem;
+    }
+    
+    .history-date {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+    
+    /* Field info tooltips */
+    .form-tooltip {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-top: 0.25rem;
+    }
+    
+    /* Badge styles */
+    .status-badge {
+      padding: 0.35rem 0.75rem;
+      border-radius: 1rem;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 60px;
+      }
+      
+      .sidebar .nav-link span {
+        display: none;
+      }
+      
+      .sidebar .nav-link i {
+        margin-right: 0;
+        font-size: 1.25rem;
+      }
+      
+      .main-content {
+        margin-left: 60px;
+      }
+      
+      .connected-bar {
+        left: 60px;
+      }
+      
+      :root {
+        --sidebar-width: 60px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .connected-bar {
+        left: 0;
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      
+      :root {
+        --sidebar-width: 0px;
+      }
     }
   </style>
 </head>
-<body class="bg-gray-100">
-
-  <!-- Barre de navigation -->
-  <div class="navbar">
-    <a href="../../index.html">
-      <img src="../ressources/LogoArdian.png" alt="Logo Ardian" />
-    </a>
-    <h1>Collecte & Validation</h1>
-  </div>
-
-  <!-- Barre latérale -->
-  <div class="sidebar">
-    <nav>
-      <a href="../Dashboard/Dashboard.html">Dashboard</a>
-      <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
-      <a href="#" class="active">Validation des données</a>
-      <a href="../Adminstration & Sécurité/admin.html">Administration et Sécurité</a>
-      <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
-    </nav>
-  </div>
-
-  <!-- Contenu principal -->
-  <div class="main">
-    <div class="container mx-auto p-5">
-    <div class="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
-  
-      <!-- Barre de titre intégrée -->
-      <div class="bg-red-600 text-white p-4 rounded-t-lg -mt-6 -mx-6 mb-6">
-        <h1 class="text-2xl font-bold">Modifier l'Indicateur ESG - Ardian Identification Number</h1>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
+      </a>
+      <div class="d-flex align-items-center">
+        <h1 class="navbar-text text-white fw-bold d-none d-sm-block mb-0 ms-3">Modifier un Indicateur</h1>
+        <button class="navbar-toggler ms-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </div>
-  
-      <!-- Formulaire -->
-      <form class="grid grid-cols-1 md:grid-cols-2 gap-4" action="gestion_dictionnaire.html" method="get">
-        <!-- Champs -->
-        <div>
-          <label for="nom" class="block font-semibold mb-1">Nom de l'indicateur</label>
-          <input id="nom" class="border p-2 w-full rounded" type="text" value="Ardian Identification Number" required>
-        </div>
-        <div>
-          <label for="id-tech" class="block font-semibold mb-1">ID Technique</label>
-          <input id="id-tech" class="border p-2 w-full rounded" type="text" value="AGI-01" required>
-        </div>
-        <div>
-          <label for="responsable" class="block font-semibold mb-1">Responsable de la donnée</label>
-          <input id="responsable" class="border p-2 w-full rounded" type="text" value="Susty" required>
-        </div>
-        <div>
-          <label for="outil" class="block font-semibold mb-1">Outil de stockage</label>
-          <input id="outil" class="border p-2 w-full rounded" type="text" value="DataPlatform" required>
-        </div>
-        <div>
-          <label for="type" class="block font-semibold mb-1">Type de donnée</label>
-          <select id="type" class="border p-2 w-full rounded">
-            <option selected>Numérique</option>
-            <option>Texte</option>
-            <option>Booléen</option>
-            <option>Liste de valeurs</option>
-          </select>
-        </div>
-        <div>
-          <label for="statut" class="block font-semibold mb-1">Statut</label>
-          <select id="statut" class="border p-2 w-full rounded">
-            <option>Nouveau</option>
-            <option selected>Modifié</option>
-            <option>Supprimé</option>
-          </select>
-        </div>
-        <div class="md:col-span-2">
-          <label for="description" class="block font-semibold mb-1">Description</label>
-          <textarea id="description" class="border p-2 w-full rounded" rows="4">Identification unique pour Ardian dans le DataPlatform.</textarea>
-        </div>
-        <div class="md:col-span-2 text-right">
-          <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
-            Modifier l'indicateur
-          </button>
-        </div>
-      </form>
-    </div>  
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebarMenu">
+    <div class="position-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="../Dashboard/Dashboard.html">
+            <i class="bi bi-graph-up"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="./gestion_dictionnaire.html">
+            <i class="bi bi-book"></i>
+            <span>Gestion du dictionnaire</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Collecte & Validation des Données/Collecte et validation.html">
+            <i class="bi bi-clipboard-data"></i>
+            <span>Validation des données</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Adminstration & Sécurité/admin.html">
+            <i class="bi bi-shield-lock"></i>
+            <span>Administration et Sécurité</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Export et intégration/Export_integration.html">
+            <i class="bi bi-box-arrow-up"></i>
+            <span>Export et Intégration</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 
+  <!-- Connected users bar -->
+  <div class="connected-bar">
+    <a href="../../Utilisateurs_connectés.html" class="connected-content">
+      <div class="connected-user"><span>Marie Dupont (ESG)</span></div>
+      <div class="connected-user"><span>Paul Bernard (Finance)</span></div>
+      <div class="connected-user"><span>Sophie Laurent (IT)</span></div>
+      <div class="connected-user"><span>Jean Martin (IT)</span></div>
+      <div class="connected-user"><span>Lucie Morel (ESG)</span></div>
+    </a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card form-card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="mb-0 fw-bold">
+              <i class="bi bi-pencil-square me-2"></i>Modifier l'Indicateur ESG
+            </h3>
+            <span class="status-badge bg-warning text-dark">Modifié</span>
+          </div>
+          <div class="card-body">
+            <form action="gestion_dictionnaire.html" method="get">
+              <div class="row g-4">
+                <!-- Informations de base -->
+                <div class="col-12 mb-3">
+                  <h5 class="border-bottom pb-2 mb-4">Informations de base</h5>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="indicator_name" class="form-label">Nom de l'indicateur <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="indicator_name" value="Ardian Identification Number" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="indicator_id" class="form-label">ID Technique <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="indicator_id" value="AGI-01" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="data_owner" class="form-label">Responsable de la donnée <span class="text-danger">*</span></label>
+                  <select class="form-select" id="data_owner" required>
+                    <option>ESG Team</option>
+                    <option selected>Susty</option>
+                    <option>DataPlatform</option>
+                    <option>Finance</option>
+                    <option>IT</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="storage_tool" class="form-label">Outil de stockage <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="storage_tool" value="DataPlatform" required>
+                </div>
+
+                <!-- Caractéristiques techniques -->
+                <div class="col-12 mb-3">
+                  <h5 class="border-bottom pb-2 mb-4 mt-2">Caractéristiques techniques</h5>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label for="data_type" class="form-label">Type de donnée <span class="text-danger">*</span></label>
+                  <select class="form-select" id="data_type" required>
+                    <option selected>Numérique</option>
+                    <option>Texte</option>
+                    <option>Booléen</option>
+                    <option>Date</option>
+                    <option>Liste de valeurs</option>
+                  </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label for="indicator_unit" class="form-label">Unité de mesure</label>
+                  <input type="text" class="form-control" id="indicator_unit" placeholder="ex: tCO2e">
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label for="indicator_status" class="form-label">Statut <span class="text-danger">*</span></label>
+                  <select class="form-select" id="indicator_status" required>
+                    <option>Nouveau</option>
+                    <option selected>Modifié</option>
+                    <option>Supprimé</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="indicator_category" class="form-label">Catégorie</label>
+                  <select class="form-select" id="indicator_category">
+                    <option>Environnement</option>
+                    <option>Social</option>
+                    <option selected>Gouvernance</option>
+                    <option>Autre</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="indicator_frequency" class="form-label">Fréquence de collecte</label>
+                  <select class="form-select" id="indicator_frequency">
+                    <option>Quotidienne</option>
+                    <option>Hebdomadaire</option>
+                    <option>Mensuelle</option>
+                    <option selected>Trimestrielle</option>
+                    <option>Annuelle</option>
+                  </select>
+                </div>
+
+                <!-- Description détaillée -->
+                <div class="col-12 mb-3">
+                  <h5 class="border-bottom pb-2 mb-4 mt-2">Description détaillée</h5>
+                </div>
+
+                <div class="col-12 mb-4">
+                  <label for="indicator_description" class="form-label">Description <span class="text-danger">*</span></label>
+                  <textarea class="form-control" id="indicator_description" rows="4" required>Identification unique pour Ardian dans le DataPlatform.</textarea>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="col-12 d-flex justify-content-end gap-3 mt-4">
+                  <a href="./gestion_dictionnaire.html" class="btn btn-cancel">Annuler</a>
+                  <button type="submit" class="btn btn-submit">
+                    <i class="bi bi-check-circle me-2"></i>Enregistrer les modifications
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4">
+        <!-- Historique des modifications -->
+        <div class="card mb-4">
+          <div class="card-header bg-light">
+            <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Historique des modifications</h5>
+          </div>
+          <div class="card-body">
+            <div class="history-item">
+              <div class="d-flex justify-content-between mb-2">
+                <strong>Marie Dupont</strong>
+                <span class="history-date">12/05/2025 14:30</span>
+              </div>
+              <p class="mb-0">Modification du responsable de la donnée (ESG Team → Susty)</p>
+            </div>
+            
+            <div class="history-item">
+              <div class="d-flex justify-content-between mb-2">
+                <strong>Jean Martin</strong>
+                <span class="history-date">05/05/2025 09:15</span>
+              </div>
+              <p class="mb-0">Mise à jour de la description et ajout de la catégorie</p>
+            </div>
+            
+            <div class="history-item">
+              <div class="d-flex justify-content-between mb-2">
+                <strong>Paul Bernard</strong>
+                <span class="history-date">21/04/2025 11:42</span>
+              </div>
+              <p class="mb-0">Création de l'indicateur</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Métadonnées -->
+        <div class="card">
+          <div class="card-header bg-light">
+            <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Métadonnées</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Date de création</span>
+                <span class="text-muted">21/04/2025</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Dernière modification</span>
+                <span class="text-muted">12/05/2025</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Version</span>
+                <span class="text-muted">2.1</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Référence standard</span>
+                <span class="text-muted">GRI-302</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Utilisé dans</span>
+                <span class="badge bg-secondary rounded-pill">8 rapports</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Mobile sidebar toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebarToggle = document.querySelector('[data-bs-toggle="collapse"]');
+      const sidebar = document.getElementById('sidebarMenu');
+
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('show');
+        });
+      }
+      
+      // Form type conditional fields
+      const dataTypeSelect = document.getElementById('data_type');
+      const unitField = document.getElementById('indicator_unit').parentElement;
+      
+      // Set initial state
+      if (dataTypeSelect.value !== 'Numérique') {
+        unitField.style.display = 'none';
+      }
+      
+      dataTypeSelect.addEventListener('change', function() {
+        if (this.value === 'Numérique') {
+          unitField.style.display = 'block';
+        } else {
+          unitField.style.display = 'none';
+        }
+      });
+    });
+  </script>
 </body>
 </html>

@@ -4,210 +4,693 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Export & Intégration ESG</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
+    :root {
+      --ardian-red: #c8102e;
+      --ardian-dark-red: #a10c24;
+      --sidebar-width: 250px;
+      --navbar-height: 72px;
+    }
+    
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #f4f6f8;
+      background-color: #f8f9fa;
+      overflow-x: hidden;
     }
-
+    
+    /* Navbar styles */
     .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background-color: #c8102e;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: white;
-      height: 72px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background-color: var(--ardian-red);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 1rem;
+      height: var(--navbar-height);
+      z-index: 1030;
     }
-
-    .navbar img {
+    
+    .navbar-brand img {
       height: 45px;
     }
-
-    .navbar h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 0;
-    }
-
+    
+    /* Sidebar styles */
     .sidebar {
-      width: 200px;
-      background-color: #c8102e;
-      color: white;
-      height: 100vh;
       position: fixed;
-      top: 0;
+      top: var(--navbar-height);
       left: 0;
-      padding-top: 90px;
-    }
-
-    .sidebar nav a {
-      display: block;
-      padding: 0.75rem 1rem;
+      width: var(--sidebar-width);
+      height: calc(100vh - var(--navbar-height));
+      background-color: var(--ardian-red);
       color: white;
-      text-decoration: none;
-      font-size: 0.9rem;
+      padding-top: 1rem;
+      z-index: 1020;
+      transition: all 0.3s;
+      overflow-y: auto;
     }
-
-    .sidebar nav a:hover {
-      background-color: #a10c24;
+    
+    .sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.85);
+      padding: 0.75rem 1.25rem;
+      font-size: 0.95rem;
+      border-radius: 0;
+      transition: all 0.2s;
     }
-
-    .sidebar nav a.active {
-      background-color: transparent;
+    
+    .sidebar .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+    
+    .sidebar .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-weight: 600;
       border-left: 4px solid white;
-      padding-left: 0.75rem;
-      font-weight: bold;
+      padding-left: calc(1.25rem - 4px);
     }
-
+    
+    .sidebar .nav-link i {
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+      width: 1.5rem;
+      text-align: center;
+    }
+    
+    /* Main content styles */
     .main-content {
-      margin-left: 200px;
-      padding: 100px 2rem 2rem;
+      margin-left: var(--sidebar-width);
+      padding: calc(var(--navbar-height) + 1.5rem + 40px) 1.5rem 1.5rem;
+      min-height: 100vh;
+      transition: all 0.3s;
     }
+    
+    /* Connected users bar */
     .connected-bar {
       position: fixed;
-      top: 72px;
-      left: 200px;
+      top: var(--navbar-height);
+      left: var(--sidebar-width);
       right: 0;
-      height: 38px;
-      background-color: #fff;
-      color: #c8102e;
-      font-size: 0.85rem;
-      padding: 0 1rem;
-      border-bottom: 1px solid #e5e7eb;
+      height: 40px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      z-index: 1010;
       display: flex;
       align-items: center;
+      padding: 0 1rem;
       overflow: hidden;
-      z-index: 998;
+      font-size: 0.85rem;
     }
-
+    
     .connected-content {
       display: inline-block;
       white-space: nowrap;
       animation: scroll 30s linear infinite;
       text-decoration: none;
-      color: inherit;
+      color: var(--ardian-red);
     }
-
+    
     .connected-user {
       display: inline-flex;
       align-items: center;
       margin-right: 2rem;
     }
-
+    
     .connected-user::before {
       content: " 🟢 ";
       margin-right: 0.4rem;
       font-size: 0.85rem;
     }
+    
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
+    
+    /* Card styles */
+    .export-card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+      height: 100%;
+      margin-bottom: 1.5rem;
+    }
+    
+    .export-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+    
+    .export-card .card-header {
+      background-color: transparent;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-weight: 600;
+      color: var(--ardian-red);
+      padding: 1.25rem 1.5rem;
+    }
+    
+    .export-card .card-header .card-title {
+      margin-bottom: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    
+    .export-card .card-body {
+      padding: 1.5rem;
+    }
+    
+    /* Code block */
+    .code-block {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9rem;
+      color: #495057;
+      white-space: pre-wrap;
+      margin-bottom: 1rem;
+    }
+    
+    /* Feature list */
+    .feature-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .feature-list li {
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .feature-list li i {
+      color: var(--ardian-red);
+      margin-right: 0.75rem;
+      font-size: 1.1rem;
+      margin-top: 0.2rem;
+    }
+    
+    /* Export buttons */
+    .export-btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    
+    .export-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .export-btn i {
+      font-size: 1.2rem;
+    }
+    
+    /* Integration connection */
+    .integration-badge {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 1rem;
+      font-weight: 500;
+    }
+    
+    .integration-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border: 1px solid #e9ecef;
+      border-radius: 0.75rem;
+      margin-bottom: 1rem;
+      transition: all 0.2s;
+    }
+    
+    .integration-item:hover {
+      background-color: #f8f9fa;
+      cursor: pointer;
+      border-color: #dee2e6;
+    }
+    
+    .integration-item img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      margin-right: 1rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 60px;
+      }
+      
+      .sidebar .nav-link span {
+        display: none;
+      }
+      
+      .sidebar .nav-link i {
+        margin-right: 0;
+        font-size: 1.25rem;
+      }
+      
+      .main-content {
+        margin-left: 60px;
+      }
+      
+      .connected-bar {
+        left: 60px;
+      }
+      
+      :root {
+        --sidebar-width: 60px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .connected-bar {
+        left: 0;
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      
+      :root {
+        --sidebar-width: 0px;
+      }
+      
+      .export-btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
+      </a>
+      <div class="d-flex align-items-center">
+        <h1 class="navbar-text text-white fw-bold d-none d-sm-block mb-0 ms-3">Export & Intégration</h1>
+        <button class="navbar-toggler ms-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
 
-  <!-- Barre de navigation -->
-  <div class="navbar">
-    <a href="../../index.html">
-      <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
-    </a>
-    <h1>Export & Intégration</h1>
-  </div>
-
-  <!-- Barre latérale -->
-  <div class="sidebar">
-    <nav>
-      <a href="../Dashboard/Dashboard.html">Dashboard</a>
-      <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
-      <a href="../Collecte & Validation des Données/Collecte et validation.html">Validation des données</a>
-      <a href="../Adminstration & Sécurité/admin.html">Administration et Sécurité</a>
-      <a href="#" class="active">Export et Intégration</a>
-    </nav>
-  </div>
-
-        <!-- Barre des utilisateurs connectés -->
-        <div class="connected-bar">
-          <a href="../../Utilisateurs_connectés.html" class="connected-content">
-            <div class="connected-user"><span> Marie Dupont (ESG) </span></div>
-            <div class="connected-user"><span> Paul Bernard (Finance) </span></div>
-            <div class="connected-user"><span> Sophie Laurent (IT) </span></div>
-            <div class="connected-user"><span> Jean Martin (IT) </span></div>
-            <div class="connected-user"><span> Lucie Morel (ESG) </span></div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebarMenu">
+    <div class="position-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="../Dashboard/Dashboard.html">
+            <i class="bi bi-graph-up"></i>
+            <span>Dashboard</span>
           </a>
-          </div>
-        </div>
-
-  <!-- Contenu principal -->
-  <div class="main-content">
-    <div class="bg-white p-6 rounded-lg shadow space-y-8">
-
-      <!-- Export Section -->
-      <section>
-        <h2 class="text-xl font-semibold text-red-600 mb-4">📄 Génération et Export des Données ESG</h2>
-        <p class="text-gray-700 mb-4">Choisissez un format pour exporter les données ESG en fonction de vos besoins :</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <button class="bg-red-600 text-white py-2 px-4 rounded shadow hover:bg-red-700">Excel</button>
-          <button class="bg-red-600 text-white py-2 px-4 rounded shadow hover:bg-red-700">CSV</button>
-          <button class="bg-red-600 text-white py-2 px-4 rounded shadow hover:bg-red-700">API JSON</button>
-        </div>
-        <div class="mt-6">
-          <h3 class="text-lg font-semibold text-gray-800 mb-2">Rapports personnalisés</h3>
-          <p class="text-gray-600">Créez des rapports ESG adaptés aux besoins des différents services (Finance, ESG, IT).</p>
-          <button class="mt-2 bg-gray-200 text-gray-800 py-2 px-4 rounded hover:bg-gray-300">Configurer un rapport personnalisé</button>
-        </div>
-      </section>
-
-      <!-- BI Integration Section -->
-      <section>
-        <h2 class="text-xl font-semibold text-red-600 mb-4">📊 Intégration avec outils BI</h2>
-        <ul class="list-disc pl-6 space-y-2 text-gray-700">
-          <li>Connecteurs disponibles vers <strong>Power BI</strong> et <strong>Tableau</strong>.</li>
-          <li>Sélection des indicateurs à synchroniser.</li>
-          <li>Mises à jour programmables ou à la demande.</li>
-        </ul>
-      </section>
-
-      <!-- API & Webhooks -->
-      <section>
-        <h2 class="text-xl font-semibold text-red-600 mb-4">🚀 API & Webhooks</h2>
-        <p class="mb-2 text-gray-700">Accédez directement aux données ESG depuis vos systèmes internes via API REST :</p>
-        <div class="bg-gray-100 p-4 rounded font-mono text-sm text-gray-800 border border-gray-300">
-          GET /api/esg/export?format=json<br>
-          Authorization: Bearer [TOKEN]
-        </div>
-        <p class="mt-2 text-gray-600">Cette API permet une intégration fluide avec les bases internes d’Ardian.</p>
-
-        <h3 class="mt-6 text-lg font-semibold text-gray-800 mb-2">Webhooks</h3>
-        <ul class="list-disc pl-6 space-y-1 text-gray-700">
-          <li>Déclenchement automatique lors de mise à jour d’indicateur.</li>
-          <li>Notification vers applications tierces ou ERP internes.</li>
-        </ul>
-      </section>
-
-      <!-- ESG Standards -->
-      <section>
-        <h2 class="text-xl font-semibold text-red-600 mb-4">🌍 Conformité ESG</h2>
-        <p class="text-gray-700">Les données exportées sont conformes aux standards internationaux :</p>
-        <ul class="list-disc pl-6 space-y-2 text-gray-700">
-          <li><strong>SFDR</strong> - Sustainable Finance Disclosure Regulation</li>
-          <li><strong>UN PRI</strong> - Principles for Responsible Investment</li>
-          <li><strong>GRI</strong> - Global Reporting Initiative</li>
-        </ul>
-      </section>
-
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Gestion du dictionnaire/gestion_dictionnaire.html">
+            <i class="bi bi-book"></i>
+            <span>Gestion du dictionnaire</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Collecte & Validation des Données/Collecte et validation.html">
+            <i class="bi bi-clipboard-data"></i>
+            <span>Validation des données</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Adminstration & Sécurité/admin.html">
+            <i class="bi bi-shield-lock"></i>
+            <span>Administration et Sécurité</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">
+            <i class="bi bi-box-arrow-up"></i>
+            <span>Export et Intégration</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 
+  <!-- Connected users bar -->
+  <div class="connected-bar">
+    <a href="../../Utilisateurs_connectés.html" class="connected-content">
+      <div class="connected-user"><span>Marie Dupont (ESG)</span></div>
+      <div class="connected-user"><span>Paul Bernard (Finance)</span></div>
+      <div class="connected-user"><span>Sophie Laurent (IT)</span></div>
+      <div class="connected-user"><span>Jean Martin (IT)</span></div>
+      <div class="connected-user"><span>Lucie Morel (ESG)</span></div>
+    </a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="row">
+      <!-- Export Section -->
+      <div class="col-lg-6">
+        <div class="card export-card">
+          <div class="card-header d-flex align-items-center">
+            <i class="bi bi-file-earmark-arrow-down me-2 fs-4"></i>
+            <h5 class="card-title">Génération et Export des Données ESG</h5>
+          </div>
+          <div class="card-body">
+            <p class="text-muted mb-4">Exportez vos données ESG dans différents formats pour analyse et reporting. Personnalisez les exports selon vos besoins spécifiques.</p>
+            
+            <div class="row mb-4">
+              <div class="col-md-4 mb-3 mb-md-0">
+                <button class="btn btn-primary export-btn w-100" data-bs-toggle="modal" data-bs-target="#exportModal">
+                  <i class="bi bi-file-earmark-excel"></i>
+                  <span>Excel</span>
+                </button>
+              </div>
+              <div class="col-md-4 mb-3 mb-md-0">
+                <button class="btn btn-primary export-btn w-100" data-bs-toggle="modal" data-bs-target="#exportModal">
+                  <i class="bi bi-filetype-csv"></i>
+                  <span>CSV</span>
+                </button>
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-primary export-btn w-100" data-bs-toggle="modal" data-bs-target="#exportModal">
+                  <i class="bi bi-braces"></i>
+                  <span>JSON</span>
+                </button>
+              </div>
+            </div>
+            
+            <h6 class="fw-bold mb-3">Rapports personnalisés</h6>
+            <div class="list-group mb-4">
+              <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">Rapport ESG Trimestriel</h6>
+                  <p class="mb-0 small text-muted">Format Excel, dernière génération: 15/04/2025</p>
+                </div>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+              <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">Données SFDR - Article 9</h6>
+                  <p class="mb-0 small text-muted">Format CSV, dernière génération: 02/05/2025</p>
+                </div>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+              <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">Indicateurs environnementaux</h6>
+                  <p class="mb-0 small text-muted">Format Excel, dernière génération: 10/05/2025</p>
+                </div>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+            
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createReportModal">
+              <i class="bi bi-plus-circle me-2"></i>Créer un rapport personnalisé
+            </button>
+          </div>
+        </div>
+        
+        <div class="card export-card">
+          <div class="card-header d-flex align-items-center">
+            <i class="bi bi-globe me-2 fs-4"></i>
+            <h5 class="card-title">Conformité ESG et Normes</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex flex-wrap justify-content-between mb-4">
+              <div class="compliance-badge bg-light rounded-pill px-3 py-2 mb-2 me-2 d-flex align-items-center">
+                <span class="badge bg-success rounded-circle me-2">&nbsp;</span>
+                <span>SFDR</span>
+              </div>
+              <div class="compliance-badge bg-light rounded-pill px-3 py-2 mb-2 me-2 d-flex align-items-center">
+                <span class="badge bg-success rounded-circle me-2">&nbsp;</span>
+                <span>TCFD</span>
+              </div>
+              <div class="compliance-badge bg-light rounded-pill px-3 py-2 mb-2 me-2 d-flex align-items-center">
+                <span class="badge bg-success rounded-circle me-2">&nbsp;</span>
+                <span>GRI</span>
+              </div>
+              <div class="compliance-badge bg-light rounded-pill px-3 py-2 mb-2 me-2 d-flex align-items-center">
+                <span class="badge bg-warning rounded-circle me-2">&nbsp;</span>
+                <span>EU Taxonomy</span>
+              </div>
+              <div class="compliance-badge bg-light rounded-pill px-3 py-2 mb-2 me-2 d-flex align-items-center">
+                <span class="badge bg-success rounded-circle me-2">&nbsp;</span>
+                <span>SASB</span>
+              </div>
+            </div>
+            
+            <p class="mb-3">Les exports sont conformes aux normes ESG internationales et peuvent être adaptés aux réglementations spécifiques.</p>
+            
+            <button class="btn btn-sm btn-outline-secondary">Afficher tous les cadres réglementaires</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Integration Section -->
+      <div class="col-lg-6">
+        <div class="card export-card">
+          <div class="card-header d-flex align-items-center">
+            <i class="bi bi-bar-chart me-2 fs-4"></i>
+            <h5 class="card-title">Intégration avec outils BI</h5>
+          </div>
+          <div class="card-body">
+            <p class="text-muted mb-4">Connectez vos données ESG directement à vos outils d'analyse et de Business Intelligence pour des visualisations avancées.</p>
+            
+            <div class="integration-item">
+              <img src="https://cdn.worldvectorlogo.com/logos/power-bi.svg" alt="Power BI">
+              <div class="flex-grow-1">
+                <h6 class="mb-1">Microsoft Power BI</h6>
+                <p class="mb-0 small text-muted">Intégration directe pour tableaux de bord interactifs</p>
+              </div>
+              <span class="badge bg-success integration-badge">Connecté</span>
+            </div>
+            
+            <div class="integration-item">
+              <img src="https://cdn.worldvectorlogo.com/logos/tableau-software.svg" alt="Tableau">
+              <div class="flex-grow-1">
+                <h6 class="mb-1">Tableau</h6>
+                <p class="mb-0 small text-muted">Visualisations avancées et rapports personnalisés</p>
+              </div>
+              <span class="badge bg-secondary integration-badge">Configurer</span>
+            </div>
+            
+            <div class="integration-item">
+              <img src="https://cdn.worldvectorlogo.com/logos/looker.svg" alt="Looker">
+              <div class="flex-grow-1">
+                <h6 class="mb-1">Looker (Google)</h6>
+                <p class="mb-0 small text-muted">Analyse de données et intelligence d'affaires</p>
+              </div>
+              <span class="badge bg-secondary integration-badge">Configurer</span>
+            </div>
+            
+            <button class="btn btn-outline-primary mt-3">
+              <i class="bi bi-plus-circle me-2"></i>Ajouter une nouvelle intégration
+            </button>
+          </div>
+        </div>
+        
+        <div class="card export-card">
+          <div class="card-header d-flex align-items-center">
+            <i class="bi bi-code-square me-2 fs-4"></i>
+            <h5 class="card-title">API & Webhooks</h5>
+          </div>
+          <div class="card-body">
+            <p class="text-muted mb-3">Accédez aux données ESG via notre API REST ou configurez des webhooks pour des notifications automatiques.</p>
+            
+            <div class="code-block mb-4">
+GET /api/esg/export?format=json
+Authorization: Bearer [TOKEN]</div>
+            
+            <h6 class="fw-bold mb-3">Fonctionnalités de l'API</h6>
+            <ul class="feature-list mb-4">
+              <li>
+                <i class="bi bi-check-circle-fill"></i>
+                <div>
+                  <strong>Filtrage avancé</strong>
+                  <p class="mb-0 text-muted small">Sélectionnez précisément les indicateurs dont vous avez besoin</p>
+                </div>
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i>
+                <div>
+                  <strong>Historique des données</strong>
+                  <p class="mb-0 text-muted small">Accédez aux séries temporelles complètes</p>
+                </div>
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i>
+                <div>
+                  <strong>Webhooks configurables</strong>
+                  <p class="mb-0 text-muted small">Notifications automatiques lors des mises à jour</p>
+                </div>
+              </li>
+            </ul>
+            
+            <div class="d-flex">
+              <button class="btn btn-sm btn-primary me-2">
+                <i class="bi bi-book me-1"></i>Documentation API
+              </button>
+              <button class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-key me-1"></i>Gérer les clés API
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Export Modal -->
+  <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exportModalLabel">Configurer l'export</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="exportType" class="form-label">Type d'export</label>
+            <select class="form-select" id="exportType">
+              <option>Tous les indicateurs ESG</option>
+              <option>Indicateurs environnementaux</option>
+              <option>Indicateurs sociaux</option>
+              <option>Indicateurs de gouvernance</option>
+              <option>Personnalisé</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label for="dateRange" class="form-label">Période</label>
+            <select class="form-select" id="dateRange">
+              <option>Dernière année (2024-2025)</option>
+              <option>Derniers 2 ans (2023-2025)</option>
+              <option>Derniers 5 ans (2020-2025)</option>
+              <option>Personnalisé</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label for="companies" class="form-label">Sociétés</label>
+            <select class="form-select" id="companies" multiple>
+              <option selected>Toutes les sociétés</option>
+              <option>Allianz SE</option>
+              <option>AXA Group</option>
+              <option>BNP Paribas</option>
+              <option>Deutsche Bank</option>
+            </select>
+            <div class="form-text">Maintenez la touche Ctrl pour sélectionner plusieurs options</div>
+          </div>
+          
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="includeMetadata" checked>
+            <label class="form-check-label" for="includeMetadata">
+              Inclure les métadonnées (sources, dates de collecte, etc.)
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary">
+            <i class="bi bi-download me-2"></i>Télécharger
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Create Report Modal -->
+  <div class="modal fade" id="createReportModal" tabindex="-1" aria-labelledby="createReportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createReportModalLabel">Créer un rapport personnalisé</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="reportName" class="form-label">Nom du rapport</label>
+            <input type="text" class="form-control" id="reportName" placeholder="ex: Rapport ESG Trimestriel">
+          </div>
+          
+          <div class="mb-3">
+            <label for="reportDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="reportDescription" rows="2" placeholder="Description du rapport et de son utilisation"></textarea>
+          </div>
+          
+          <div class="mb-3">
+            <label for="reportFormat" class="form-label">Format</label>
+            <select class="form-select" id="reportFormat">
+              <option value="excel">Excel</option>
+              <option value="csv">CSV</option>
+              <option value="pdf">PDF</option>
+              <option value="json">JSON</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label for="reportFrequency" class="form-label">Fréquence de génération</label>
+            <select class="form-select" id="reportFrequency">
+              <option value="manual">Manuel uniquement</option>
+              <option value="daily">Quotidien</option>
+              <option value="weekly">Hebdomadaire</option>
+              <option value="monthly">Mensuel</option>
+              <option value="quarterly">Trimestriel</option>
+            </select>
+          </div>
+          
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="reportNotify" checked>
+            <label class="form-check-label" for="reportNotify">
+              Notifier par email lors de la génération
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary">Créer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Mobile sidebar toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebarToggle = document.querySelector('[data-bs-toggle="collapse"]');
+      const sidebar = document.getElementById('sidebarMenu');
+
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('show');
+        });
+      }
+    });
+  </script>
 </body>
 </html>

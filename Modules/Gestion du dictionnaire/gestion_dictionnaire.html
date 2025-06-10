@@ -4,301 +4,905 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gestion du Dictionnaire ESG</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
+    :root {
+      --ardian-red: #c8102e;
+      --ardian-dark-red: #a10c24;
+      --sidebar-width: 250px;
+      --navbar-height: 72px;
+    }
+    
     body {
-      margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
-      color: #111827;
+      background-color: #f8f9fa;
+      overflow-x: hidden;
     }
+    
+    /* Navbar styles */
     .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 72px;
-      background-color: #c8102e;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem;
-      z-index: 1000;
+      background-color: var(--ardian-red);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 1rem;
+      height: var(--navbar-height);
+      z-index: 1030;
     }
-    .navbar img {
+    
+    .navbar-brand img {
       height: 45px;
     }
+    
+    /* Sidebar styles */
     .sidebar {
       position: fixed;
-      top: 72px;
+      top: var(--navbar-height);
       left: 0;
-      width: 200px;
-      height: calc(100vh - 72px);
-      background-color: #c8102e;
+      width: var(--sidebar-width);
+      height: calc(100vh - var(--navbar-height));
+      background-color: var(--ardian-red);
       color: white;
-      padding: 1rem 0.5rem;
+      padding-top: 1rem;
+      z-index: 1020;
+      transition: all 0.3s;
+      overflow-y: auto;
     }
-    .sidebar nav a {
-      display: block;
-      color: white;
-      padding: 0.5rem 1rem;
-      text-decoration: none;
-      font-size: 0.9rem;
+    
+    .sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.85);
+      padding: 0.75rem 1.25rem;
+      font-size: 0.95rem;
+      border-radius: 0;
+      transition: all 0.2s;
     }
-    .sidebar nav a:hover,
-    .sidebar nav a.active {
+    
+    .sidebar .nav-link:hover {
       background-color: rgba(255, 255, 255, 0.1);
-      font-weight: bold;
+      color: white;
     }
-    .main {
-      margin-left: 200px;
-      padding: 90px 2rem 2rem;
+    
+    .sidebar .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-weight: 600;
+      border-left: 4px solid white;
+      padding-left: calc(1.25rem - 4px);
     }
+    
+    .sidebar .nav-link i {
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+      width: 1.5rem;
+      text-align: center;
+    }
+    
+    /* Main content styles */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: calc(var(--navbar-height) + 1.5rem + 40px) 1.5rem 1.5rem;
+      min-height: 100vh;
+      transition: all 0.3s;
+    }
+    
+    /* Connected users bar */
     .connected-bar {
       position: fixed;
-      top: 72px;
-      left: 200px;
+      top: var(--navbar-height);
+      left: var(--sidebar-width);
       right: 0;
-      height: 38px;
-      background-color: #fff;
-      color: #c8102e;
-      font-size: 0.85rem;
-      padding: 0 1rem;
-      border-bottom: 1px solid #e5e7eb;
+      height: 40px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      z-index: 1010;
       display: flex;
       align-items: center;
+      padding: 0 1rem;
       overflow: hidden;
-      z-index: 998;
+      font-size: 0.85rem;
     }
-
+    
     .connected-content {
       display: inline-block;
       white-space: nowrap;
       animation: scroll 30s linear infinite;
       text-decoration: none;
-      color: inherit;
+      color: var(--ardian-red);
     }
-
+    
     .connected-user {
       display: inline-flex;
       align-items: center;
       margin-right: 2rem;
     }
-
+    
     .connected-user::before {
       content: " 🟢 ";
       margin-right: 0.4rem;
       font-size: 0.85rem;
     }
+    
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
+    
+    /* Dictionary card styles */
+    .dictionary-card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+    }
+    
+    .dictionary-card .card-header {
+      background-color: transparent;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-weight: 600;
+      color: var(--ardian-red);
+    }
+    
+    /* Table styles */
+    .table-container {
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .table th {
+      font-weight: 600;
+      background-color: #f8f9fa;
+      border-top: none;
+    }
+    
+    /* Badge styles */
+    .badge-new {
+      background-color: rgba(25, 135, 84, 0.1);
+      color: #198754;
+    }
+    
+    .badge-modified {
+      background-color: rgba(255, 193, 7, 0.1);
+      color: #cc9a06;
+    }
+    
+    .badge-deleted {
+      background-color: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+    }
+    
+    .badge-unchanged {
+      background-color: rgba(108, 117, 125, 0.1);
+      color: #6c757d;
+    }
+    
+    /* Buttons */
+    .btn-primary {
+      background-color: var(--ardian-red);
+      border-color: var(--ardian-red);
+    }
+    
+    .btn-primary:hover, .btn-primary:focus {
+      background-color: var(--ardian-dark-red);
+      border-color: var(--ardian-dark-red);
+    }
+    
+    /* Indicator Detail Styles */
+    .detail-card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .detail-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+    
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .detail-body {
+      padding: 1.25rem;
+    }
+    
+    .detail-item {
+      margin-bottom: 1rem;
+      border-left: 3px solid var(--ardian-red);
+      padding-left: 1rem;
+    }
+    
+    .detail-label {
+      font-weight: 600;
+      color: #6c757d;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+    }
+    
+    .detail-value {
+      font-weight: 500;
+    }
+    
+    .regulation-badge {
+      background-color: rgba(108, 117, 125, 0.1);
+      color: #495057;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 1rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+    
+    /* Comment Section Styles */
+    .comment-section {
+      background-color: #f8f9fa;
+      border-radius: 1rem;
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    
+    .comment {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.025);
+    }
+    
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+    
+    .comment-author {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+    
+    .comment-author img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 0.75rem;
+    }
+    
+    .comment-date {
+      color: #6c757d;
+      font-size: 0.85rem;
+    }
+    
+    .timeline-container {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding-bottom: 1.5rem;
+    }
+    
+    .timeline-item:before {
+      content: "";
+      position: absolute;
+      left: -28px;
+      top: 0;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--ardian-red);
+      z-index: 1;
+    }
+    
+    .timeline-item:after {
+      content: "";
+      position: absolute;
+      left: -23px;
+      top: 12px;
+      width: 2px;
+      height: 100%;
+      background: #e9ecef;
+    }
+    
+    .timeline-item:last-child:after {
+      display: none;
+    }
+    
+    .timeline-date {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-content {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.025);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 60px;
+      }
+      
+      .sidebar .nav-link span {
+        display: none;
+      }
+      
+      .sidebar .nav-link i {
+        margin-right: 0;
+        font-size: 1.25rem;
+      }
+      
+      .main-content {
+        margin-left: 60px;
+      }
+      
+      .connected-bar {
+        left: 60px;
+      }
+      
+      :root {
+        --sidebar-width: 60px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .connected-bar {
+        left: 0;
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      
+      :root {
+        --sidebar-width: 0px;
+      }
+    }
   </style>
 </head>
 <body>
-
   <!-- Navbar -->
-  <div class="navbar">
-    <a href="../../index.html">
-      <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
-    </a>
-    <h1 class="text-xl font-bold">Gestion du Dictionnaire ESG</h1>
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
+      </a>
+      <div class="d-flex align-items-center">
+        <h1 class="navbar-text text-white fw-bold d-none d-sm-block mb-0 ms-3">Gestion du Dictionnaire ESG</h1>
+        <button class="navbar-toggler ms-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
 
   <!-- Sidebar -->
-  <div class="sidebar">
-    <nav>
-      <a href="../Dashboard/Dashboard.html">Dashboard</a>
-      <a href="gestion_dictionnaire.html" class="active">Gestion du dictionnaire</a>
-      <a href="../Collecte & Validation des Données/Collecte et validation.html"> Validation des données</a>
-      <a href="../Adminstration & Sécurité/admin.html">Administration et Sécurité</a>
-      <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
-    </nav>
+  <div class="sidebar" id="sidebarMenu">
+    <div class="position-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="../Dashboard/Dashboard.html">
+            <i class="bi bi-graph-up"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">
+            <i class="bi bi-book"></i>
+            <span>Gestion du dictionnaire</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Collecte & Validation des Données/Collecte et validation.html">
+            <i class="bi bi-clipboard-data"></i>
+            <span>Validation des données</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Adminstration & Sécurité/admin.html">
+            <i class="bi bi-shield-lock"></i>
+            <span>Administration et Sécurité</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Export et intégration/Export_integration.html">
+            <i class="bi bi-box-arrow-up"></i>
+            <span>Export et Intégration</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 
-        <!-- Barre des utilisateurs connectés -->
-        <div class="connected-bar">
-          <a href="../../Utilisateurs_connectés.html" class="connected-content">
-            <div class="connected-user"><span> Marie Dupont (ESG) </span></div>
-            <div class="connected-user"><span> Paul Bernard (Finance) </span></div>
-            <div class="connected-user"><span> Sophie Laurent (IT) </span></div>
-            <div class="connected-user"><span> Jean Martin (IT) </span></div>
-            <div class="connected-user"><span> Lucie Morel (ESG) </span></div>
-          </a>
+  <!-- Connected users bar -->
+  <div class="connected-bar">
+    <a href="../../Utilisateurs_connectés.html" class="connected-content">
+      <div class="connected-user"><span>Marie Dupont (ESG)</span></div>
+      <div class="connected-user"><span>Paul Bernard (Finance)</span></div>
+      <div class="connected-user"><span>Sophie Laurent (IT)</span></div>
+      <div class="connected-user"><span>Jean Martin (IT)</span></div>
+      <div class="connected-user"><span>Lucie Morel (ESG)</span></div>
+    </a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="fw-bold text-danger mb-0">Dictionnaire des indicateurs</h2>
+          <div>
+            <button class="btn btn-outline-secondary me-2" id="toggleDetailBtn">
+              <i class="bi bi-eye me-2"></i>Afficher détails
+            </button>
+            <a href="ajout.html" class="btn btn-danger">
+              <i class="bi bi-plus-lg me-2"></i>Ajouter un indicateur
+            </a>
           </div>
         </div>
-
-  <!-- Contenu principal -->
-  <div class="main">
-    <div class="bg-white p-6 rounded-lg shadow-md grid grid-cols-3 gap-4">
-      <!-- Tableau -->
-      <div class="col-span-2">
-        <div class="flex gap-2 mb-4">
-          <input type="text" placeholder="Nom de l'indicateur" class="border p-2 w-1/3 rounded">
-          <select class="border p-2 w-1/4 rounded">
-            <option>Statut</option>
-            <option>Nouveau</option>
-            <option>Inchangé</option>
-            <option>Modifié</option>
-            <option>Supprimé</option>
-          </select>
-          <input type="text" placeholder="Réglementation associée" class="border p-2 w-1/3 rounded">
-          <button class="bg-red-600 text-white px-4 py-2 rounded">Filtrer</button>
-        </div>
-
-        <table class="w-full border-collapse text-sm">
-          <thead class="bg-gray-200">
-            <tr>
-              <th class="p-2 border">Nom</th>
-              <th class="p-2 border">ID</th>
-              <th class="p-2 border">Responsable</th>
-              <th class="p-2 border">Stockage</th>
-              <th class="p-2 border">Type</th>
-              <th class="p-2 border">Statut</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">Ardian Identification Number</td>
-                <td class="p-2 border">AGI-01</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Numérique</td>
-                <td class="p-2 border"><span class="bg-green-200 text-green-700 px-2 py-1 rounded">Nouveau</span></td>
-            </tr>
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">MDM Company Commercial Name</td>
-                <td class="p-2 border">AGI-02</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Texte</td>
-                <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
-            </tr>
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">Industry Classification GICS 3</td>
-                <td class="p-2 border">AGI-04</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Liste de valeurs</td>
-                <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
-            </tr>
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">Industry Classification GICS 4</td>
-                <td class="p-2 border">AGI-37</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Numérique</td>
-                <td class="p-2 border"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded">Supprimé</span></td>
-            </tr>
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">MDM Company Commercial Name</td>
-                <td class="p-2 border">AGI-02</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Texte</td>
-                <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
-            </tr>
-
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">Industry Classification GICS 3</td>
-                <td class="p-2 border">AGI-04</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Liste de valeurs</td>
-                <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
-            </tr>
-
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">Industry Classification GICS 4</td>
-                <td class="p-2 border">AGI-37</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Numérique</td>
-                <td class="p-2 border"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded">Supprimé</span></td>
-            </tr>
-
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">Ardian Identification Number</td>
-                <td class="p-2 border">AGI-01</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Numérique</td>
-                <td class="p-2 border"><span class="bg-green-200 text-green-700 px-2 py-1 rounded">Nouveau</span></td>
-            </tr>
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">Industry Classification GICS 3</td>
-                <td class="p-2 border">AGI-04</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Liste de valeurs</td>
-                <td class="p-2 border"><span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded">Modifié</span></td>
-            </tr>
-
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">Industry Classification GICS 4</td>
-                <td class="p-2 border">AGI-37</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Numérique</td>
-                <td class="p-2 border"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded">Supprimé</span></td>
-            </tr>
-
-            <tr class="hover:bg-gray-100">
-                <td class="p-2 border">Ardian Identification Number</td>
-                <td class="p-2 border">AGI-01</td>
-                <td class="p-2 border">Susty</td>
-                <td class="p-2 border">DataPlatform</td>
-                <td class="p-2 border">Numérique</td>
-                <td class="p-2 border"><span class="bg-green-200 text-green-700 px-2 py-1 rounded">Nouveau</span></td>
-            </tr>
-        </tbody>
-        </table>
-
-        <a href="./ajout.html">
-          <button class="mt-4 bg-red-600 text-white px-4 py-2 rounded">Ajouter un indicateur</button>
-        </a>
-      </div>
-
-      <!-- Détails -->
-      <div class="bg-gray-50 p-4 rounded border">
-        <h2 class="text-lg font-semibold mb-2">Détail de l'indicateur</h2>
-        <p><strong>ID Technique :</strong> AGI-01</p>
-        <p><strong>Responsable :</strong> Susty</p>
-        <p><strong>Stockage :</strong> DataPlatform</p>
-        <p><strong>Type :</strong> Numérique</p>
-        <p><strong>Statut :</strong> Nouveau</p>
-        <p><strong>Description :</strong> Identification unique dans le DataPlatform.</p>
-
-        <a href="./modification.html">
-          <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Modifier</button>
-        </a>
-
-        <!-- Commentaires -->
-        <div class="mt-6">
-          <h3 class="font-bold mb-2">Commentaires</h3>
-          <div class="h-32 overflow-y-auto border p-2 bg-white rounded">
-            <p><strong>Jean :</strong> À vérifier</p>
-            <p><strong>Marie :</strong> OK pour validation</p>
+        
+        <!-- Détail de l'indicateur (initialement caché) -->
+        <div id="indicatorDetail" class="detail-card mb-4" style="display: none;">
+          <div class="detail-header">
+            <div>
+              <h4 class="mb-0 fw-bold text-danger">Émissions de CO2 Scope 1</h4>
+              <div class="text-muted mt-1">ID: ENV-01</div>
+            </div>
+            <span class="badge badge-new rounded-pill px-3 py-2">Nouveau</span>
           </div>
-          <div class="flex gap-2 mt-2">
-            <input type="text" placeholder="Ajouter..." class="border p-2 flex-grow rounded">
-            <button class="bg-blue-600 text-white px-4 py-2 rounded">Envoyer</button>
+          <div class="detail-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="detail-item">
+                  <div class="detail-label">Description</div>
+                  <div class="detail-value">Émissions directes de gaz à effet de serre provenant des installations fixes ou mobiles situées à l'intérieur du périmètre organisationnel.</div>
+                </div>
+                
+                <div class="detail-item">
+                  <div class="detail-label">Unité de mesure</div>
+                  <div class="detail-value">tCO2e (tonnes équivalent CO2)</div>
+                </div>
+                
+                <div class="detail-item">
+                  <div class="detail-label">Type de données</div>
+                  <div class="detail-value">Numérique</div>
+                </div>
+                
+                <div class="detail-item">
+                  <div class="detail-label">Source de données</div>
+                  <div class="detail-value">Questionnaire ESG annuel</div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="detail-item">
+                  <div class="detail-label">Responsable</div>
+                  <div class="detail-value">Équipe Susty</div>
+                </div>
+                
+                <div class="detail-item">
+                  <div class="detail-label">Fréquence de collecte</div>
+                  <div class="detail-value">Annuelle</div>
+                </div>
+                
+                <div class="detail-item">
+                  <div class="detail-label">Stockage</div>
+                  <div class="detail-value">DataPlatform</div>
+                </div>
+                
+                <div class="detail-item">
+                  <div class="detail-label">Réglementations associées</div>
+                  <div class="detail-value">
+                    <span class="regulation-badge">SFDR</span>
+                    <span class="regulation-badge">TCFD</span>
+                    <span class="regulation-badge">GHG Protocol</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Historique de l'indicateur -->
+            <div class="mt-4">
+              <h5 class="fw-bold mb-3">Historique</h5>
+              <div class="timeline-container">
+                <div class="timeline-item">
+                  <div class="timeline-date">10 Mai 2025 - Marie Dupont</div>
+                  <div class="timeline-content">
+                    <strong>Création</strong> de l'indicateur
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-date">12 Mai 2025 - Jean Martin</div>
+                  <div class="timeline-content">
+                    <strong>Modification</strong> de la description
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-date">14 Mai 2025 - Lucie Morel</div>
+                  <div class="timeline-content">
+                    <strong>Ajout</strong> de la réglementation SFDR
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Section commentaires -->
+            <div class="comment-section">
+              <h5 class="fw-bold mb-3">Commentaires</h5>
+              
+              <!-- Liste des commentaires -->
+              <div class="comment mb-3">
+                <div class="comment-header">
+                  <div class="comment-author">
+                    <img src="../ressources/avatar1.png" alt="Avatar" onerror="this.src='https://via.placeholder.com/32'">
+                    <span>Marie Dupont</span>
+                  </div>
+                  <div class="comment-date">10 Mai 2025, 14:32</div>
+                </div>
+                <div class="comment-content">
+                  Indicateur créé suite à la mise à jour des exigences SFDR. Veuillez vous référer à la méthodologie du GHG Protocol pour le calcul.
+                </div>
+              </div>
+              
+              <div class="comment mb-3">
+                <div class="comment-header">
+                  <div class="comment-author">
+                    <img src="../ressources/avatar2.png" alt="Avatar" onerror="this.src='https://via.placeholder.com/32'">
+                    <span>Jean Martin</span>
+                  </div>
+                  <div class="comment-date">12 Mai 2025, 09:15</div>
+                </div>
+                <div class="comment-content">
+                  J'ai précisé la description pour clarifier que les émissions concernent uniquement le périmètre organisationnel.
+                </div>
+              </div>
+              
+              <!-- Formulaire de commentaire -->
+              <div class="card border-0">
+                <div class="card-body p-0">
+                  <form>
+                    <div class="mb-3">
+                      <textarea class="form-control" rows="3" placeholder="Ajouter un commentaire..."></textarea>
+                    </div>
+                    <div class="text-end">
+                      <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-send me-2"></i>Commenter
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- Historique -->
-        <div class="mt-6">
-          <h3 class="font-bold mb-2">Historique</h3>
-          <ul class="text-sm space-y-2 border-l-2 border-gray-300 pl-4">
-            <li><span class="text-gray-500">12/05/2025</span> - <strong>Ajout</strong> par Jean</li>
-            <li><span class="text-gray-500">13/05/2025</span> - <strong>Modification</strong> par Marie</li>
-          </ul>
+        
+        <div class="card dictionary-card">
+          <div class="card-header d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0">Liste des indicateurs</h5>
+          </div>
+          <div class="card-body">
+            <!-- Filtres -->
+            <div class="row g-3 mb-4">
+              <div class="col-md-4">
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-search"></i></span>
+                  <input type="text" class="form-control" placeholder="Nom de l'indicateur">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <select class="form-select">
+                  <option value="">Statut</option>
+                  <option value="nouveau">Nouveau</option>
+                  <option value="inchange">Inchangé</option>
+                  <option value="modifie">Modifié</option>
+                  <option value="supprime">Supprimé</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Réglementation associée">
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-primary w-100">
+                  <i class="bi bi-funnel me-2"></i>Filtrer
+                </button>
+              </div>
+            </div>
+            
+            <!-- Tableau -->
+            <div class="table-container">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead>
+                    <tr>
+                      <th>Nom</th>
+                      <th>ID</th>
+                      <th>Responsable</th>
+                      <th>Stockage</th>
+                      <th>Type</th>
+                      <th>Statut</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="indicator-row" data-id="AGI-01">
+                      <td>Ardian Identification Number</td>
+                      <td>AGI-01</td>
+                      <td>Susty</td>
+                      <td>DataPlatform</td>
+                      <td>Numérique</td>
+                      <td><span class="badge badge-new rounded-pill px-3 py-2">Nouveau</span></td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-sm btn-outline-secondary view-details">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <a href="modification.html" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                          <button class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="indicator-row" data-id="AGI-02">
+                      <td>MDM Company Commercial Name</td>
+                      <td>AGI-02</td>
+                      <td>Susty</td>
+                      <td>DataPlatform</td>
+                      <td>Texte</td>
+                      <td><span class="badge badge-modified rounded-pill px-3 py-2">Modifié</span></td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-sm btn-outline-secondary view-details">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <a href="modification.html" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                          <button class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="indicator-row" data-id="AGI-04">
+                      <td>Industry Classification GICS 3</td>
+                      <td>AGI-04</td>
+                      <td>Susty</td>
+                      <td>DataPlatform</td>
+                      <td>Liste de valeurs</td>
+                      <td><span class="badge badge-modified rounded-pill px-3 py-2">Modifié</span></td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-sm btn-outline-secondary view-details">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <a href="modification.html" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                          <button class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="indicator-row" data-id="AGI-37">
+                      <td>Industry Classification GICS 4</td>
+                      <td>AGI-37</td>
+                      <td>Susty</td>
+                      <td>DataPlatform</td>
+                      <td>Numérique</td>
+                      <td><span class="badge badge-deleted rounded-pill px-3 py-2">Supprimé</span></td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-sm btn-outline-secondary view-details">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <a href="modification.html" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                          <button class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="indicator-row" data-id="AGI-12">
+                      <td>Secteur d'activité principal</td>
+                      <td>AGI-12</td>
+                      <td>Susty</td>
+                      <td>DataPlatform</td>
+                      <td>Liste de valeurs</td>
+                      <td><span class="badge badge-unchanged rounded-pill px-3 py-2">Inchangé</span></td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-sm btn-outline-secondary view-details">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <a href="modification.html" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                          <button class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="indicator-row" data-id="ENV-01">
+                      <td>Émissions de CO2 Scope 1</td>
+                      <td>ENV-01</td>
+                      <td>Susty</td>
+                      <td>DataPlatform</td>
+                      <td>Numérique</td>
+                      <td><span class="badge badge-new rounded-pill px-3 py-2">Nouveau</span></td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-sm btn-outline-secondary view-details">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <a href="modification.html" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                          <button class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="indicator-row" data-id="ENV-02">
+                      <td>Émissions de CO2 Scope 2</td>
+                      <td>ENV-02</td>
+                      <td>Susty</td>
+                      <td>DataPlatform</td>
+                      <td>Numérique</td>
+                      <td><span class="badge badge-new rounded-pill px-3 py-2">Nouveau</span></td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-sm btn-outline-secondary view-details">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <a href="modification.html" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                          <button class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="indicator-row" data-id="ENV-05">
+                      <td>Consommation d'eau</td>
+                      <td>ENV-05</td>
+                      <td>Susty</td>
+                      <td>DataPlatform</td>
+                      <td>Numérique</td>
+                      <td><span class="badge badge-unchanged rounded-pill px-3 py-2">Inchangé</span></td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-sm btn-outline-secondary view-details">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <a href="modification.html" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                          <button class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center mt-4">
+              <div>
+                <span class="text-muted">Affichage de 1-8 sur 42 entrées</span>
+              </div>
+              <nav aria-label="Page navigation">
+                <ul class="pagination mb-0">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Précédent</a>
+                  </li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">Suivant</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Mobile sidebar toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebarToggle = document.querySelector('[data-bs-toggle="collapse"]');
+      const sidebar = document.getElementById('sidebarMenu');
+      const indicatorDetail = document.getElementById('indicatorDetail');
+      const toggleDetailBtn = document.getElementById('toggleDetailBtn');
+      const viewDetailsButtons = document.querySelectorAll('.view-details');
+      const indicatorRows = document.querySelectorAll('.indicator-row');
+
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('show');
+        });
+      }
+      
+      // Toggle detail view
+      if (toggleDetailBtn && indicatorDetail) {
+        toggleDetailBtn.addEventListener('click', function() {
+          if (indicatorDetail.style.display === 'none') {
+            indicatorDetail.style.display = 'block';
+            toggleDetailBtn.innerHTML = '<i class="bi bi-eye-slash me-2"></i>Masquer détails';
+          } else {
+            indicatorDetail.style.display = 'none';
+            toggleDetailBtn.innerHTML = '<i class="bi bi-eye me-2"></i>Afficher détails';
+          }
+        });
+      }
+      
+      // View details on row click
+      if (viewDetailsButtons.length > 0) {
+        viewDetailsButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const row = this.closest('tr');
+            const indicatorId = row.dataset.id;
+            
+            // Highlight the selected row
+            indicatorRows.forEach(row => row.classList.remove('table-active'));
+            row.classList.add('table-active');
+            
+            // Show the details section
+            if (indicatorDetail.style.display === 'none') {
+              indicatorDetail.style.display = 'block';
+              toggleDetailBtn.innerHTML = '<i class="bi bi-eye-slash me-2"></i>Masquer détails';
+            }
+            
+            // Scroll to details
+            indicatorDetail.scrollIntoView({behavior: 'smooth'});
+            
+            // In a real application, we would fetch details from the server based on the ID
+            console.log(`Viewing details for indicator ${indicatorId}`);
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>

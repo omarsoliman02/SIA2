@@ -4,365 +4,672 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Administration & Sécurité - ESG</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
+    :root {
+      --ardian-red: #c8102e;
+      --ardian-dark-red: #a10c24;
+      --sidebar-width: 250px;
+      --navbar-height: 72px;
+    }
+    
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #f4f6f8;
-      color: #111827;
+      background-color: #f8f9fa;
+      overflow-x: hidden;
     }
-
+    
+    /* Navbar styles */
     .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background-color: #c8102e;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: white;
-      height: 72px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background-color: var(--ardian-red);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 1rem;
+      height: var(--navbar-height);
+      z-index: 1030;
     }
-
-    .navbar img {
+    
+    .navbar-brand img {
       height: 45px;
     }
-
-    .navbar h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 0;
-    }
-
+    
+    /* Sidebar styles */
     .sidebar {
-      width: 200px;
-      background-color: #c8102e;
-      color: white;
-      height: 100vh;
       position: fixed;
-      top: 0;
+      top: var(--navbar-height);
       left: 0;
-      padding-top: 90px;
-    }
-
-    .sidebar nav a {
-      display: block;
-      padding: 0.75rem 1rem;
+      width: var(--sidebar-width);
+      height: calc(100vh - var(--navbar-height));
+      background-color: var(--ardian-red);
       color: white;
-      text-decoration: none;
-      font-size: 0.9rem;
+      padding-top: 1rem;
+      z-index: 1020;
+      transition: all 0.3s;
+      overflow-y: auto;
     }
-
-    .sidebar nav a:hover {
-      background-color: #a10c24;
-    }
-
-    .sidebar nav a.active {
-      background-color: transparent;
-      border-left: 4px solid white;
-      padding-left: 0.75rem;
-      font-weight: bold;
-    }
-
-    .main-content {
-      margin-left: 200px;
-      padding: 100px 2rem 2rem;
-    }
-
-    .card {
-      background-color: white;
-      border-radius: 1.5rem;
-      padding: 2rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-      flex: 1 1 500px;
-      max-width: 600px;
-      transition: transform 0.2s ease-in-out;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-    }
-
-    h2 {
-      font-size: 1.6rem;
-      color: #c8102e;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-    }
-
-    .btn {
-      background-color: #c8102e;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 0.75rem;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 4px 10px rgba(200, 16, 46, 0.3);
-      margin-bottom: 1.5rem;
-    }
-
-    .btn:hover {
-      background-color: #a10c24;
-      box-shadow: 0 6px 12px rgba(161, 12, 36, 0.4);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 1rem;
-      border-radius: 0.75rem;
-      overflow: hidden;
-    }
-
-    th, td {
-      padding: 1rem;
-      text-align: left;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    th {
-      background-color: #f9fafb;
-      color: #1f2937;
-      font-weight: 600;
-    }
-
-    .badge {
-      padding: 0.4rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      display: inline-block;
-    }
-
-    .badge-read { background-color: #f3f4f6; color: #374151; }
-    .badge-edit { background-color: #fef3c7; color: #92400e; }
-    .badge-validate { background-color: #d1fae5; color: #065f46; }
-
-    .log-entry {
-      margin-bottom: 0.5rem;
-      display: flex;
-      justify-content: space-between;
+    
+    .sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.85);
+      padding: 0.75rem 1.25rem;
       font-size: 0.95rem;
-      padding: 0.75rem 1rem;
-      border-radius: 0.6rem;
-      align-items: center;
+      border-radius: 0;
+      transition: all 0.2s;
     }
-
-    .log-valid { background-color: #d1fae5; color: #065f46; }
-    .log-modif { background-color: #fef3c7; color: #92400e; }
-    .log-connexion { background-color: #dbeafe; color: #1e40af; }
-
-    .log-date {
-      font-weight: 700;
-      margin-top: 1rem;
-      color: #111827;
-      font-size: 1rem;
+    
+    .sidebar .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
     }
-
-    ul {
-      padding-left: 1.2rem;
-      color: #6b7280;
-      margin-top: 1rem;
+    
+    .sidebar .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-weight: 600;
+      border-left: 4px solid white;
+      padding-left: calc(1.25rem - 4px);
     }
-
-    ul li {
-      margin-bottom: 0.5rem;
+    
+    .sidebar .nav-link i {
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+      width: 1.5rem;
+      text-align: center;
     }
-
-    .role-select {
-      padding: 0.4rem 0.6rem;
-      border-radius: 0.5rem;
-      border: 1px solid #d1d5db;
-      background-color: #f9fafb;
+    
+    /* Main content styles */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: calc(var(--navbar-height) + 1.5rem + 40px) 1.5rem 1.5rem;
+      min-height: 100vh;
+      transition: all 0.3s;
     }
-
-    .card-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-    }
+    
+    /* Connected users bar */
     .connected-bar {
       position: fixed;
-      top: 72px;
-      left: 200px;
+      top: var(--navbar-height);
+      left: var(--sidebar-width);
       right: 0;
-      height: 38px;
-      background-color: #fff;
-      color: #c8102e;
-      font-size: 0.85rem;
-      padding: 0 1rem;
-      border-bottom: 1px solid #e5e7eb;
+      height: 40px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      z-index: 1010;
       display: flex;
       align-items: center;
+      padding: 0 1rem;
       overflow: hidden;
-      z-index: 998;
+      font-size: 0.85rem;
     }
-
+    
     .connected-content {
       display: inline-block;
       white-space: nowrap;
       animation: scroll 30s linear infinite;
       text-decoration: none;
-      color: inherit;
+      color: var(--ardian-red);
     }
-
+    
     .connected-user {
       display: inline-flex;
       align-items: center;
       margin-right: 2rem;
     }
-
+    
     .connected-user::before {
       content: " 🟢 ";
       margin-right: 0.4rem;
       font-size: 0.85rem;
     }
+    
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
+    
+    /* Card styles */
+    .admin-card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+      height: 100%;
+    }
+    
+    .admin-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+    
+    .admin-card .card-header {
+      background-color: transparent;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-weight: 600;
+      color: var(--ardian-red);
+    }
+    
+    /* Badge styles */
+    .badge-read {
+      background-color: rgba(108, 117, 125, 0.1);
+      color: #6c757d;
+    }
+    
+    .badge-edit {
+      background-color: rgba(255, 193, 7, 0.1);
+      color: #cc9a06;
+    }
+    
+    .badge-validate {
+      background-color: rgba(25, 135, 84, 0.1);
+      color: #198754;
+    }
+    
+    /* Log entry styles */
+    .log-entry {
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .log-valid { 
+      background-color: rgba(25, 135, 84, 0.1);
+      color: #198754;
+    }
+    
+    .log-modif { 
+      background-color: rgba(255, 193, 7, 0.1);
+      color: #cc9a06;
+    }
+    
+    .log-connexion { 
+      background-color: rgba(13, 110, 253, 0.1);
+      color: #0d6efd;
+    }
+    
+    /* Team clickable style */
+    .team-name {
+      cursor: pointer;
+      color: var(--ardian-red);
+      text-decoration: underline;
+      transition: all 0.2s;
+    }
+    
+    .team-name:hover {
+      color: var(--ardian-dark-red);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 60px;
+      }
+      
+      .sidebar .nav-link span {
+        display: none;
+      }
+      
+      .sidebar .nav-link i {
+        margin-right: 0;
+        font-size: 1.25rem;
+      }
+      
+      .main-content {
+        margin-left: 60px;
+      }
+      
+      .connected-bar {
+        left: 60px;
+      }
+      
+      :root {
+        --sidebar-width: 60px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .connected-bar {
+        left: 0;
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      
+      :root {
+        --sidebar-width: 0px;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
+      </a>
+      <div class="d-flex align-items-center">
+        <h1 class="navbar-text text-white fw-bold d-none d-sm-block mb-0 ms-3">Administration & Sécurité</h1>
+        <button class="navbar-toggler ms-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
 
-  <!-- Barre de navigation -->
-  <div class="navbar">
-    <a href="../../index.html">
-      <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
-    </a>
-    <h1>Administration & Sécurité</h1>
-  </div>
-
-  <!-- Barre latérale -->
-  <div class="sidebar">
-    <nav>
-      <a href="../Dashboard/Dashboard.html">Dashboard</a>
-      <a href="../Gestion du dictionnaire/gestion_dictionnaire.html">Gestion du dictionnaire</a>
-      <a href="../Collecte & Validation des Données/Collecte et validation.html">Validation des données</a>
-      <a href="#" class="active">Administration et Sécurité</a>
-      <a href="../Export et intégration/Export_integration.html">Export et Intégration</a>
-    </nav>
-  </div>
-
-        <!-- Barre des utilisateurs connectés -->
-        <div class="connected-bar">
-          <a href="../../Utilisateurs_connectés.html" class="connected-content">
-            <div class="connected-user"><span> Marie Dupont (ESG) </span></div>
-            <div class="connected-user"><span> Paul Bernard (Finance) </span></div>
-            <div class="connected-user"><span> Sophie Laurent (IT) </span></div>
-            <div class="connected-user"><span> Jean Martin (IT) </span></div>
-            <div class="connected-user"><span> Lucie Morel (ESG) </span></div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebarMenu">
+    <div class="position-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="../Dashboard/Dashboard.html">
+            <i class="bi bi-graph-up"></i>
+            <span>Dashboard</span>
           </a>
-          </div>
-        </div>
-
-  <div class="main-content">
-    <div class="card-wrapper" style="flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 1.5rem;">
-      
-      <!-- Carte gauche -->
-      <div class="card" style="max-width: 500px; width: 100%;">
-        <h2>Gestion des rôles</h2>
-        <button class="btn" onclick="window.location.href='ajouter_utilisateur.html'">Ajouter un utilisateur</button>
-        <table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Équipe</th>
-              <th>Droits</th>
-              <th>Modifier</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Marie Dupont</td><td>ESG</td>
-              <td><span class="badge badge-validate">Validation</span></td>
-              <td><select class="role-select"><option>Lecture seule</option><option>Édition</option><option selected>Validation</option></select></td>
-            </tr>
-            <tr>
-              <td>Paul Bernard</td><td>Finance</td>
-              <td><span class="badge badge-edit">Édition</span></td>
-              <td><select class="role-select"><option>Lecture seule</option><option selected>Édition</option><option>Validation</option></select></td>
-            </tr>
-            <tr>
-              <td>Sophie Laurent</td><td>IT</td>
-              <td><span class="badge badge-read">Lecture seule</span></td>
-              <td><select class="role-select"><option selected>Lecture seule</option><option>Édition</option><option>Validation</option></select></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  
-      <!-- Carte droite -->
-      <div class="card" style="max-width: 500px; width: 100%;">
-        <h2>Suivi des connexions</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Utilisateur</th>
-              <th>Connexion</th>
-              <th>Méthode</th>
-              <th>État</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Marie Dupont</td><td>03/06/2025 09:32</td><td>SSO</td><td><span class="badge badge-validate">Succès</span></td>
-            </tr>
-            <tr>
-              <td>Paul Bernard</td><td>01/06/2025 14:05</td><td>Mot de passe</td><td><span class="badge badge-read">échecs</span></td>
-            </tr>
-            <tr>
-              <td>Sophie Laurent</td><td>30/05/2025 08:11</td><td>SSO</td><td><span class="badge badge-edit">Succès</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  
-      <!-- Carte du dessous : Historique -->
-      <div class="card" style="width: 100%; max-width: 1040px;">
-        <h2>Historique des rôles & permissions</h2>
-        <div class="space-y-4">
-          <div class="flex items-start gap-3">
-            <span class="text-green-600 text-xl">✔️</span>
-            <div>
-              <div class="text-sm text-gray-500">03/06/2025</div>
-              <div><strong>Marie Dupont</strong> a donné le rôle <strong>Validation</strong> à <strong>Paul Bernard</strong></div>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-yellow-600 text-xl">✏️</span>
-            <div>
-              <div class="text-sm text-gray-500">01/06/2025</div>
-              <div><strong>Paul Bernard</strong> a modifié les droits de <strong>Sophie Laurent</strong> (Édition → Lecture)</div>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-blue-600 text-xl">➕</span>
-            <div>
-              <div class="text-sm text-gray-500">30/05/2025</div>
-              <div><strong>Jean Martin</strong> a ajouté un nouvel utilisateur : <strong>Lucie Morel</strong> (ESG)</div>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-red-600 text-xl">🗑️</span>
-            <div>
-              <div class="text-sm text-gray-500">29/05/2025</div>
-              <div><strong>Admin</strong> a supprimé <strong>Hugo Lemaitre</strong></div>
-            </div>
-          </div>
-        </div>
-      </div>
-  
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Gestion du dictionnaire/gestion_dictionnaire.html">
+            <i class="bi bi-book"></i>
+            <span>Gestion du dictionnaire</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Collecte & Validation des Données/Collecte et validation.html">
+            <i class="bi bi-clipboard-data"></i>
+            <span>Validation des données</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">
+            <i class="bi bi-shield-lock"></i>
+            <span>Administration et Sécurité</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Export et intégration/Export_integration.html">
+            <i class="bi bi-box-arrow-up"></i>
+            <span>Export et Intégration</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
-  
+
+  <!-- Connected users bar -->
+  <div class="connected-bar">
+    <a href="../../Utilisateurs_connectés.html" class="connected-content">
+      <div class="connected-user"><span>Marie Dupont (ESG)</span></div>
+      <div class="connected-user"><span>Paul Bernard (Finance)</span></div>
+      <div class="connected-user"><span>Sophie Laurent (IT)</span></div>
+      <div class="connected-user"><span>Jean Martin (IT)</span></div>
+      <div class="connected-user"><span>Lucie Morel (ESG)</span></div>
+    </a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="fw-bold text-danger mb-0">Gestion des utilisateurs</h2>
+          <a href="ajouter_utilisateur.html" class="btn btn-danger">
+            <i class="bi bi-person-plus me-2"></i>Ajouter un utilisateur
+          </a>
+        </div>
+        
+        <div class="card admin-card">
+          <div class="card-header d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0">Liste des utilisateurs</h5>
+            <div class="input-group w-auto">
+              <input type="text" class="form-control form-control-sm" placeholder="Rechercher un utilisateur">
+              <button class="btn btn-sm btn-outline-secondary" type="button">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th>Équipe</th>
+                    <th>Permissions</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- ESG Team -->
+                  <tr class="table-light">
+                    <td colspan="3" class="fw-bold">
+                      <i class="bi bi-people-fill me-2"></i>Équipe ESG
+                      <button class="btn btn-sm btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#teamModal" data-team="ESG">
+                        <i class="bi bi-eye"></i> Voir membres
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ps-4">Marie Dupont</td>
+                    <td>
+                      <span class="badge badge-validate rounded-pill px-3 py-2">Validation</span>
+                      <span class="badge badge-edit rounded-pill px-3 py-2">Édition</span>
+                      <span class="badge badge-read rounded-pill px-3 py-2">Lecture</span>
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="btn btn-sm btn-outline-primary">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ps-4">Lucie Morel</td>
+                    <td>
+                      <span class="badge badge-validate rounded-pill px-3 py-2">Validation</span>
+                      <span class="badge badge-edit rounded-pill px-3 py-2">Édition</span>
+                      <span class="badge badge-read rounded-pill px-3 py-2">Lecture</span>
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="btn btn-sm btn-outline-primary">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                  <!-- IT Team -->
+                  <tr class="table-light">
+                    <td colspan="3" class="fw-bold">
+                      <i class="bi bi-people-fill me-2"></i>Équipe IT
+                      <button class="btn btn-sm btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#teamModal" data-team="IT">
+                        <i class="bi bi-eye"></i> Voir membres
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ps-4">Jean Martin</td>
+                    <td>
+                      <span class="badge badge-edit rounded-pill px-3 py-2">Édition</span>
+                      <span class="badge badge-read rounded-pill px-3 py-2">Lecture</span>
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="btn btn-sm btn-outline-primary">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ps-4">Sophie Laurent</td>
+                    <td>
+                      <span class="badge badge-edit rounded-pill px-3 py-2">Édition</span>
+                      <span class="badge badge-read rounded-pill px-3 py-2">Lecture</span>
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="btn btn-sm btn-outline-primary">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                  <!-- Finance Team -->
+                  <tr class="table-light">
+                    <td colspan="3" class="fw-bold">
+                      <i class="bi bi-people-fill me-2"></i>Équipe Finance
+                      <button class="btn btn-sm btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#teamModal" data-team="Finance">
+                        <i class="bi bi-eye"></i> Voir membres
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ps-4">Paul Bernard</td>
+                    <td>
+                      <span class="badge badge-read rounded-pill px-3 py-2">Lecture</span>
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="btn btn-sm btn-outline-primary">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="card admin-card h-100">
+          <div class="card-header py-3">
+            <h5 class="mb-0">Journal d'activité</h5>
+          </div>
+          <div class="card-body">
+            <div class="log-date mb-2">Aujourd'hui</div>
+            <div class="log-connexion log-entry d-flex justify-content-between">
+              <span>Connexion à la plateforme</span>
+              <span>Marie D. (10:35)</span>
+            </div>
+            <div class="log-modif log-entry d-flex justify-content-between">
+              <span>Modification du rôle de Paul B.</span>
+              <span>Sophie L. (09:12)</span>
+            </div>
+            <div class="log-valid log-entry d-flex justify-content-between">
+              <span>Création d'un nouvel utilisateur</span>
+              <span>Lucie M. (08:47)</span>
+            </div>
+            
+            <div class="log-date mb-2 mt-3">Hier</div>
+            <div class="log-connexion log-entry d-flex justify-content-between">
+              <span>Connexion à la plateforme</span>
+              <span>Jean M. (16:22)</span>
+            </div>
+            <div class="log-modif log-entry d-flex justify-content-between">
+              <span>Modification des droits d'accès</span>
+              <span>Marie D. (14:05)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card admin-card h-100">
+          <div class="card-header py-3">
+            <h5 class="mb-0">Paramètres de sécurité</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-4">
+              <h6 class="fw-bold">Politique de mot de passe</h6>
+              <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span>Longueur minimale</span>
+                  <span class="badge bg-secondary rounded-pill">10 caractères</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span>Complexité requise</span>
+                  <span class="badge bg-secondary rounded-pill">Forte</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span>Expiration</span>
+                  <span class="badge bg-secondary rounded-pill">90 jours</span>
+                </li>
+              </ul>
+              <button class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-gear me-1"></i>Configurer
+              </button>
+            </div>
+            
+            <div>
+              <h6 class="fw-bold">Authentification</h6>
+              <div class="form-check form-switch mb-2">
+                <input class="form-check-input" type="checkbox" id="2fa" checked>
+                <label class="form-check-label" for="2fa">Authentification à deux facteurs (2FA)</label>
+              </div>
+              <div class="form-check form-switch mb-2">
+                <input class="form-check-input" type="checkbox" id="sso" checked>
+                <label class="form-check-label" for="sso">Single Sign-On (SSO)</label>
+              </div>
+              <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" id="auto-logout">
+                <label class="form-check-label" for="auto-logout">Déconnexion automatique après 30 minutes</label>
+              </div>
+              <button class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-gear me-1"></i>Configurer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal pour afficher les membres de l'équipe -->
+  <div class="modal fade" id="teamModal" tabindex="-1" aria-labelledby="teamModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-light">
+          <h5 class="modal-title" id="teamModalLabel">Membres de l'équipe</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="list-group list-group-flush">
+            <!-- ESG Team -->
+            <div id="ESG-members" class="d-none">
+              <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-0">Marie Dupont</h6>
+                    <p class="mb-0 text-muted small">marie.dupont@ardian.com</p>
+                  </div>
+                  <span class="badge bg-danger rounded-pill">Administrateur</span>
+                </div>
+              </div>
+              <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-0">Lucie Morel</h6>
+                    <p class="mb-0 text-muted small">lucie.morel@ardian.com</p>
+                  </div>
+                  <span class="badge bg-danger rounded-pill">Administrateur</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- IT Team -->
+            <div id="IT-members" class="d-none">
+              <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-0">Jean Martin</h6>
+                    <p class="mb-0 text-muted small">jean.martin@ardian.com</p>
+                  </div>
+                  <span class="badge bg-secondary rounded-pill">Utilisateur</span>
+                </div>
+              </div>
+              <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-0">Sophie Laurent</h6>
+                    <p class="mb-0 text-muted small">sophie.laurent@ardian.com</p>
+                  </div>
+                  <span class="badge bg-primary rounded-pill">Contributeur</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Finance Team -->
+            <div id="Finance-members" class="d-none">
+              <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-0">Paul Bernard</h6>
+                    <p class="mb-0 text-muted small">paul.bernard@ardian.com</p>
+                  </div>
+                  <span class="badge bg-secondary rounded-pill">Lecteur</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Mobile sidebar toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebarToggle = document.querySelector('[data-bs-toggle="collapse"]');
+      const sidebar = document.getElementById('sidebarMenu');
+
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('show');
+        });
+      }
+      
+      // Gérer l'affichage des membres de l'équipe
+      const teamModal = document.getElementById('teamModal');
+      if (teamModal) {
+        teamModal.addEventListener('show.bs.modal', function(event) {
+          // Récupérer le nom de l'équipe à partir de l'élément cliqué
+          const teamName = event.relatedTarget.getAttribute('data-team');
+          
+          // Mettre à jour le titre de la modal
+          const modalTitle = teamModal.querySelector('.modal-title');
+          modalTitle.textContent = `Membres de l'équipe ${teamName}`;
+          
+          // Cacher tous les groupes de membres
+          document.querySelectorAll('[id$="-members"]').forEach(el => {
+            el.classList.add('d-none');
+          });
+          
+          // Afficher le groupe de membres de l'équipe sélectionnée
+          const teamMembers = document.getElementById(`${teamName}-members`);
+          if (teamMembers) {
+            teamMembers.classList.remove('d-none');
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
