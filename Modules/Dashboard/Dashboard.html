@@ -324,9 +324,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../Collecte & Validation des Données/Collecte et validation.html">
+          <a class="nav-link" href="../Validation des indicateurs/Validation des indicateurs.html">
             <i class="bi bi-clipboard-data"></i>
-            <span>Validation des données</span>
+            <span>Validation des indicateurs</span>
           </a>
         </li>
         <li class="nav-item">
@@ -366,8 +366,8 @@
           <div class="col-6 col-lg-3">
             <div class="card kpi-card">
               <div class="card-body text-center p-3">
-                <div class="kpi-value text-primary">153</div>
-                <div class="kpi-label">Sociétés suivies</div>
+                <div class="kpi-value text-primary">80</div>
+                <div class="kpi-label">Indicateurs</div>
               </div>
             </div>
           </div>
@@ -375,7 +375,7 @@
             <div class="card kpi-card">
               <div class="card-body text-center p-3">
                 <div class="kpi-value text-success">86%</div>
-                <div class="kpi-label">Taux de complétion</div>
+                <div class="kpi-label">Taux de validation</div>
               </div>
             </div>
           </div>
@@ -391,7 +391,7 @@
             <div class="card kpi-card clickable" data-bs-toggle="modal" data-bs-target="#modifiedModal">
               <div class="card-body text-center p-3">
                 <div class="kpi-value text-danger">8</div>
-                <div class="kpi-label">Indicateurs modifiés</div>
+                <div class="kpi-label">Récemment modifiés</div>
               </div>
             </div>
           </div>
@@ -400,9 +400,10 @@
       <div class="col-md-4 mt-3 mt-md-0">
         <div class="d-flex flex-column gap-2">
           <select class="form-select">
-            <option>Toutes les sociétés</option>
-            <option>Sociétés européennes</option>
-            <option>Sociétés américaines</option>
+            <option>Toutes les régions</option>
+            <option>Europe</option>
+            <option>Amérique du Nord</option>
+            <option>Asie-Pacifique</option>
           </select>
           <select class="form-select">
             <option>Tous les indicateurs</option>
@@ -410,6 +411,178 @@
             <option>Social</option>
             <option>Gouvernance</option>
           </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nouvelle section d'analyse ESG avancée -->
+    <div class="row g-4 mb-4">
+      <!-- Répartition des indicateurs par catégorie -->
+      <div class="col-lg-4">
+        <div class="card dashboard-card h-100">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Répartition des indicateurs</h5>
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-download"></i>
+            </button>
+          </div>
+          <div class="card-body">
+            <canvas id="categoryDistributionChart" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statut des indicateurs -->
+      <div class="col-lg-4">
+        <div class="card dashboard-card h-100">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Statut des indicateurs</h5>
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-download"></i>
+            </button>
+          </div>
+          <div class="card-body">
+            <canvas id="indicatorStatusChart" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conformité réglementaire -->
+      <div class="col-lg-4">
+        <div class="card dashboard-card h-100">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Conformité réglementaire</h5>
+            <div class="dropdown">
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="reglementDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Filtrer
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="reglementDropdown">
+                <li><a class="dropdown-item" href="#">SFDR</a></li>
+                <li><a class="dropdown-item" href="#">EU Taxonomy</a></li>
+                <li><a class="dropdown-item" href="#">TCFD</a></li>
+                <li><a class="dropdown-item" href="#">GRI</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas id="regulatoryComplianceChart" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analyse des tendances -->
+    <div class="row g-4 mb-4">
+      <!-- Évolution des émissions de CO2 -->
+      <div class="col-lg-6">
+        <div class="card dashboard-card h-100">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Évolution des émissions de CO2</h5>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-outline-secondary">Annuel</button>
+              <button class="btn btn-sm btn-outline-secondary active">Trimestriel</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas id="co2EmissionsChart" height="220"></canvas>
+          </div>
+          <div class="card-footer bg-transparent border-0">
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-success fw-bold">-12% depuis 2024</small>
+              <a href="#" class="btn btn-sm btn-link text-decoration-none">Voir détails</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tableau des performances ESG -->
+      <div class="col-lg-6">
+        <div class="card dashboard-card h-100">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Performance par indicateur clé</h5>
+            <div class="dropdown">
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="performanceDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Top 5
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="performanceDropdown">
+                <li><a class="dropdown-item" href="#">Top 5</a></li>
+                <li><a class="dropdown-item" href="#">Top 10</a></li>
+                <li><a class="dropdown-item" href="#">Tous</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-container">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th>Indicateur</th>
+                    <th>2023</th>
+                    <th>2024</th>
+                    <th>2025</th>
+                    <th>Tendance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Émissions CO2 (tCO2e)</td>
+                    <td>1 250</td>
+                    <td>1 100</td>
+                    <td>950</td>
+                    <td>
+                      <span class="badge bg-success-subtle text-success rounded-pill">
+                        <i class="bi bi-arrow-down-short me-1"></i>-24%
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Consommation d'eau (m³)</td>
+                    <td>3 400</td>
+                    <td>3 250</td>
+                    <td>3 100</td>
+                    <td>
+                      <span class="badge bg-success-subtle text-success rounded-pill">
+                        <i class="bi bi-arrow-down-short me-1"></i>-9%
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Diversité (% femmes)</td>
+                    <td>37%</td>
+                    <td>41%</td>
+                    <td>45%</td>
+                    <td>
+                      <span class="badge bg-success-subtle text-success rounded-pill">
+                        <i class="bi bi-arrow-up-short me-1"></i>+8%
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Formation (h/employé)</td>
+                    <td>12</td>
+                    <td>15</td>
+                    <td>18</td>
+                    <td>
+                      <span class="badge bg-success-subtle text-success rounded-pill">
+                        <i class="bi bi-arrow-up-short me-1"></i>+50%
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Énergie renouvelable (%)</td>
+                    <td>45%</td>
+                    <td>62%</td>
+                    <td>78%</td>
+                    <td>
+                      <span class="badge bg-success-subtle text-success rounded-pill">
+                        <i class="bi bi-arrow-up-short me-1"></i>+33%
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -439,7 +612,7 @@
           <div class="card-body">
             <div class="log-date mb-2">Aujourd'hui</div>
             <div class="log-entry log-valid d-flex justify-content-between">
-              <span>Validation de données Allianz</span>
+              <span>Validation indicateur Émissions CO2</span>
               <span>Marie D.</span>
             </div>
             <div class="log-entry log-modif d-flex justify-content-between">
@@ -453,7 +626,7 @@
             
             <div class="log-date mb-2 mt-3">Hier</div>
             <div class="log-entry log-valid d-flex justify-content-between">
-              <span>Validation données AXA</span>
+              <span>Validation indicateur Social #SOC-04</span>
               <span>Paul B.</span>
             </div>
             <div class="log-entry log-modif d-flex justify-content-between">
@@ -470,7 +643,7 @@
       <div class="col-12">
         <div class="card dashboard-card">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Collecte en cours</h5>
+            <h5 class="mb-0">Suivi des indicateurs</h5>
             <div class="input-group w-auto">
               <input type="text" class="form-control form-control-sm" placeholder="Rechercher">
               <button class="btn btn-sm btn-outline-secondary" type="button">
@@ -483,24 +656,20 @@
               <table class="table table-hover mb-0">
                 <thead>
                   <tr>
-                    <th>Société</th>
+                    <th>Indicateur</th>
+                    <th>Catégorie</th>
                     <th>Responsable</th>
                     <th>Dernier update</th>
-                    <th>Complétion</th>
                     <th>Statut</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Allianz SE</td>
+                    <td>Émissions de CO2 Scope 1</td>
+                    <td>Environnement</td>
                     <td>Marie Dupont</td>
                     <td>15/05/2025</td>
-                    <td>
-                      <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 92%" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
                     <td><span class="badge badge-validé rounded-pill px-3 py-2">Validé</span></td>
                     <td>
                       <button class="btn btn-sm btn-outline-primary">
@@ -509,14 +678,10 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>Axa Group</td>
+                    <td>Parité salariale</td>
+                    <td>Social</td>
                     <td>Jean Martin</td>
                     <td>14/05/2025</td>
-                    <td>
-                      <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 87%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
                     <td><span class="badge badge-validé rounded-pill px-3 py-2">Validé</span></td>
                     <td>
                       <button class="btn btn-sm btn-outline-primary">
@@ -525,14 +690,10 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>BNP Paribas</td>
+                    <td>Consommation d'eau</td>
+                    <td>Environnement</td>
                     <td>Lucie Morel</td>
                     <td>13/05/2025</td>
-                    <td>
-                      <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 64%" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
                     <td><span class="badge badge-en-cours rounded-pill px-3 py-2">En cours</span></td>
                     <td>
                       <button class="btn btn-sm btn-outline-primary">
@@ -541,14 +702,10 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>Deutsche Bank</td>
+                    <td>Gouvernance des données</td>
+                    <td>Gouvernance</td>
                     <td>Sophie Laurent</td>
                     <td>10/05/2025</td>
-                    <td>
-                      <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 32%" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
                     <td><span class="badge badge-nouveau rounded-pill px-3 py-2">Nouveau</span></td>
                     <td>
                       <button class="btn btn-sm btn-outline-primary">
@@ -580,7 +737,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Indicateur</th>
-                  <th>Société</th>
+                  <th>Catégorie</th>
                   <th>Responsable</th>
                   <th>Date d'échéance</th>
                   <th>Actions</th>
@@ -590,7 +747,7 @@
                 <tr>
                   <td>ENV-01</td>
                   <td>Émissions de CO2 Scope 1</td>
-                  <td>BNP Paribas</td>
+                  <td>Environnement</td>
                   <td>
                     <div class="d-flex align-items-center">
                       <img src="../ressources/avatar1.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
@@ -607,7 +764,7 @@
                 <tr>
                   <td>ENV-02</td>
                   <td>Émissions de CO2 Scope 2</td>
-                  <td>BNP Paribas</td>
+                  <td>Environnement</td>
                   <td>
                     <div class="d-flex align-items-center">
                       <img src="../ressources/avatar1.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
@@ -624,7 +781,7 @@
                 <tr>
                   <td>SOC-01</td>
                   <td>Parité hommes-femmes</td>
-                  <td>Deutsche Bank</td>
+                  <td>Social</td>
                   <td>
                     <div class="d-flex align-items-center">
                       <img src="../ressources/avatar3.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
@@ -641,7 +798,7 @@
                 <tr>
                   <td>GOV-05</td>
                   <td>Conformité RGPD</td>
-                  <td>Allianz SE</td>
+                  <td>Gouvernance</td>
                   <td>
                     <div class="d-flex align-items-center">
                       <img src="../ressources/avatar4.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
@@ -658,7 +815,7 @@
                 <tr>
                   <td>ENV-07</td>
                   <td>Consommation d'eau</td>
-                  <td>AXA Group</td>
+                  <td>Environnement</td>
                   <td>
                     <div class="d-flex align-items-center">
                       <img src="../ressources/avatar2.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
@@ -699,7 +856,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Indicateur</th>
-                  <th>Société</th>
+                  <th>Catégorie</th>
                   <th>Responsable</th>
                   <th>Date de modification</th>
                   <th>Actions</th>
@@ -709,7 +866,7 @@
                 <tr>
                   <td>ESG-22</td>
                   <td>Indice de diversité</td>
-                  <td>BNP Paribas</td>
+                  <td>Social</td>
                   <td>
                     <div class="d-flex align-items-center">
                       <img src="../ressources/avatar4.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
@@ -726,7 +883,7 @@
                 <tr>
                   <td>ESG-17</td>
                   <td>Politique de rémunération</td>
-                  <td>AXA Group</td>
+                  <td>Social</td>
                   <td>
                     <div class="d-flex align-items-center">
                       <img src="../ressources/avatar2.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
@@ -743,7 +900,7 @@
                 <tr>
                   <td>ENV-03</td>
                   <td>Émissions de CO2 Scope 3</td>
-                  <td>Allianz SE</td>
+                  <td>Environnement</td>
                   <td>
                     <div class="d-flex align-items-center">
                       <img src="../ressources/avatar1.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
@@ -823,6 +980,186 @@
               callback: function(value) {
                 return value + '%';
               }
+            }
+          }
+        }
+      }
+    });
+
+    // Répartition des indicateurs par catégorie
+    const categoryDistributionCtx = document.getElementById('categoryDistributionChart').getContext('2d');
+    const categoryDistributionChart = new Chart(categoryDistributionCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Environnement', 'Social', 'Gouvernance'],
+        datasets: [{
+          data: [38, 25, 17],
+          backgroundColor: [
+            'rgba(25, 135, 84, 0.7)',
+            'rgba(13, 110, 253, 0.7)',
+            'rgba(255, 193, 7, 0.7)'
+          ],
+          borderColor: [
+            'rgba(25, 135, 84, 1)',
+            'rgba(13, 110, 253, 1)',
+            'rgba(255, 193, 7, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const label = context.label || '';
+                const value = context.raw || 0;
+                const total = context.dataset.data.reduce((acc, data) => acc + data, 0);
+                const percentage = Math.round((value / total) * 100);
+                return `${label}: ${value} (${percentage}%)`;
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Statut des indicateurs
+    const indicatorStatusCtx = document.getElementById('indicatorStatusChart').getContext('2d');
+    const indicatorStatusChart = new Chart(indicatorStatusCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Validé', 'En cours', 'Brouillon'],
+        datasets: [{
+          data: [65, 25, 10],
+          backgroundColor: [
+            'rgba(25, 135, 84, 0.7)',
+            'rgba(255, 193, 7, 0.7)',
+            'rgba(108, 117, 125, 0.7)'
+          ],
+          borderColor: [
+            'rgba(25, 135, 84, 1)',
+            'rgba(255, 193, 7, 1)',
+            'rgba(108, 117, 125, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const label = context.label || '';
+                const value = context.raw || 0;
+                const total = context.dataset.data.reduce((acc, data) => acc + data, 0);
+                const percentage = Math.round((value / total) * 100);
+                return `${label}: ${value} (${percentage}%)`;
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Conformité réglementaire
+    const regulatoryComplianceCtx = document.getElementById('regulatoryComplianceChart').getContext('2d');
+    const regulatoryComplianceChart = new Chart(regulatoryComplianceCtx, {
+      type: 'bar',
+      data: {
+        labels: ['SFDR', 'EU Taxonomy', 'TCFD', 'GRI'],
+        datasets: [{
+          label: 'Conformité (%)',
+          data: [95, 82, 88, 75],
+          backgroundColor: 'rgba(13, 110, 253, 0.7)',
+          borderColor: 'rgba(13, 110, 253, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            ticks: {
+              callback: function(value) {
+                return value + '%';
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+
+    // Évolution des émissions de CO2
+    const co2EmissionsCtx = document.getElementById('co2EmissionsChart').getContext('2d');
+    const co2EmissionsChart = new Chart(co2EmissionsCtx, {
+      type: 'line',
+      data: {
+        labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025'],
+        datasets: [{
+          label: 'Scope 1',
+          data: [320, 310, 290, 280, 260, 240],
+          borderColor: 'rgba(220, 53, 69, 1)',
+          backgroundColor: 'rgba(220, 53, 69, 0.1)',
+          tension: 0.3,
+          fill: true
+        }, {
+          label: 'Scope 2',
+          data: [520, 500, 480, 450, 430, 410],
+          borderColor: 'rgba(255, 193, 7, 1)',
+          backgroundColor: 'rgba(255, 193, 7, 0.1)',
+          tension: 0.3,
+          fill: true
+        }, {
+          label: 'Scope 3',
+          data: [980, 950, 920, 900, 880, 850],
+          borderColor: 'rgba(13, 110, 253, 1)',
+          backgroundColor: 'rgba(13, 110, 253, 0.1)',
+          tension: 0.3,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const label = context.dataset.label || '';
+                const value = context.raw || 0;
+                return `${label}: ${value} tCO2e`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            title: {
+              display: true,
+              text: 'Tonnes CO2e'
             }
           }
         }
