@@ -275,6 +275,20 @@
         --sidebar-width: 0px;
       }
     }
+
+    .clickable {
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .clickable:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    
+    .clickable:active {
+      transform: translateY(-2px);
+    }
   </style>
 </head>
 <body>
@@ -366,15 +380,19 @@
             </div>
           </div>
           <div class="col-6 col-lg-3">
-            <div class="card kpi-card">
-              <div class="card-body text-warning">42</div>
-              <div class="kpi-label">En attente</div>
+            <div class="card kpi-card clickable" data-bs-toggle="modal" data-bs-target="#pendingModal">
+              <div class="card-body text-center p-3">
+                <div class="kpi-value text-warning">42</div>
+                <div class="kpi-label">En attente</div>
+              </div>
             </div>
           </div>
           <div class="col-6 col-lg-3">
-            <div class="card kpi-card">
-              <div class="card-body text-danger">8</div>
-              <div class="kpi-label">Indicateurs modifiés</div>
+            <div class="card kpi-card clickable" data-bs-toggle="modal" data-bs-target="#modifiedModal">
+              <div class="card-body text-center p-3">
+                <div class="kpi-value text-danger">8</div>
+                <div class="kpi-label">Indicateurs modifiés</div>
+              </div>
             </div>
           </div>
         </div>
@@ -542,6 +560,210 @@
               </table>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Indicateurs en attente -->
+  <div class="modal fade" id="pendingModal" tabindex="-1" aria-labelledby="pendingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pendingModalLabel">Indicateurs en attente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Indicateur</th>
+                  <th>Société</th>
+                  <th>Responsable</th>
+                  <th>Date d'échéance</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ENV-01</td>
+                  <td>Émissions de CO2 Scope 1</td>
+                  <td>BNP Paribas</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="../ressources/avatar1.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
+                      <span>Marie Dupont</span>
+                    </div>
+                  </td>
+                  <td>20/05/2025</td>
+                  <td>
+                    <button class="btn btn-sm btn-primary">
+                      <i class="bi bi-pencil me-1"></i>Compléter
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>ENV-02</td>
+                  <td>Émissions de CO2 Scope 2</td>
+                  <td>BNP Paribas</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="../ressources/avatar1.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
+                      <span>Marie Dupont</span>
+                    </div>
+                  </td>
+                  <td>20/05/2025</td>
+                  <td>
+                    <button class="btn btn-sm btn-primary">
+                      <i class="bi bi-pencil me-1"></i>Compléter
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>SOC-01</td>
+                  <td>Parité hommes-femmes</td>
+                  <td>Deutsche Bank</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="../ressources/avatar3.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
+                      <span>Sophie Laurent</span>
+                    </div>
+                  </td>
+                  <td>18/05/2025</td>
+                  <td>
+                    <button class="btn btn-sm btn-primary">
+                      <i class="bi bi-pencil me-1"></i>Compléter
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>GOV-05</td>
+                  <td>Conformité RGPD</td>
+                  <td>Allianz SE</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="../ressources/avatar4.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
+                      <span>Jean Martin</span>
+                    </div>
+                  </td>
+                  <td>22/05/2025</td>
+                  <td>
+                    <button class="btn btn-sm btn-primary">
+                      <i class="bi bi-pencil me-1"></i>Compléter
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>ENV-07</td>
+                  <td>Consommation d'eau</td>
+                  <td>AXA Group</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="../ressources/avatar2.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
+                      <span>Lucie Morel</span>
+                    </div>
+                  </td>
+                  <td>25/05/2025</td>
+                  <td>
+                    <button class="btn btn-sm btn-primary">
+                      <i class="bi bi-pencil me-1"></i>Compléter
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="button" class="btn btn-primary">Voir tout (42)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Indicateurs modifiés -->
+  <div class="modal fade" id="modifiedModal" tabindex="-1" aria-labelledby="modifiedModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modifiedModalLabel">Indicateurs modifiés</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Indicateur</th>
+                  <th>Société</th>
+                  <th>Responsable</th>
+                  <th>Date de modification</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ESG-22</td>
+                  <td>Indice de diversité</td>
+                  <td>BNP Paribas</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="../ressources/avatar4.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
+                      <span>Jean Martin</span>
+                    </div>
+                  </td>
+                  <td>15/05/2025</td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary">
+                      <i class="bi bi-eye me-1"></i>Voir
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>ESG-17</td>
+                  <td>Politique de rémunération</td>
+                  <td>AXA Group</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="../ressources/avatar2.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
+                      <span>Lucie Morel</span>
+                    </div>
+                  </td>
+                  <td>14/05/2025</td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary">
+                      <i class="bi bi-eye me-1"></i>Voir
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>ENV-03</td>
+                  <td>Émissions de CO2 Scope 3</td>
+                  <td>Allianz SE</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="../ressources/avatar1.png" alt="Avatar" class="rounded-circle me-2" width="28" height="28" onerror="this.src='https://via.placeholder.com/28'">
+                      <span>Marie Dupont</span>
+                    </div>
+                  </td>
+                  <td>12/05/2025</td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary">
+                      <i class="bi bi-eye me-1"></i>Voir
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="button" class="btn btn-primary">Voir tout (8)</button>
         </div>
       </div>
     </div>
