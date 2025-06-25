@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workflow ESG</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --ardian-red: #c8102e;
+            --ardian-dark-red: #a10c24;
+            --sidebar-width: 250px;
+            --navbar-height: 72px;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        .navbar {
+            background-color: var(--ardian-red);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+            height: var(--navbar-height);
+            z-index: 1030;
+        }
+        .navbar-brand img { height: 45px; }
+        .sidebar {
+            position: fixed;
+            top: var(--navbar-height);
+            left: 0;
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--navbar-height));
+            background-color: var(--ardian-red);
+            color: white;
+            padding-top: 1rem;
+            z-index: 1020;
+            transition: all 0.3s;
+            overflow-y: auto;
+        }
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 0.75rem 1.25rem;
+            font-size: 0.95rem;
+            border-radius: 0;
+            transition: all 0.2s;
+        }
+        .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-weight: 600;
+            border-left: 4px solid white;
+            padding-left: calc(1.25rem - 4px);
+        }
+        .sidebar .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+            width: 1.5rem;
+            text-align: center;
+        }
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: calc(var(--navbar-height) + 1.5rem + 40px) 1.5rem 1.5rem;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+        .connected-bar {
+            position: fixed;
+            top: var(--navbar-height);
+            left: var(--sidebar-width);
+            right: 0;
+            height: 40px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            z-index: 1010;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            overflow: hidden;
+            font-size: 0.85rem;
+        }
+        .connected-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll 30s linear infinite;
+            text-decoration: none;
+            color: var(--ardian-red);
+        }
+        .connected-user {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 2rem;
+        }
+        .connected-user::before {
+            content: " 🟢 ";
+            margin-right: 0.4rem;
+            font-size: 0.85rem;
+        }
+        /* Workflow pipeline styles (adapté) */
+        .workflow-pipeline {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            margin-bottom: 2rem;
+        }
+        .pipeline-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        .pipeline-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #48BB78, #38A169, #2F855A, #276749, #22543D, #1A202C, #c8102e);
+            z-index: 1;
+        }
+        .step {
+            background: white;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid;
+            font-weight: bold;
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .step.development { border-color: #48BB78; background: #48BB78; }
+        .step.collection { border-color: #38A169; background: #38A169; }
+        .step.quality { border-color: #2F855A; background: #2F855A; }
+        .step.calculation { border-color: #276749; background: #276749; }
+        .step.disclosure { border-color: #22543D; background: #22543D; }
+        .step.analytics { border-color: #1A202C; background: #1A202C; }
+        .step.reporting { border-color: var(--ardian-red); background: var(--ardian-red); }
+        .step-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .step-label {
+            width: 70px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #4A5568;
+            font-weight: 600;
+        }
+        /* Bloc tâches, commentaires, indicateurs (adapté) */
+        .section-title {
+            font-size: 1.2rem;
+            color: var(--ardian-red);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--ardian-red);
+            padding-bottom: 0.5rem;
+        }
+        .active-tasks, .comments-section, .indicators-table {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            margin-bottom: 2rem;
+        }
+        .metrics-grid {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            flex: 1;
+        }
+        .metric-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .metric-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        .task-item {
+            background: #F7FAFC;
+            border-left: 4px solid var(--ardian-red);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+        .task-title { font-weight: 600; color: #2D3748; margin-bottom: 0.3rem; }
+        .task-meta { display: flex; justify-content: space-between; font-size: 0.95rem; color: #718096; }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-pending { background: #FED7D7; color: #C53030; }
+        .status-progress { background: #FEEBC8; color: #DD6B20; }
+        .status-review { background: #BEE3F8; color: #2B6CB0; }
+        .status-completed { background: #C6F6D5; color: #2F855A; }
+        .comment-item {
+            background: #F7FAFC;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #805AD5;
+        }
+        .comment-author { font-weight: 600; color: #2D3748; margin-bottom: 0.3rem; }
+        .comment-text { color: #4A5568; margin-bottom: 0.3rem; }
+        .comment-time { font-size: 0.85rem; color: #718096; }
+        .indicators-table .table-header {
+            background: var(--ardian-red);
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            border-radius: 0.75rem 0.75rem 0 0;
+            margin-bottom: 0.5rem;
+        }
+        .indicator-row {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #E2E8F0;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1rem;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+        .indicator-row:hover { background: #F7FAFC; }
+        .indicator-name { font-weight: 600; color: #2D3748; }
+        .indicator-category { color: #718096; font-size: 0.95rem; }
+        .action-buttons { display: flex; gap: 0.5rem; }
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-edit { background: #3182CE; color: white; }
+        .btn-validate { background: #38A169; color: white; }
+        .btn-comment { background: #805AD5; color: white; }
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .filter-bar {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .filter-group { display: flex; flex-direction: column; gap: 0.3rem; }
+        .filter-label { font-size: 0.95rem; color: #718096; font-weight: 600; }
+        .filter-select {
+            padding: 8px 12px;
+            border: 2px solid #E2E8F0;
+            border-radius: 6px;
+            background: white;
+            color: #2D3748;
+        }
+        .add-indicator-btn {
+            background: linear-gradient(135deg, #48BB78, #38A169);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: auto;
+            transition: all 0.3s ease;
+        }
+        .add-indicator-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
+        }
+        @media (max-width: 992px) {
+            .sidebar { width: 60px; }
+            .sidebar .nav-link span { display: none; }
+            .sidebar .nav-link i { margin-right: 0; font-size: 1.25rem; }
+            .main-content { margin-left: 60px; }
+            .connected-bar { left: 60px; }
+            :root { --sidebar-width: 60px; }
+        }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; }
+            .connected-bar { left: 0; }
+            .sidebar.show { transform: translateX(0); }
+            :root { --sidebar-width: 0px; }
+            .pipeline-steps { flex-direction: column; gap: 1rem; }
+            .pipeline-steps::before { display: none; }
+            .step-labels { flex-direction: column; gap: 0.5rem; }
+            .metrics-grid { flex-direction: column; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .indicator-row { grid-template-columns: 1fr; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand animate__animated animate__fadeIn" href="../../index.html">
+                <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
+            </a>
+            <div class="d-flex align-items-center">
+                <h1 class="navbar-text text-white fw-bold d-none d-sm-block mb-0 ms-3 animate__animated animate__fadeIn">Workflow ESG</h1>
+                <div class="d-flex ms-3">
+                    <div class="dropdown me-2">
+                        <button class="btn btn-sm btn-outline-light rounded-circle" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bell"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="notificationDropdown" style="width: 300px;">
+                            <li><h6 class="dropdown-header">Notifications</h6></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-user-plus text-primary fs-5"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <p class="mb-0 fw-semibold">Nouvel indicateur ajouté</p>
+                                        <p class="mb-0 text-muted small">Il y a 10 minutes</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-shield-alt text-warning fs-5"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <p class="mb-0 fw-semibold">Alerte de workflow</p>
+                                        <p class="mb-0 text-muted small">Il y a 1 heure</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-center text-primary" href="#">
+                                    Voir toutes les notifications
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dropdown me-2">
+                        <button class="btn btn-sm btn-outline-light rounded-circle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="userDropdown">
+                            <li><h6 class="dropdown-header">Marie Dupont</h6></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2"></i>Mon profil</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Paramètres</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="../../connexion.html"><i class="fas fa-sign-out-alt me-2"></i>Déconnexion</a></li>
+                        </ul>
+                    </div>
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Sidebar -->
+    <div class="sidebar shadow-lg" id="sidebarMenu">
+        <div class="position-sticky">
+            <div class="d-flex justify-content-center py-3 mb-2 d-lg-none">
+                <img src="../ressources/LogoArdian.png" alt="Logo Ardian" style="height: 30px;">
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="Dashboard.html">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="ms-2">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="../Gestion du dictionnaire/gestion_dictionnaire.html">
+                        <i class="fas fa-book"></i>
+                        <span class="ms-2">Gestion du dictionnaire</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="../Validation des indicateurs/Validation des indicateurs.html">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span class="ms-2">Validation des indicateurs</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="../Adminstration & Sécurité/admin.html">
+                        <i class="fas fa-shield-alt"></i>
+                        <span class="ms-2">Administration et Sécurité</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="../Export et intégration/Export_integration.html">
+                        <i class="fas fa-file-export"></i>
+                        <span class="ms-2">Export et Intégration</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="../Audit/audit.html">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span class="ms-2">Audit</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-auto">
+                    <div class="nav-link text-muted small">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="ms-2">Version 2.5.0</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Connected users bar -->
+    <div class="connected-bar">
+        <a href="../../Utilisateurs_connectés.html" class="connected-content">
+            <div class="connected-user"><span>Marie Dupont (ESG)</span></div>
+            <div class="connected-user"><span>Paul Bernard (Finance)</span></div>
+            <div class="connected-user"><span>Sophie Laurent (IT)</span></div>
+            <div class="connected-user"><span>Jean Martin (IT)</span></div>
+            <div class="connected-user"><span>Lucie Morel (ESG)</span></div>
+        </a>
+    </div>
+    <!-- Main content -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="workflow-header mb-4">
+                <h2 class="fw-bold text-danger mb-0"><i class="fas fa-project-diagram me-2"></i>Workflow de Gestion ESG</h2>
+                <p class="text-muted mt-2">Collecte, validation et reporting des données ESG - Campagne 2025</p>
+            </div>
+            <div class="workflow-pipeline">
+                <div class="pipeline-steps">
+                    <div class="step development">1</div>
+                    <div class="step collection">2</div>
+                    <div class="step quality">3</div>
+                    <div class="step calculation">4</div>
+                    <div class="step disclosure">5</div>
+                    <div class="step analytics">6</div>
+                    <div class="step reporting">7</div>
+                </div>
+                <div class="step-labels">
+                    <div class="step-label">Développement<br>Questionnaires</div>
+                    <div class="step-label">Collecte<br>Données</div>
+                    <div class="step-label">Contrôles<br>Qualité</div>
+                    <div class="step-label">Calculs<br>Indicateurs</div>
+                    <div class="step-label">Divulgations<br>Réglementaires</div>
+                    <div class="step-label">Analytics<br>& Partage</div>
+                    <div class="step-label">Reporting<br>Final</div>
+                </div>
+            </div>
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label class="filter-label">Catégorie</label>
+                    <select class="filter-select">
+                        <option>Toutes</option>
+                        <option>Climate</option>
+                        <option>Social</option>
+                        <option>Environment</option>
+                        <option>Governance</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Statut</label>
+                    <select class="filter-select">
+                        <option>Tous</option>
+                        <option>En attente</option>
+                        <option>En cours</option>
+                        <option>En révision</option>
+                        <option>Validé</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Assigné à</label>
+                    <select class="filter-select">
+                        <option>Tous</option>
+                        <option>Équipe Sustainability</option>
+                        <option>Portfolio Companies</option>
+                        <option>Investment Teams</option>
+                    </select>
+                </div>
+                <button class="add-indicator-btn">+ Nouvel Indicateur</button>
+            </div>
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="active-tasks">
+                        <h3 class="section-title"><i class="fas fa-tasks me-2"></i>Tâches Actives</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-number">47</div>
+                                <div class="metric-label">En cours</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-number">123</div>
+                                <div class="metric-label">Validés</div>
+                            </div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-title">Validation GHG Emissions</div>
+                            <div class="task-meta">
+                                <span>Assigné à: Équipe Sustainability</span>
+                                <span class="status-badge status-review">En révision</span>
+                            </div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-title">Collecte Board Diversity</div>
+                            <div class="task-meta">
+                                <span>Assigné à: Portfolio Companies</span>
+                                <span class="status-badge status-progress">En cours</span>
+                            </div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-title">Contrôle Energy Consumption</div>
+                            <div class="task-meta">
+                                <span>Assigné à: Consultants</span>
+                                <span class="status-badge status-pending">En attente</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="comments-section">
+                        <h3 class="section-title"><i class="fas fa-comments me-2"></i>Commentaires Récents</h3>
+                        <div class="comment-item">
+                            <div class="comment-author">Marie Dubois - Sustainability Team</div>
+                            <div class="comment-text">Les définitions pour les émissions Scope 3 doivent être clarifiées avec le consultant externe.</div>
+                            <div class="comment-time">Il y a 2 heures</div>
+                        </div>
+                        <div class="comment-item">
+                            <div class="comment-author">Jean Martin - Portfolio Company</div>
+                            <div class="comment-text">Données de diversité du conseil mises à jour et prêtes pour validation.</div>
+                            <div class="comment-time">Il y a 4 heures</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="indicators-table">
+                <div class="table-header">
+                    <i class="fas fa-list me-2"></i>Indicateurs ESG - Vue d'ensemble
+                </div>
+                <div class="table-content">
+                    <div class="indicator-row">
+                        <div>
+                            <div class="indicator-name">Total GHG emissions (tCO2e)</div>
+                            <div class="indicator-category">Climate</div>
+                        </div>
+                        <div class="status-badge status-completed">Validé</div>
+                        <div>Équipe Sustainability</div>
+                        <div class="action-buttons">
+                            <button class="btn btn-edit"><i class="fas fa-pencil-alt"></i></button>
+                            <button class="btn btn-comment"><i class="fas fa-comment"></i></button>
+                        </div>
+                    </div>
+                    <div class="indicator-row">
+                        <div>
+                            <div class="indicator-name">Board Gender Diversity</div>
+                            <div class="indicator-category">Social</div>
+                        </div>
+                        <div class="status-badge status-review">En révision</div>
+                        <div>Portfolio Companies</div>
+                        <div class="action-buttons">
+                            <button class="btn btn-edit"><i class="fas fa-pencil-alt"></i></button>
+                            <button class="btn btn-validate"><i class="fas fa-check"></i></button>
+                            <button class="btn btn-comment"><i class="fas fa-comment"></i></button>
+                        </div>
+                    </div>
+                    <div class="indicator-row">
+                        <div>
+                            <div class="indicator-name">Energy Consumption (GWh)</div>
+                            <div class="indicator-category">Environment</div>
+                        </div>
+                        <div class="status-badge status-progress">En cours</div>
+                        <div>Consultants</div>
+                        <div class="action-buttons">
+                            <button class="btn btn-edit"><i class="fas fa-pencil-alt"></i></button>
+                            <button class="btn btn-comment"><i class="fas fa-comment"></i></button>
+                        </div>
+                    </div>
+                    <div class="indicator-row">
+                        <div>
+                            <div class="indicator-name">Employee Shareholding</div>
+                            <div class="indicator-category">Value Sharing</div>
+                        </div>
+                        <div class="status-badge status-pending">En attente</div>
+                        <div>Investment Teams</div>
+                        <div class="action-buttons">
+                            <button class="btn btn-edit"><i class="fas fa-pencil-alt"></i></button>
+                            <button class="btn btn-comment"><i class="fas fa-comment"></i></button>
+                        </div>
+                    </div>
+                    <div class="indicator-row">
+                        <div>
+                            <div class="indicator-name">Rate of Accidents</div>
+                            <div class="indicator-category">Social</div>
+                        </div>
+                        <div class="status-badge status-completed">Validé</div>
+                        <div>Portfolio Companies</div>
+                        <div class="action-buttons">
+                            <button class="btn btn-edit"><i class="fas fa-pencil-alt"></i></button>
+                            <button class="btn btn-comment"><i class="fas fa-comment"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Gestion des interactions (identique à l'original)
+        document.querySelectorAll('.step').forEach(step => {
+            step.addEventListener('click', function() {
+                const stepNumber = this.textContent;
+                alert(`Détails de l'étape ${stepNumber} du workflow`);
+            });
+        });
+        document.querySelectorAll('.btn-edit').forEach(btn => {
+            btn.addEventListener('click', function() {
+                alert('Ouverture du formulaire d\'édition');
+            });
+        });
+        document.querySelectorAll('.btn-validate').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(confirm('Confirmer la validation de cet indicateur ?')) {
+                    this.closest('.indicator-row').querySelector('.status-badge').textContent = 'Validé';
+                    this.closest('.indicator-row').querySelector('.status-badge').className = 'status-badge status-completed';
+                    this.remove();
+                }
+            });
+        });
+        document.querySelectorAll('.btn-comment').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const comment = prompt('Ajouter un commentaire :');
+                if(comment) {
+                    alert('Commentaire ajouté : ' + comment);
+                }
+            });
+        });
+        document.querySelector('.add-indicator-btn').addEventListener('click', function() {
+            alert('Ouverture du formulaire de création d\'indicateur');
+        });
+        // Simulation de mise à jour en temps réel
+        setInterval(() => {
+            const taskItems = document.querySelectorAll('.task-item');
+            if(taskItems.length > 0) {
+                const randomTask = taskItems[Math.floor(Math.random() * taskItems.length)];
+                const badge = randomTask.querySelector('.status-badge');
+                if(badge && Math.random() > 0.7) {
+                    badge.textContent = 'Mis à jour';
+                    badge.className = 'status-badge status-completed';
+                    setTimeout(() => {
+                        badge.textContent = 'En cours';
+                        badge.className = 'status-badge status-progress';
+                    }, 2000);
+                }
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
