@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     :root {
       --ardian-red: #c8102e;
@@ -326,51 +328,136 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="../../index.html">
+      <a class="navbar-brand animate__animated animate__fadeIn" href="../../index.html">
         <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
       </a>
       <div class="d-flex align-items-center">
-        <h1 class="navbar-text text-white fw-bold d-none d-sm-block mb-0 ms-3">Validation des Indicateurs</h1>
-        <button class="navbar-toggler ms-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <h1 class="navbar-text text-white fw-bold d-none d-sm-block mb-0 ms-3 animate__animated animate__fadeIn">Validation des Indicateurs</h1>
+        <div class="d-flex ms-3">
+          <!-- Notifications -->
+          <div class="dropdown me-2">
+            <button class="btn btn-sm btn-outline-light rounded-circle" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-bell"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                3
+              </span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="notificationDropdown" style="width: 300px;">
+              <li><h6 class="dropdown-header">Notifications</h6></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                  <div class="flex-shrink-0">
+                    <i class="fas fa-user-plus text-primary fs-5"></i>
+                  </div>
+                  <div class="ms-3">
+                    <p class="mb-0 fw-semibold">Nouvel utilisateur créé</p>
+                    <p class="mb-0 text-muted small">Il y a 5 minutes</p>
+                  </div>
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                  <div class="flex-shrink-0">
+                    <i class="fas fa-shield-alt text-warning fs-5"></i>
+                  </div>
+                  <div class="ms-3">
+                    <p class="mb-0 fw-semibold">Alerte de sécurité</p>
+                    <p class="mb-0 text-muted small">Il y a 20 minutes</p>
+                  </div>
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                  <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-triangle text-danger fs-5"></i>
+                  </div>
+                  <div class="ms-3">
+                    <p class="mb-0 fw-semibold">Tentative de connexion échouée</p>
+                    <p class="mb-0 text-muted small">Il y a 1 heure</p>
+                  </div>
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item text-center text-primary" href="#">
+                  Voir toutes les notifications
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- Profil -->
+          <div class="dropdown me-2">
+            <button class="btn btn-sm btn-outline-light rounded-circle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="userDropdown">
+              <li><h6 class="dropdown-header">Marie Dupont</h6></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2"></i>Mon profil</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Paramètres</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="../../connexion.html"><i class="fas fa-sign-out-alt me-2"></i>Déconnexion</a></li>
+            </ul>
+          </div>
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
       </div>
     </div>
   </nav>
 
   <!-- Sidebar -->
-  <div class="sidebar" id="sidebarMenu">
+  <div class="sidebar shadow-lg" id="sidebarMenu">
     <div class="position-sticky">
+      <div class="d-flex justify-content-center py-3 mb-2 d-lg-none">
+        <img src="../ressources/LogoArdian.png" alt="Logo Ardian" style="height: 30px;">
+      </div>
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link" href="../Dashboard/Dashboard.html">
-            <i class="bi bi-graph-up"></i>
-            <span>Dashboard</span>
+          <a class="nav-link d-flex align-items-center" href="../Dashboard/Dashboard.html">
+            <i class="fas fa-chart-line"></i>
+            <span class="ms-2">Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../Gestion du dictionnaire/gestion_dictionnaire.html">
-            <i class="bi bi-book"></i>
-            <span>Gestion du dictionnaire</span>
+          <a class="nav-link d-flex align-items-center" href="../Gestion du dictionnaire/gestion_dictionnaire.html">
+            <i class="fas fa-book"></i>
+            <span class="ms-2">Gestion du dictionnaire</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">
-            <i class="bi bi-clipboard-data"></i>
-            <span>Validation des indicateurs</span>
+          <a class="nav-link active d-flex align-items-center" href="#">
+            <i class="fas fa-clipboard-check"></i>
+            <span class="ms-2">Validation des indicateurs</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../Adminstration & Sécurité/admin.html">
-            <i class="bi bi-shield-lock"></i>
-            <span>Administration et Sécurité</span>
+          <a class="nav-link d-flex align-items-center" href="../Adminstration & Sécurité/admin.html">
+            <i class="fas fa-shield-alt"></i>
+            <span class="ms-2">Administration et Sécurité</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../Export et intégration/Export_integration.html">
-            <i class="bi bi-box-arrow-up"></i>
-            <span>Export et Intégration</span>
+          <a class="nav-link d-flex align-items-center" href="../Export et intégration/Export_integration.html">
+            <i class="fas fa-file-export"></i>
+            <span class="ms-2">Export et Intégration</span>
           </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="../Audit/audit.html">
+            <i class="fas fa-clipboard-list"></i>
+            <span class="ms-2">Audit</span>
+          </a>
+        </li>
+        <li class="nav-item mt-auto">
+          <div class="nav-link text-muted small">
+            <i class="fas fa-info-circle"></i>
+            <span class="ms-2">Version 2.5.0</span>
+          </div>
         </li>
       </ul>
     </div>
@@ -395,10 +482,163 @@
         <h2 class="mb-1">Validation des Indicateurs</h2>
         <p class="text-muted mb-0">Gestion et suivi des indicateurs ESG</p>
       </div>
-      <div>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createIndicatorModal">
-          <i class="bi bi-plus-lg me-2"></i>Nouvel indicateur
-        </button>
+    </div>
+
+    <!-- Kanban Board -->
+    <div class="kanban-board row mb-4">
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-header bg-secondary text-white text-center">
+            <strong>Brouillon</strong>
+          </div>
+          <div class="card-body p-2" style="min-height: 300px;">
+            <!-- Exemple de carte indicateur -->
+            <div class="kanban-card card mb-2">
+              <div class="card-body p-2">
+                <div class="fw-bold">Émissions de CO2 Scope 3</div>
+                <div class="small text-muted">ENV-03 • Environnement</div>
+                <div class="small">Marie Dupont</div>
+                <div class="small text-muted mb-1">Mesure les émissions indirectes de GES de la chaîne de valeur.</div>
+                <span class="badge badge-draft rounded-pill px-2 py-1 mt-1">Brouillon</span>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fas fa-eye"></i> Détails</button>
+                </div>
+              </div>
+            </div>
+            <div class="kanban-card card mb-2">
+              <div class="card-body p-2">
+                <div class="fw-bold">Conformité réglementaire</div>
+                <div class="small text-muted">GOV-02 • Gouvernance</div>
+                <div class="small">Paul Bernard</div>
+                <div class="small text-muted mb-1">Respect des obligations légales et réglementaires.</div>
+                <span class="badge badge-draft rounded-pill px-2 py-1 mt-1">Brouillon</span>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fas fa-eye"></i> Détails</button>
+                </div>
+              </div>
+            </div>
+            <!-- ... autres indicateurs ... -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-header bg-warning text-dark text-center">
+            <strong>En validation</strong>
+          </div>
+          <div class="card-body p-2" style="min-height: 300px;">
+            <div class="kanban-card card mb-2">
+              <div class="card-body p-2">
+                <div class="fw-bold">Émissions de CO2 Scope 1</div>
+                <div class="small text-muted">ENV-01 • Environnement</div>
+                <div class="small">Marie Dupont</div>
+                <div class="small text-muted mb-1">Émissions directes de GES issues des sources contrôlées.</div>
+                <span class="badge badge-review rounded-pill px-2 py-1 mt-1">En validation</span>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-success"><i class="fas fa-check"></i> Valider</button>
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fas fa-eye"></i> Détails</button>
+                </div>
+              </div>
+            </div>
+            <div class="kanban-card card mb-2">
+              <div class="card-body p-2">
+                <div class="fw-bold">Consommation d'eau</div>
+                <div class="small text-muted">ENV-05 • Environnement</div>
+                <div class="small">Lucie Morel</div>
+                <div class="small text-muted mb-1">Volume d'eau consommé par l'organisation.</div>
+                <span class="badge badge-review rounded-pill px-2 py-1 mt-1">En validation</span>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-success"><i class="fas fa-check"></i> Valider</button>
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fas fa-eye"></i> Détails</button>
+                </div>
+              </div>
+            </div>
+            <div class="kanban-card card mb-2">
+              <div class="card-body p-2">
+                <div class="fw-bold">Parité salariale</div>
+                <div class="small text-muted">SOC-03 • Social</div>
+                <div class="small">Sophie Laurent</div>
+                <div class="small text-muted mb-1">Écart de rémunération entre femmes et hommes.</div>
+                <span class="badge badge-review rounded-pill px-2 py-1 mt-1">En validation</span>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-success"><i class="fas fa-check"></i> Valider</button>
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fas fa-eye"></i> Détails</button>
+                </div>
+              </div>
+            </div>
+            <!-- ... autres indicateurs ... -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-header bg-success text-white text-center">
+            <strong>Validé</strong>
+          </div>
+          <div class="card-body p-2" style="min-height: 300px;">
+            <div class="kanban-card card mb-2">
+              <div class="card-body p-2">
+                <div class="fw-bold">Émissions de CO2 Scope 2</div>
+                <div class="small text-muted">ENV-02 • Environnement</div>
+                <div class="small">Marie Dupont</div>
+                <div class="small text-muted mb-1">Émissions indirectes de GES liées à l'énergie achetée.</div>
+                <span class="badge badge-validated rounded-pill px-2 py-1 mt-1">Validé</span>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fas fa-eye"></i> Détails</button>
+                </div>
+              </div>
+            </div>
+            <div class="kanban-card card mb-2">
+              <div class="card-body p-2">
+                <div class="fw-bold">Consommation d'énergie</div>
+                <div class="small text-muted">ENV-04 • Environnement</div>
+                <div class="small">Jean Martin</div>
+                <div class="small text-muted mb-1">Quantité totale d'énergie consommée.</div>
+                <span class="badge badge-validated rounded-pill px-2 py-1 mt-1">Validé</span>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fas fa-eye"></i> Détails</button>
+                </div>
+              </div>
+            </div>
+            <div class="kanban-card card mb-2">
+              <div class="card-body p-2">
+                <div class="fw-bold">Diversité et inclusion</div>
+                <div class="small text-muted">SOC-01 • Social</div>
+                <div class="small">Sophie Laurent</div>
+                <div class="small text-muted mb-1">Part des femmes et minorités dans l'effectif.</div>
+                <span class="badge badge-validated rounded-pill px-2 py-1 mt-1">Validé</span>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fas fa-eye"></i> Détails</button>
+                </div>
+              </div>
+            </div>
+            <div class="kanban-card card mb-2">
+              <div class="card-body p-2">
+                <div class="fw-bold">Formation des employés</div>
+                <div class="small text-muted">SOC-02 • Social</div>
+                <div class="small">Sophie Laurent</div>
+                <div class="small text-muted mb-1">Nombre d'heures de formation par employé.</div>
+                <span class="badge badge-validated rounded-pill px-2 py-1 mt-1">Validé</span>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fas fa-eye"></i> Détails</button>
+                </div>
+              </div>
+            </div>
+            <div class="kanban-card card mb-2">
+              <div class="card-body p-2">
+                <div class="fw-bold">Éthique des affaires</div>
+                <div class="small text-muted">GOV-01 • Gouvernance</div>
+                <div class="small">Paul Bernard</div>
+                <div class="small text-muted mb-1">Respect des principes éthiques dans l'entreprise.</div>
+                <span class="badge badge-validated rounded-pill px-2 py-1 mt-1">Validé</span>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fas fa-eye"></i> Détails</button>
+                </div>
+              </div>
+            </div>
+            <!-- ... autres indicateurs ... -->
+          </div>
+        </div>
       </div>
     </div>
 
@@ -994,69 +1234,86 @@
       </div>
     </div>
   </div>
-  
-  <!-- Modal for creating new indicator -->
-  <div class="modal fade" id="createIndicatorModal" tabindex="-1" aria-labelledby="createIndicatorModalLabel" aria-hidden="true">
+
+  <!-- Modal Détails Indicateur (maquette) -->
+  <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createIndicatorModalLabel">Créer un nouvel indicateur</h5>
+          <h5 class="modal-title" id="detailsModalLabel">Détails de l'indicateur</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="indicatorId" class="form-label">ID Technique</label>
-                <input type="text" class="form-control" id="indicatorId" placeholder="ex: ENV-XX">
+          <div class="row">
+            <div class="col-md-7">
+              <h5 class="fw-bold mb-1">Émissions de CO2 Scope 1</h5>
+              <div class="mb-2 text-muted">ENV-01 • Environnement</div>
+              <div class="mb-2"><span class="badge badge-review">En validation</span></div>
+              <p class="mb-2">Cet indicateur mesure les émissions directes de gaz à effet de serre (GES) issues des sources possédées ou contrôlées par l'organisation.</p>
+              <ul class="list-unstyled mb-3">
+                <li><strong>Responsable :</strong> Marie Dupont</li>
+                <li><strong>Date de création :</strong> 10/05/2025</li>
+                <li><strong>Date de modification :</strong> 14/05/2025</li>
+                <li><strong>Unité :</strong> tCO2e</li>
+                <li><strong>Standards :</strong> GHG Protocol, ISO 14064-1</li>
+              </ul>
+              <h6 class="fw-bold mt-4">Définition technique</h6>
+              <div class="bg-light rounded p-2 mb-3">
+                Somme des émissions directes de GES issues des sources possédées ou contrôlées par l'organisation, calculées selon la méthodologie du GHG Protocol.
               </div>
-              <div class="col-md-6">
-                <label for="indicatorCategory" class="form-label">Catégorie</label>
-                <select class="form-select" id="indicatorCategory">
-                  <option selected>Sélectionner une catégorie</option>
-                  <option value="env">Environnement</option>
-                  <option value="soc">Social</option>
-                  <option value="gov">Gouvernance</option>
-                </select>
-              </div>
-            </div>
-            
-            <div class="mb-3">
-              <label for="indicatorName" class="form-label">Nom de l'indicateur</label>
-              <input type="text" class="form-control" id="indicatorName" placeholder="Nom de l'indicateur">
-            </div>
-            
-            <div class="mb-3">
-              <label for="indicatorDesc" class="form-label">Description</label>
-              <textarea class="form-control" id="indicatorDesc" rows="2" placeholder="Description courte de l'indicateur"></textarea>
-            </div>
-            
-            <div class="mb-3">
-              <label for="indicatorDef" class="form-label">Définition technique</label>
-              <textarea class="form-control" id="indicatorDef" rows="3" placeholder="Définition technique précise de l'indicateur"></textarea>
-            </div>
-            
-            <div class="mb-3">
-              <label for="indicatorCalc" class="form-label">Méthode de calcul</label>
-              <textarea class="form-control" id="indicatorCalc" rows="3" placeholder="Méthode de calcul de l'indicateur"></textarea>
-            </div>
-            
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="indicatorUnit" class="form-label">Unité</label>
-                <input type="text" class="form-control" id="indicatorUnit" placeholder="ex: tCO2e, %, m³, etc.">
-              </div>
-              <div class="col-md-6">
-                <label for="indicatorStandards" class="form-label">Standards et références</label>
-                <input type="text" class="form-control" id="indicatorStandards" placeholder="ex: GRI 305-1, ISO 14064">
+              <h6 class="fw-bold">Méthode de calcul</h6>
+              <div class="bg-light rounded p-2 mb-3">
+                Addition des émissions de CO2, CH4, N2O, HFC, PFC, SF6 et NF3, exprimées en tCO2e selon les PRG à 100 ans du GIEC.
               </div>
             </div>
-          </form>
+            <div class="col-md-5">
+              <h6 class="fw-bold">Historique</h6>
+              <ul class="timeline list-unstyled mb-4">
+                <li class="mb-3">
+                  <span class="fw-bold">Soumission pour validation</span><br>
+                  <span class="text-muted small">14/05/2025 à 10:35</span><br>
+                  <span>Marie Dupont</span>
+                </li>
+                <li class="mb-3">
+                  <span class="fw-bold">Modification de la définition</span><br>
+                  <span class="text-muted small">13/05/2025 à 16:30</span><br>
+                  <span>Marie Dupont</span>
+                </li>
+                <li class="mb-3">
+                  <span class="fw-bold">Création de l'indicateur</span><br>
+                  <span class="text-muted small">10/05/2025 à 09:45</span><br>
+                  <span>Marie Dupont</span>
+                </li>
+              </ul>
+              <h6 class="fw-bold">Commentaires</h6>
+              <div class="mb-2">
+                <div class="border rounded p-2 mb-2">
+                  <div class="d-flex justify-content-between">
+                    <strong>Jean Martin</strong>
+                    <small class="text-muted">12/05/2025 14:15</small>
+                  </div>
+                  <div>Proposition d'alignement avec le standard international GHG Protocol.</div>
+                </div>
+                <div class="border rounded p-2 mb-2">
+                  <div class="d-flex justify-content-between">
+                    <strong>Lucie Morel</strong>
+                    <small class="text-muted">11/05/2025 10:03</small>
+                  </div>
+                  <div>Merci pour la précision sur la méthode de calcul.</div>
+                </div>
+              </div>
+              <form>
+                <div class="mb-2">
+                  <label for="commentArea" class="form-label">Ajouter un commentaire</label>
+                  <textarea class="form-control" id="commentArea" rows="2" placeholder="Votre commentaire..."></textarea>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm">Envoyer</button>
+              </form>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
-          <button type="button" class="btn btn-outline-primary">Enregistrer comme brouillon</button>
-          <button type="button" class="btn btn-primary">Soumettre pour validation</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fermer</button>
         </div>
       </div>
     </div>

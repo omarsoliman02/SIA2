@@ -8,6 +8,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     :root {
       --ardian-red: #c8102e;
@@ -266,51 +268,136 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="../../index.html">
+      <a class="navbar-brand animate__animated animate__fadeIn" href="../../index.html">
         <img src="../ressources/LogoArdian.png" alt="Logo Ardian">
       </a>
       <div class="d-flex align-items-center">
-        <h1 class="navbar-text text-white fw-bold d-none d-sm-block mb-0 ms-3">Ajouter un Indicateur</h1>
-        <button class="navbar-toggler ms-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <h1 class="navbar-text text-white fw-bold d-none d-sm-block mb-0 ms-3 animate__animated animate__fadeIn">Ajouter un Indicateur ESG</h1>
+        <div class="d-flex ms-3">
+          <!-- Notifications -->
+          <div class="dropdown me-2">
+            <button class="btn btn-sm btn-outline-light rounded-circle" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-bell"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                3
+              </span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="notificationDropdown" style="width: 300px;">
+              <li><h6 class="dropdown-header">Notifications</h6></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                  <div class="flex-shrink-0">
+                    <i class="fas fa-user-plus text-primary fs-5"></i>
+                  </div>
+                  <div class="ms-3">
+                    <p class="mb-0 fw-semibold">Nouvel utilisateur créé</p>
+                    <p class="mb-0 text-muted small">Il y a 5 minutes</p>
+                  </div>
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                  <div class="flex-shrink-0">
+                    <i class="fas fa-shield-alt text-warning fs-5"></i>
+                  </div>
+                  <div class="ms-3">
+                    <p class="mb-0 fw-semibold">Alerte de sécurité</p>
+                    <p class="mb-0 text-muted small">Il y a 20 minutes</p>
+                  </div>
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                  <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-triangle text-danger fs-5"></i>
+                  </div>
+                  <div class="ms-3">
+                    <p class="mb-0 fw-semibold">Tentative de connexion échouée</p>
+                    <p class="mb-0 text-muted small">Il y a 1 heure</p>
+                  </div>
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item text-center text-primary" href="#">
+                  Voir toutes les notifications
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- Profil -->
+          <div class="dropdown me-2">
+            <button class="btn btn-sm btn-outline-light rounded-circle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="userDropdown">
+              <li><h6 class="dropdown-header">Marie Dupont</h6></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2"></i>Mon profil</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Paramètres</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="../../connexion.html"><i class="fas fa-sign-out-alt me-2"></i>Déconnexion</a></li>
+            </ul>
+          </div>
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
       </div>
     </div>
   </nav>
 
   <!-- Sidebar -->
-  <div class="sidebar" id="sidebarMenu">
+  <div class="sidebar shadow-lg" id="sidebarMenu">
     <div class="position-sticky">
+      <div class="d-flex justify-content-center py-3 mb-2 d-lg-none">
+        <img src="../ressources/LogoArdian.png" alt="Logo Ardian" style="height: 30px;">
+      </div>
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link" href="../Dashboard/Dashboard.html">
-            <i class="bi bi-graph-up"></i>
-            <span>Dashboard</span>
+          <a class="nav-link d-flex align-items-center" href="../Dashboard/Dashboard.html">
+            <i class="fas fa-chart-line"></i>
+            <span class="ms-2">Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="./gestion_dictionnaire.html">
-            <i class="bi bi-book"></i>
-            <span>Gestion du dictionnaire</span>
+          <a class="nav-link d-flex align-items-center" href="gestion_dictionnaire.html">
+            <i class="fas fa-book"></i>
+            <span class="ms-2">Gestion du dictionnaire</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../Collecte & Validation des Données/Collecte et validation.html">
-            <i class="bi bi-clipboard-data"></i>
-            <span>Validation des données</span>
+          <a class="nav-link d-flex align-items-center" href="../Validation des indicateurs/Validation des indicateurs.html">
+            <i class="fas fa-clipboard-check"></i>
+            <span class="ms-2">Validation des indicateurs</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../Adminstration & Sécurité/admin.html">
-            <i class="bi bi-shield-lock"></i>
-            <span>Administration et Sécurité</span>
+          <a class="nav-link d-flex align-items-center" href="../Adminstration & Sécurité/admin.html">
+            <i class="fas fa-shield-alt"></i>
+            <span class="ms-2">Administration et Sécurité</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../Export et intégration/Export_integration.html">
-            <i class="bi bi-box-arrow-up"></i>
-            <span>Export et Intégration</span>
+          <a class="nav-link d-flex align-items-center" href="../Export et intégration/Export_integration.html">
+            <i class="fas fa-file-export"></i>
+            <span class="ms-2">Export et Intégration</span>
           </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="../Audit/audit.html">
+            <i class="fas fa-clipboard-list"></i>
+            <span class="ms-2">Audit</span>
+          </a>
+        </li>
+        <li class="nav-item mt-auto">
+          <div class="nav-link text-muted small">
+            <i class="fas fa-info-circle"></i>
+            <span class="ms-2">Version 2.5.0</span>
+          </div>
         </li>
       </ul>
     </div>
@@ -356,19 +443,6 @@
                 </div>
 
                 <div class="col-md-6 mb-3">
-                  <label for="data_owner" class="form-label">Responsable de la donnée <span class="text-danger">*</span></label>
-                  <select class="form-select" id="data_owner" required>
-                    <option value="" selected disabled>Sélectionner un responsable</option>
-                    <option value="Susty">Susty</option>
-                    <option value="DataPlatform">DataPlatform</option>
-                    <option value="ESG Team">Équipe ESG</option>
-                    <option value="Finance">Finance</option>
-                    <option value="IT">IT</option>
-                  </select>
-                  <div class="form-tooltip">Équipe ou système responsable de la maintenance de cette donnée</div>
-                </div>
-
-                <div class="col-md-6 mb-3">
                   <label for="storage_tool" class="form-label">Outil de stockage <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="storage_tool" placeholder="ex: DataPlatform" required>
                   <div class="form-tooltip">Système où la donnée est stockée principalement</div>
@@ -380,14 +454,12 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                  <label for="data_type" class="form-label">Type de donnée <span class="text-danger">*</span></label>
+                  <label for="data_type" class="form-label">Catégorie d'indicateur <span class="text-danger">*</span></label>
                   <select class="form-select" id="data_type" required>
                     <option value="" selected disabled>Sélectionner un type</option>
-                    <option value="numeric">Numérique</option>
-                    <option value="text">Texte</option>
-                    <option value="boolean">Booléen</option>
-                    <option value="date">Date</option>
-                    <option value="list">Liste de valeurs</option>
+                    <option value="text">input</option>
+                    <option value="text">import</option>
+                    <option value="text">calculated</option>
                   </select>
                 </div>
 
